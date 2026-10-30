@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 30 Anime — ghostedyourinterest</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/stylus.css">
+</head>
+<body class="calendar-theme">
+<div class="wrap">
+
+  <!-- Standard Top Nav -->
+  <nav class="topnav">
+    <a href="index.html">home</a>
+    <a href="anime.html" class="active">anime</a>
+    <a href="manga.html">manga</a>
+    <a href="games.html">games</a>
+    <a href="music.html">music</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CALENDAR HERO HEADER -->
+  <!-- ═══════════════════════════════════════ -->
+  <header class="calendar-header">
+    <div class="cal-top-row">
+      <span class="cal-brand">THIS IS MY FAV 30 ANIME</span>
+      <span class="cal-dots">•••</span>
+    </div>
+    
+    <div class="cal-title-row">
+      <div class="cal-back-btn">‹</div>
+      <h1 class="cal-main-num">30</h1>
+      <div class="cal-sub-title">Masterpiece List</div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- THE CALENDAR GRID -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="calendar-grid-wrapper">
+    
+    <!-- Left Vertical Sidebar -->
+    <div class="cal-sidebar-left">
+      <div class="cal-vertical-text">MY PERSONAL FAVORITES</div>
+      <div class="cal-website">ghostedyourinterest.com</div>
+    </div>
+
+    <!-- The Main 5-Column Grid -->
+    <div class="calendar-grid">
+      
+      <!-- COLUMN 1 (MONDAY) -->
+      <div class="cal-col">
+        <div class="cal-col-header">M</div>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Wolf+Children" target="_blank" onmouseenter="startAudioTimer('audio-wolf')" onmouseleave="stopAudioTimer('audio-wolf')">
+          <div class="cal-date">01</div>
+          <div class="cal-img"><img src="img/anime/ani1.jpg" alt="Wolf Children"></div>
+          <div class="cal-desc">Wolf Children</div>
+          <audio id="audio-wolf" src="audio/wolf_children.mp3" preload="none"></audio>
+        </a>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Reincarnated+as+a+Slime" target="_blank" onmouseenter="startAudioTimer('audio-slime')" onmouseleave="stopAudioTimer('audio-slime')">
+          <div class="cal-date">06</div>
+          <div class="cal-img"><img src="img/anime/ani6.jpg" alt="Reincarnated as a Slime"></div>
+          <div class="cal-desc">Reincarnated as a Slime</div>
+          <audio id="audio-slime" src="audio/slime.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Shinsekai+yori" target="_blank" onmouseenter="startAudioTimer('audio-shinsekai')" onmouseleave="stopAudioTimer('audio-shinsekai')">
+          <div class="cal-date">11</div>
+          <div class="cal-img"><img src="img/anime/ani11.jpg" alt="Shinsekai yori"></div>
+          <div class="cal-desc">Shinsekai yori</div>
+          <audio id="audio-shinsekai" src="audio/shinsekai.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Legend+of+Hei+2" target="_blank" onmouseenter="startAudioTimer('audio-hei')" onmouseleave="stopAudioTimer('audio-hei')">
+          <div class="cal-date">16</div>
+          <div class="cal-img"><img src="img/anime/ani16.jpg" alt="Legend of Hei 2"></div>
+          <div class="cal-desc">Legend of Hei 2</div>
+          <audio id="audio-hei" src="audio/legend_of_hei.mp3" preload="none"></audio>
+        </a>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Welcome+to+NHK" target="_blank" onmouseenter="startAudioTimer('audio-nhk')" onmouseleave="stopAudioTimer('audio-nhk')">
+          <div class="cal-date">21</div>
+          <div class="cal-img"><img src="img/anime/ani21.jpg" alt="Welcome to NHK"></div>
+          <div class="cal-desc">Welcome to NHK</div>
+          <audio id="audio-nhk" src="audio/nhk.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Anime+26" target="_blank" onmouseenter="startAudioTimer('audio-new1')" onmouseleave="stopAudioTimer('audio-new1')">
+          <div class="cal-date">26</div>
+          <div class="cal-img"><img src="img/anime/ani26.jpg" alt="Anime 26"></div>
+          <div class="cal-desc">Anime 26</div>
+          <audio id="audio-new1" src="audio/new1.mp3" preload="none"></audio>
+        </a>
+      </div>
+
+      <!-- COLUMN 2 (TUESDAY) -->
+      <div class="cal-col">
+        <div class="cal-col-header">T</div>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Mushoku+Tensei" target="_blank" onmouseenter="startAudioTimer('audio-mushoku')" onmouseleave="stopAudioTimer('audio-mushoku')">
+          <div class="cal-date">02</div>
+          <div class="cal-img"><img src="img/anime/ani2.jpg" alt="Mushoku Tensei"></div>
+          <div class="cal-desc">Mushoku Tensei</div>
+          <audio id="audio-mushoku" src="audio/mushoku_tensei.mp3" preload="none"></audio>
+        </a>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Baccano" target="_blank" onmouseenter="startAudioTimer('audio-baccano')" onmouseleave="stopAudioTimer('audio-baccano')">
+          <div class="cal-date">07</div>
+          <div class="cal-img"><img src="img/anime/ani7.jpg" alt="Baccano!"></div>
+          <div class="cal-desc">Baccano!</div>
+          <audio id="audio-baccano" src="audio/baccano.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Monster" target="_blank" onmouseenter="startAudioTimer('audio-monster')" onmouseleave="stopAudioTimer('audio-monster')">
+          <div class="cal-date">12</div>
+          <div class="cal-img"><img src="img/anime/ani12.jpg" alt="Monster"></div>
+          <div class="cal-desc">Monster</div>
+          <audio id="audio-monster" src="audio/monster.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Serial+Experiments+Lain" target="_blank" onmouseenter="startAudioTimer('audio-lain')" onmouseleave="stopAudioTimer('audio-lain')">
+          <div class="cal-date">17</div>
+          <div class="cal-img"><img src="img/anime/ani17.jpg" alt="Serial Experiments Lain"></div>
+          <div class="cal-desc">Serial Experiments Lain</div>
+          <audio id="audio-lain" src="audio/lain.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Showa+Genroku" target="_blank" onmouseenter="startAudioTimer('audio-showa')" onmouseleave="stopAudioTimer('audio-showa')">
+          <div class="cal-date">22</div>
+          <div class="cal-img"><img src="img/anime/ani22.jpg" alt="Showa Genroku"></div>
+          <div class="cal-desc">Showa Genroku</div>
+          <audio id="audio-showa" src="audio/showa_genroku.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Anime+27" target="_blank" onmouseenter="startAudioTimer('audio-new2')" onmouseleave="stopAudioTimer('audio-new2')">
+          <div class="cal-date">27</div>
+          <div class="cal-img"><img src="img/anime/ani27.jpg" alt="Anime 27"></div>
+          <div class="cal-desc">Anime 27</div>
+          <audio id="audio-new2" src="audio/new2.mp3" preload="none"></audio>
+        </a>
+      </div>
+
+      <!-- COLUMN 3 (WEDNESDAY) -->
+      <div class="cal-col">
+        <div class="cal-col-header">W</div>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Fullmetal+Alchemist+Brotherhood" target="_blank" onmouseenter="startAudioTimer('audio-fma')" onmouseleave="stopAudioTimer('audio-fma')">
+          <div class="cal-date">03</div>
+          <div class="cal-img"><img src="img/anime/ani3.jpg" alt="FMA Brotherhood"></div>
+          <div class="cal-desc">FMA: Brotherhood</div>
+          <audio id="audio-fma" src="audio/fma_brotherhood.mp3" preload="none"></audio>
+        </a>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Monogatari" target="_blank" onmouseenter="startAudioTimer('audio-monogatari')" onmouseleave="stopAudioTimer('audio-monogatari')">
+          <div class="cal-date">08</div>
+          <div class="cal-img"><img src="img/anime/ani8.jpg" alt="Monogatari"></div>
+          <div class="cal-desc">Monogatari</div>
+          <audio id="audio-monogatari" src="audio/monogatari.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Maquia" target="_blank" onmouseenter="startAudioTimer('audio-maquia')" onmouseleave="stopAudioTimer('audio-maquia')">
+          <div class="cal-date">13</div>
+          <div class="cal-img"><img src="img/anime/ani13.jpg" alt="Maquia"></div>
+          <div class="cal-desc">Maquia</div>
+          <audio id="audio-maquia" src="audio/maquia.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Nichijou" target="_blank" onmouseenter="startAudioTimer('audio-nichijou')" onmouseleave="stopAudioTimer('audio-nichijou')">
+          <div class="cal-date">18</div>
+          <div class="cal-img"><img src="img/anime/ani18.jpg" alt="Nichijou"></div>
+          <div class="cal-desc">Nichijou</div>
+          <audio id="audio-nichijou" src="audio/nichijou.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Bocchi+the+Rock" target="_blank" onmouseenter="startAudioTimer('audio-bocchi')" onmouseleave="stopAudioTimer('audio-bocchi')">
+          <div class="cal-date">23</div>
+          <div class="cal-img"><img src="img/anime/ani23.jpg" alt="Bocchi the Rock"></div>
+          <div class="cal-desc">Bocchi the Rock</div>
+          <audio id="audio-bocchi" src="audio/bocchi.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Anime+28" target="_blank" onmouseenter="startAudioTimer('audio-new3')" onmouseleave="stopAudioTimer('audio-new3')">
+          <div class="cal-date">28</div>
+          <div class="cal-img"><img src="img/anime/ani28.jpg" alt="Anime 28"></div>
+          <div class="cal-desc">Anime 28</div>
+          <audio id="audio-new3" src="audio/new3.mp3" preload="none"></audio>
+        </a>
+      </div>
+
+      <!-- COLUMN 4 (THURSDAY) -->
+      <div class="cal-col">
+        <div class="cal-col-header">T</div>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=No+Game+No+Life" target="_blank" onmouseenter="startAudioTimer('audio-ngnl')" onmouseleave="stopAudioTimer('audio-ngnl')">
+          <div class="cal-date">04</div>
+          <div class="cal-img"><img src="img/anime/ani4.jpg" alt="No Game No Life"></div>
+          <div class="cal-desc">No Game No Life</div>
+          <audio id="audio-ngnl" src="audio/no_game_no_life.mp3" preload="none"></audio>
+        </a>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Frieren" target="_blank" onmouseenter="startAudioTimer('audio-frieren')" onmouseleave="stopAudioTimer('audio-frieren')">
+          <div class="cal-date">09</div>
+          <div class="cal-img"><img src="img/anime/ani9.jpg" alt="Frieren"></div>
+          <div class="cal-desc">Frieren</div>
+          <audio id="audio-frieren" src="audio/frieren.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Steins+Gate" target="_blank" onmouseenter="startAudioTimer('audio-steins')" onmouseleave="stopAudioTimer('audio-steins')">
+          <div class="cal-date">14</div>
+          <div class="cal-img"><img src="img/anime/ani14.jpg" alt="Steins;Gate"></div>
+          <div class="cal-desc">Steins;Gate</div>
+          <audio id="audio-steins" src="audio/steins_gate.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Gintama+Season+2" target="_blank" onmouseenter="startAudioTimer('audio-gintama')" onmouseleave="stopAudioTimer('audio-gintama')">
+          <div class="cal-date">19</div>
+          <div class="cal-img"><img src="img/anime/ani19.jpg" alt="Gintama Season 2"></div>
+          <div class="cal-desc">Gintama Season 2</div>
+          <audio id="audio-gintama" src="audio/gintama.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Made+in+Abyss" target="_blank" onmouseenter="startAudioTimer('audio-abyss')" onmouseleave="stopAudioTimer('audio-abyss')">
+          <div class="cal-date">24</div>
+          <div class="cal-img"><img src="img/anime/ani24.jpg" alt="Made in Abyss"></div>
+          <div class="cal-desc">Made in Abyss</div>
+          <audio id="audio-abyss" src="audio/made_in_abyss.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Anime+29" target="_blank" onmouseenter="startAudioTimer('audio-new4')" onmouseleave="stopAudioTimer('audio-new4')">
+          <div class="cal-date">29</div>
+          <div class="cal-img"><img src="img/anime/ani29.jpg" alt="Anime 29"></div>
+          <div class="cal-desc">Anime 29</div>
+          <audio id="audio-new4" src="audio/new4.mp3" preload="none"></audio>
+        </a>
+      </div>
+
+      <!-- COLUMN 5 (FRIDAY) -->
+      <div class="cal-col">
+        <div class="cal-col-header">F</div>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Violet+Evergarden" target="_blank" onmouseenter="startAudioTimer('audio-violet')" onmouseleave="stopAudioTimer('audio-violet')">
+          <div class="cal-date">05</div>
+          <div class="cal-img"><img src="img/anime/ani5.jpg" alt="Violet Evergarden"></div>
+          <div class="cal-desc">Violet Evergarden</div>
+          <audio id="audio-violet" src="audio/violet_evergarden.mp3" preload="none"></audio>
+        </a>
+        
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Mushishi" target="_blank" onmouseenter="startAudioTimer('audio-mushishi')" onmouseleave="stopAudioTimer('audio-mushishi')">
+          <div class="cal-date">10</div>
+          <div class="cal-img"><img src="img/anime/ani10.jpg" alt="Mushishi"></div>
+          <div class="cal-desc">Mushishi</div>
+          <audio id="audio-mushishi" src="audio/mushishi.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Mononoke" target="_blank" onmouseenter="startAudioTimer('audio-mononoke')" onmouseleave="stopAudioTimer('audio-mononoke')">
+          <div class="cal-date">15</div>
+          <div class="cal-img"><img src="img/anime/ani15.jpg" alt="Mononoke"></div>
+          <div class="cal-desc">Mononoke</div>
+          <audio id="audio-mononoke" src="audio/mononoke.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Samurai+Champloo" target="_blank" onmouseenter="startAudioTimer('audio-champloo')" onmouseleave="stopAudioTimer('audio-champloo')">
+          <div class="cal-date">20</div>
+          <div class="cal-img"><img src="img/anime/ani20.jpg" alt="Samurai Champloo"></div>
+          <div class="cal-desc">Samurai Champloo</div>
+          <audio id="audio-champloo" src="audio/samurai_champloo.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Eureka+Seven" target="_blank" onmouseenter="startAudioTimer('audio-eureka')" onmouseleave="stopAudioTimer('audio-eureka')">
+          <div class="cal-date">25</div>
+          <div class="cal-img"><img src="img/anime/ani25.jpg" alt="Eureka Seven"></div>
+          <div class="cal-desc">Eureka Seven</div>
+          <audio id="audio-eureka" src="audio/eureka_seven.mp3" preload="none"></audio>
+        </a>
+
+        <a class="cal-item" href="https://myanimelist.net/anime.php?q=Anime+30" target="_blank" onmouseenter="startAudioTimer('audio-new5')" onmouseleave="stopAudioTimer('audio-new5')">
+          <div class="cal-date">30</div>
+          <div class="cal-img"><img src="img/anime/ani30.jpg" alt="Anime 30"></div>
+          <div class="cal-desc">Anime 30</div>
+          <audio id="audio-new5" src="audio/new5.mp3" preload="none"></audio>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Right Vertical Sidebar -->
+    <div class="cal-sidebar-right">
+      <div class="cal-vertical-text" style="color: var(--p-300);">EVERY ENDING IS A NEW BEGINNING</div>
+      <div class="cal-open">Open to recs →</div>
+    </div>
+
+  </div>
+
+  <!-- CALENDAR FOOTER (Visuals only) -->
+  <div class="cal-footer">
+    <div class="cal-foot-visuals">
+      <div class="barcode"></div>
+      <div class="foot-icons">
+        <span class="f-icon">⌕</span>
+        <span class="f-icon">✂</span>
+        <span class="f-icon">⌂</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- RECOMMENDATION PROMO BANNER -->
+  <!-- ═══════════════════════════════════════ -->
+  <a href="anirecommendation.html" class="featured" style="margin-top: 30px; border-radius: 0; background: #18181b; color: #e0e0e0; border: 2px solid #333;">
+    <div class="featured-title" style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.2rem; text-transform: uppercase;">🔍 Looking for Hidden Depths & Cult Classics?</div>
+    <div class="featured-sub" style="font-family: 'Inter', sans-serif; font-weight: 600;">Check out my niche recommendations if you want some psychological, atmospheric, and deeply weird shows.</div>
+  </a>
+
+  <footer>© Rorri · ghostedyourinterest.gamer.gd · made with 💜</footer>
+</div>
+
+<!-- Mobile Toast -->
+<div id="mobile-toast"></div>
+
+<!-- Audio Timer Script -->
+<script>
+  let hoverTimer;
+
+  function startAudioTimer(audioId) {
+    clearTimeout(hoverTimer);
+    // 6 Second Timer
+    hoverTimer = setTimeout(() => {
+      const audio = document.getElementById(audioId);
+      if (audio) {
+        audio.volume = 0.4; // Set volume to 40%
+        audio.play().catch(e => console.log("Audio play blocked by browser:", e));
+      }
+    }, 6000); 
+  }
+
+  function stopAudioTimer(audioId) {
+    clearTimeout(hoverTimer);
+    const audio = document.getElementById(audioId);
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }
+
+  function showMobileTitle(titleText) {
+    if (window.innerWidth <= 700) {
+      const toast = document.getElementById('mobile-toast');
+      toast.innerText = titleText;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 2000);
+    }
+  }
+</script>
+
+</body>
+</html>
