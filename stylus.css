@@ -115,7 +115,11 @@ footer { text-align: center; font-size: .85rem; color: var(--text-soft); font-we
 .grid9 .tile:hover .title-tip { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 700px) {
-  .grid9 .tile, #reading-grid .tile { width: calc(33.333% - 8px); min-width: 0 !important; gap: 10px !important; }
+  .grid9 .tile, #reading-grid .tile {
+  width: calc(16.666% - 14px) !important;
+  min-width: 130px !important;
+  /* max-width: 180px !important;  ← remove */
+}
 }
 
 /* ═══════════════════════════════════════════
@@ -217,7 +221,11 @@ h1 { font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800; let
 
 .filter-item { display: none !important; transition: all 0.4s ease; }
 .filter-item.show { display: block !important; animation: fadeUp 0.4s var(--ease-smooth) both; }
-.filter-item.dimmed { opacity: 0.1; filter: grayscale(100%) blur(4px); pointer-events: none; transform: scale(0.95); }
+.filter-item.dimmed {
+  opacity: 0.25;         /* was 0.1 */
+  filter: grayscale(80%) blur(1px);  /* was grayscale(100%) blur(4px) */
+  transform: scale(0.98);  /* was 0.95 */
+}
 
 @media (max-width: 800px) { .filter-bar { flex-direction: column; align-items: stretch; padding: 12px; gap: 12px; } .filter-group { justify-content: center; } .status-group { justify-content: center; display: flex; } }
 
@@ -282,8 +290,68 @@ body.vinyl-theme { background-color: #1a1817; background-image: none; }
 .polaroid:hover { transform: scale(1.1) rotate(0deg) !important; z-index: 10; box-shadow: 5px 10px 25px rgba(0,0,0,0.6); }
 .polaroid img { width: 100%; height: auto; aspect-ratio: 1/1; object-fit: cover; border: 1px solid #3a3533; }
 .polaroid .title-tip { position: absolute; bottom: 0; left: 0; right: 0; height: 24px; display: flex; align-items: center; justify-content: center; font-family: 'Caveat', cursive; font-size: 1.1rem; color: #e0d8d0; opacity: 0.8; }
+/* Fix Polaroid Titles to fit nicely */
+.polaroid .title-tip {
+  background: rgba(42, 38, 37, 0.95);
+  border-top: 1px solid #3a3533;
+  opacity: 1; /* Always visible now instead of just on hover */
+  transform: none;
+  height: 30px; /* Slightly taller to fit the font better */
+  font-size: 0.95rem;
+  padding: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 0 0 4px 4px;
+}
 @media (max-width: 900px) { .polaroid { width: calc(33.333% - 12px); } }
 @media (max-width: 600px) { .polaroid { width: calc(50% - 12px); } }
+/* Scrapbook Grid (5 columns for Top Picks) */
+.scrapbook-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Forces 5 columns */
+  gap: 12px;
+  justify-items: center; /* Centers the cards inside their columns */
+  width: 100%;
+}
+@media (max-width: 900px) { .scrapbook-grid-5 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .scrapbook-grid-5 { grid-template-columns: repeat(2, 1fr); } }
+
+/* Polaroid Cards (Top Picks) */
+.polaroid-card {
+  background: #2a2625;
+  padding: 6px 6px 12px 6px; 
+  border: 1px solid #3a3533;
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+  text-align: center;
+  transition: transform 0.2s;
+  width: 100%; /* Fills the grid column */
+  max-width: 120px; /* Limits the max size */
+}
+.polaroid-card:hover { transform: scale(1.05) rotate(2deg); }
+
+.polaroid-card img { 
+  width: 100%; 
+  aspect-ratio: 2/3; 
+  object-fit: cover; 
+  margin-bottom: 8px; 
+  border: 1px solid #111;
+}
+
+.p-info h4 { 
+  font-size: 0.75rem; 
+  color: #e0d8d0; 
+  margin-bottom: 2px; 
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.p-info p { 
+  font-size: 0.65rem; 
+  color: #d48a8a; 
+  font-weight: 700; 
+}
 
 /* Music Sidebar Cards */
 .vinyl-theme .music-sidebar .card { background: #242120; border: 1px solid #3a3533; box-shadow: 5px 5px 0px #111; border-radius: 8px; }
@@ -303,24 +371,114 @@ body.vinyl-theme { background-color: #1a1817; background-image: none; }
 .roulette-ticket a { font-family: 'Outfit', sans-serif; font-weight: 800; color: #ff9999; text-decoration: none; font-size: 1.1rem; margin-top: 4px; display: inline-block; border-bottom: 2px solid #ff9999; }
 .roulette-ticket a:hover { color: #fff; border-color: #fff; }
 
-/* Retro Pixel Now Playing */
-.pixel-np-card { padding: 20px; border: 4px solid #1a1140; border-radius: 0; box-shadow: inset 0 0 0 2px #6e45e2, 0 10px 30px rgba(0,0,0,0.5); background: #0f0a1c; image-rendering: pixelated; margin-bottom: 24px; }
-.pixel-np-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #6e45e2; padding-bottom: 10px; margin-bottom: 20px; }
-.pixel-np-title { display: flex; align-items: center; gap: 10px; font-family: monospace; font-size: 1.2rem; font-weight: 900; color: #8db3ff; letter-spacing: 2px; text-shadow: 2px 2px 0px #1a1140; }
-.pixel-icon { color: #4a6fff; font-size: 1rem; }
+/* --- Retro Pixel Now Playing (Vinyl Theme) --- */
+.pixel-np-card {
+  padding: 20px;
+  border: 4px solid #1a1817;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 2px #4a3f3a, 0 10px 30px rgba(0,0,0,0.5);
+  background: #242120;
+  image-rendering: pixelated;
+  margin-bottom: 24px;
+}
+
+.pixel-np-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid #3a3533;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.pixel-np-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: monospace;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #e0d8d0;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0px #111;
+}
+
+.pixel-icon { color: #d48a8a; font-size: 1rem; }
+
+/* Battery Style */
 .pixel-np-battery { display: flex; align-items: center; position: relative; }
-.pixel-np-battery::before { content: ''; width: 35px; height: 18px; border: 3px solid #8db3ff; border-radius: 2px; display: block; position: relative; }
-.pixel-np-battery .battery-fill { position: absolute; top: 6px; left: 6px; width: 23px; height: 10px; background: repeating-linear-gradient(90deg, #4a6fff, #4a6fff 4px, transparent 4px, transparent 6px); }
-.pixel-np-battery .battery-tip { width: 4px; height: 8px; background: #8db3ff; margin-left: 2px; border-radius: 0 2px 2px 0; }
-.pixel-np-content { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 24px; }
-.pixel-np-cover { width: 150px; height: 150px; object-fit: cover; border: 4px solid #1a1140; box-shadow: 0 0 20px rgba(74, 111, 255, 0.3); image-rendering: pixelated; margin-bottom: 16px; }
-.pixel-np-song { font-family: monospace; font-size: 1.4rem; color: #fff; margin-bottom: 4px; text-shadow: 2px 2px 0px #1a1140; }
-.pixel-np-artist { font-family: monospace; font-size: 1rem; color: #8db3ff; letter-spacing: 1px; }
-.pixel-np-footer { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.pixel-progress-container { width: 100%; height: 20px; background: #1a1140; border: 3px solid #8db3ff; padding: 2px; position: relative; }
-.pixel-progress-bar { height: 100%; width: 0%; background: repeating-linear-gradient(90deg, #4a6fff, #4a6fff 10px, #6e45e2 10px, #6e45e2 20px); transition: width 1s linear; }
-.pixel-times { display: flex; justify-content: space-between; align-items: center; width: 100%; font-family: monospace; font-size: 1.1rem; color: #8db3ff; padding: 0 10px; }
-.pixel-play-btn { font-size: 1.2rem; color: #4a6fff; text-shadow: 2px 2px 0px #1a1140; transform: scaleX(1.5); }
+.pixel-np-battery::before {
+  content: '';
+  width: 35px; height: 18px;
+  border: 3px solid #a39b94;
+  border-radius: 2px;
+  display: block; position: relative;
+}
+.pixel-np-battery .battery-fill {
+  position: absolute; top: 6px; left: 6px;
+  width: 23px; height: 10px;
+  background: repeating-linear-gradient(90deg, #d48a8a, #d48a8a 4px, transparent 4px, transparent 6px);
+}
+.pixel-np-battery .battery-tip {
+  width: 4px; height: 8px;
+  background: #a39b94;
+  margin-left: 2px; border-radius: 0 2px 2px 0;
+}
+
+/* Content */
+.pixel-np-content {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; margin-bottom: 24px;
+}
+.pixel-np-cover {
+  width: 150px; height: 150px; object-fit: cover;
+  border: 4px solid #111;
+  box-shadow: 0 0 20px rgba(212, 138, 138, 0.2);
+  image-rendering: pixelated;
+  margin-bottom: 16px;
+}
+.pixel-np-song {
+  font-family: monospace; font-size: 1.4rem;
+  color: #e0d8d0; margin-bottom: 4px;
+  text-shadow: 2px 2px 0px #111;
+}
+.pixel-np-artist {
+  font-family: monospace; font-size: 1rem;
+  color: #a39b94; letter-spacing: 1px;
+}
+
+/* Footer & Progress Bar */
+.pixel-np-footer {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.pixel-progress-container {
+  width: 100%; height: 20px;
+  background: #1a1817;
+  border: 3px solid #3a3533;
+  padding: 2px; position: relative;
+}
+.pixel-progress-bar {
+  height: 100%; width: 0%;
+  background: repeating-linear-gradient(90deg, #d48a8a, #d48a8a 10px, #8b2a2a 10px, #8b2a2a 20px);
+  transition: width 1s linear;
+}
+.pixel-times {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; font-family: monospace; font-size: 1.1rem;
+  color: #a39b94; padding: 0 10px;
+}
+
+/* The Play Button (Made clickable) */
+.pixel-play-btn {
+  font-size: 1.2rem; color: #d48a8a;
+  text-shadow: 2px 2px 0px #111;
+  transform: scaleX(1.5);
+  text-decoration: none; /* Removes underline from the link */
+  transition: color 0.2s;
+}
+.pixel-play-btn:hover {
+  color: #fff;
+}
 
 /* ═══════════════════════════════════════════
    10. GAMES PAGE (Dark Scrapbook Theme)
@@ -405,6 +563,7 @@ body.scrapbook-theme {
 .washi-tape { position: absolute; top: -12px; left: 20px; width: 100px; height: 30px; background: rgba(139, 42, 42, 0.5); transform: rotate(-2deg); backdrop-filter: blur(2px); }
 .blue-tape { background: rgba(52, 73, 94, 0.6); left: 30px; }
 .dark-tape { background: rgba(80, 80, 80, 0.6); width: 130px; }
+.pink-tape { background: rgba(212, 138, 138, 0.5); }
 
 /* Grid inside Cards */
 .board-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -546,18 +705,77 @@ body.calendar-theme { background-color: #121212; background-image: none; color: 
 .cal-sidebar-right .cal-vertical-text { transform: rotate(180deg); }
 .cal-website, .cal-open { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 0.8rem; font-weight: 600; text-align: center; color: #777; }
 
-.calendar-grid { flex: 1; display: grid; grid-template-columns: repeat(5, 1fr); }
-.cal-col { border-right: 1px solid #333; display: flex; flex-direction: column; }
-.cal-col:last-child { border-right: none; }
-.cal-col-header { text-align: left; padding: 20px 10px 10px; font-weight: 800; font-size: 1.2rem; color: #a0a0a0; }
+/* ═══════════════════════════════════════════
+   CALENDAR GRID (ABSOLUTE STRICT ALIGNMENT)
+   ═══════════════════════════════════════════ */
 
-.cal-item { display: flex; flex-direction: column; padding: 10px; text-decoration: none; color: #fff; border-bottom: 1px solid transparent; transition: background 0.2s; }
+.calendar-grid {
+  flex: 1; 
+  display: grid; 
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: auto;
+  align-items: stretch; /* Forces all columns to stretch to the same height */
+}
+
+.cal-col { 
+  border-right: 1px solid #333; 
+  display: flex; 
+  flex-direction: column; 
+  height: 100%; /* Ensures the column fills the grid row completely */
+}
+.cal-col:last-child { border-right: none; }
+
+.cal-item { 
+  display: flex; 
+  flex-direction: column; 
+  padding: 10px; 
+  text-decoration: none; 
+  color: #fff; 
+  border-bottom: 1px solid transparent; 
+  transition: background 0.2s; 
+  flex: 1; /* Forces every item to grow and fill space evenly */
+  min-height: 0; /* Prevents flexbox from blowing out the height */
+}
 .cal-item:hover { background: #27272a; }
-.cal-date { font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: 10px; letter-spacing: -1px; color: #fff; }
-.cal-img { width: 100%; margin-bottom: 10px; }
-.cal-img img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border: 1px solid #444; filter: brightness(0.85); transition: filter 0.2s; }
+
+.cal-date { 
+  font-size: 2.5rem; 
+  font-weight: 800; 
+  line-height: 1; 
+  margin-bottom: 10px; 
+  letter-spacing: -1px; 
+  color: #fff; 
+}
+
+/* Force the image container to be a strict 2:3 box */
+.cal-img { 
+  width: 100%; 
+  aspect-ratio: 2 / 3; /* The magic ratio */
+  margin-bottom: 10px; 
+  overflow: hidden;
+  background: #1a1128;
+  flex-shrink: 0; /* Prevents the image from squishing if text is long */
+}
+
+.cal-img img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; /* Forces the image to fill the exact 2:3 box */
+  object-position: center; /* Keeps the center of the image visible */
+  display: block; 
+  border: 1px solid #444; 
+  filter: brightness(0.85); 
+  transition: filter 0.2s; 
+}
 .cal-item:hover .cal-img img { filter: brightness(1.1); }
-.cal-desc { font-size: 0.8rem; font-weight: 600; line-height: 1.3; color: #e0e0e0; }
+
+.cal-desc { 
+  font-size: 0.8rem; 
+  font-weight: 600; 
+  line-height: 1.3; 
+  color: #e0e0e0; 
+  margin-top: auto; /* Pushes text to the bottom */
+}
 
 .cal-footer { width: 100%; max-width: 1600px; margin: 20px auto; }
 .cal-foot-visuals { display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #333; padding-top: 20px; }
@@ -574,11 +792,1136 @@ body.calendar-theme { background-color: #121212; background-image: none; color: 
   .cal-sidebar-left, .cal-sidebar-right { display: none; }
   .cal-main-num { font-size: 3rem; }
   .cal-title-row { gap: 10px; }
-  .cal-col-header { border-bottom: 1px solid #333; text-align: center; }
+  .cal-col-header {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #777;
+  padding: 14px 10px 10px;
+  border-bottom: 1px solid #333;
+  text-transform: uppercase;
+}
 }
 @media (max-width: 480px) {
   .calendar-grid { grid-template-columns: 1fr; }
   .cal-item { flex-direction: row; gap: 15px; align-items: flex-start; }
   .cal-date { font-size: 2rem; width: 40px; margin-bottom: 0; }
   .cal-img { width: 100px; margin-bottom: 0; flex-shrink: 0; }
+}
+
+/* ═══════════════════════════════════════════
+   DISCORD-STYLE EMBED CARDS
+   ═══════════════════════════════════════════ */
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.embed-card {
+  position: relative;
+  background: #2a2625;
+  border-radius: 8px;
+  border: 1px solid #3a3533;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.embed-card:hover {
+  transform: translateY(-2px);
+}
+
+/* The left colored stripe */
+.embed-stripe {
+  width: 6px;
+  flex-shrink: 0;
+}
+
+.embed-content {
+  padding: 20px;
+  flex: 1;
+}
+
+.embed-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #e0d8d0;
+  margin-bottom: 2px;
+}
+
+.embed-jp-title {
+  font-size: 0.85rem;
+  color: #a39b94;
+  margin-bottom: 12px;
+}
+
+.embed-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: #a39b94;
+}
+
+.embed-meta-grid strong {
+  color: #e0d8d0;
+}
+
+/* Genre Pills */
+.embed-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.embed-genres span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #1a1817;
+  color: #d48a8a;
+  border: 1px solid #3a3533;
+}
+
+/* Image + Text Layout */
+.embed-body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.embed-img {
+  flex: 0 0 120px;
+}
+
+.embed-img img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #3a3533;
+}
+
+.embed-desc {
+  flex: 1;
+}
+
+.embed-desc p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #a39b94;
+  margin-bottom: 10px;
+}
+
+.embed-desc p:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .embed-body {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .embed-img {
+    flex: none;
+    width: 140px;
+    margin-bottom: 10px;
+  }
+  .embed-meta-grid {
+    grid-template-columns: 1fr; /* Stacks the Year/Media vertically */
+    text-align: center;
+  }
+  .embed-genres {
+    justify-content: center;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   EMBED POST ID & SORT FIX
+   ═══════════════════════════════════════════ */
+
+.embed-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.log-post-id {
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #a39b94;
+  background: #1a1817;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid #3a3533;
+}
+
+/* ═══════════════════════════════════════════
+   FOREST PROFILE CARD THEME (Homepage)
+   ═══════════════════════════════════════════ */
+
+body.xiu-theme {
+  background-color: #141e18; 
+  color: #a9a396; 
+  display: block;
+  padding: 40px 20px;
+  font-family: 'Quicksand', sans-serif;
+  min-height: 100vh;
+}
+
+/* Background Layer */
+.xiu-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; 
+}
+
+.xiu-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Main Profile Card */
+.profile-card {
+  background: rgba(40, 56, 45, 0.95); /* Deep Forest */
+  border: 4px solid #4c7054; /* Medium Green */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+
+/* Top Banner */
+.profile-banner {
+  width: 100%;
+  height: 200px; /* You can increase this to 250px if you want more of the cat to show */
+  border-bottom: 4px solid #4c7054;
+  position: relative; /* Good for keeping things aligned */
+  overflow: hidden;
+}
+
+.profile-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* THIS is the magic property. It fills the box without squishing the cat */
+  object-position: center 30%; /* This focuses on the top-middle (the cat's head) */
+  display: block;
+}
+
+/* Header Section (Avatar + Info) */
+.profile-header {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+  border-bottom: 2px solid #4c7054;
+}
+
+/* Avatar */
+.ph-avatar-wrap {
+  flex: 0 0 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #7a9e7e; /* Sage Green */
+  overflow: hidden;
+  margin-top: -60px; /* Pulls avatar up into banner */
+  background: #141e18;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.ph-avatar { width: 100%; height: 100%; object-fit: cover; }
+
+/* Info right of avatar */
+.ph-info {
+  flex: 1;
+  padding-top: 10px;
+}
+
+.ph-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.ph-name-block h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.8rem;
+  color: #7a9e7e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.ph-name-block p {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.ph-links-block {
+  text-align: right;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #a9a396;
+}
+
+.ph-bio {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.ph-bio p { margin-bottom: 8px; }
+.ph-bio strong { color: #7a9e7e; }
+
+/* Social Grid (8 Links) */
+.profile-socials {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 20px;
+  background: #28382d; /* Darker forest */
+  border-bottom: 2px solid #4c7054;
+}
+
+.ps-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #141e18;
+  border: 2px solid #4c7054;
+  border-radius: 8px;
+  padding: 12px;
+  text-decoration: none;
+  color: #a9a396;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ps-link:hover {
+  background: #4c7054;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.ps-link svg {
+  width: 20px;
+  height: 20px;
+  color: #7a9e7e; /* Sage icons */
+}
+
+.ps-link .ico {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* Before You Follow Block */
+.profile-text-block {
+  padding: 20px;
+}
+
+.pt-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #4c7054;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  color: #7a9e7e;
+  font-weight: 700;
+}
+
+.pt-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.pt-body strong { color: #d48a8a; } /* Highlight warning in soft red */
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .ph-avatar-wrap {
+    margin-top: -80px;
+  }
+  .ph-top-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .ph-links-block {
+    text-align: center;
+  }
+  .profile-socials {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns of links on mobile */
+  }
+}
+
+/* Ensure the modal matches the green theme */
+body.xiu-theme .modal-content {
+  background: #28382d;
+  border: 2px solid #4c7054;
+}
+body.xiu-theme .modal-title { color: #7a9e7e; }
+body.xiu-theme .modal-id { background: #141e18; border-color: #7a9e7e; color: #fff; }
+body.xiu-theme .modal-copy-btn { background: #4c7054; }
+body.xiu-theme .modal-copy-btn:hover { background: #7a9e7e; }
+body.xiu-theme .modal-close { border-color: #4c7054; color: #a9a396; }
+body.xiu-theme .modal-close:hover { background: #4c7054; color: #fff; }
+
+/* ═══════════════════════════════════════════
+   PROFILE NAV BAR (Between Banner & Avatar)
+   ═══════════════════════════════════════════ */
+
+.profile-nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  background: #28382d; /* Deep forest background */
+  padding: 12px 20px;
+  border-bottom: 2px solid #4c7054; /* Medium green */
+}
+
+.profile-nav a {
+  text-decoration: none;
+  color: #a9a396; /* Warm grey text */
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: lowercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.profile-nav a:hover {
+  color: #fff;
+  background: #4c7054;
+}
+
+.profile-nav a.active {
+  color: #141e18; /* Darkest forest */
+  background: #7a9e7e; /* Sage green */
+  font-weight: 800;
+}
+
+/* Mobile tweak for Nav */
+@media (max-width: 600px) {
+  .profile-nav {
+    gap: 8px;
+    padding: 10px;
+    flex-wrap: wrap; /* Allows buttons to wrap on tiny screens */
+  }
+  .profile-nav a {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   MANGA PAGE DARK MODE OVERRIDES
+   ═══════════════════════════════════════════ */
+
+/* Make the main card dark instead of white */
+.scrapbook-theme .card.sec-anime {
+  background: #242120 !important; /* Dark charcoal */
+  border: 1px solid #3a3533 !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+}
+
+/* Fix the text inside the header to be readable */
+.scrapbook-theme .section-title {
+  color: #e0d8d0 !important;
+  text-shadow: none !important;
+}
+.scrapbook-theme .section-sub {
+  color: #a39b94 !important;
+}
+
+/* Ensure the grid handles the empty rows gracefully */
+#reading-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important; /* Centers the last row */
+  gap: 16px !important;
+  width: 100%;
+}
+
+/* The tiles */
+#reading-grid .tile {
+  width: calc(20% - 13px) !important; /* Exactly 5 per row on laptop */
+  min-width: 160px; 
+  max-width: 220px; 
+  aspect-ratio: 2 / 3;
+  position: relative;
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1a1128; 
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .2s;
+}
+
+/* Hover state for the tiles */
+#reading-grid .tile:hover {
+  transform: translateY(-8px) scale(1.05);
+  z-index: 10;
+  border-color: rgba(196, 161, 255, 0.8);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(155, 93, 255, 0.4);
+}
+
+/* Mobile: Exactly 3 columns */
+@media (max-width: 700px) {
+  #reading-grid .tile {
+    width: calc(33.333% - 8px) !important; 
+    min-width: 0 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   15. MANGA PAGE — FILTER BAR RESTYLE
+   & 4-UP GRID FOR MANHUA / LIGHT NOVEL
+   ═══════════════════════════════════════════ */
+
+/* ---------- Filter bar (matches scrapbook nav theme) ---------- */
+.scrapbook-theme .filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #242120;
+  border: 2px solid #3a3533;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.scrapbook-theme .filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Pill buttons styled like .scrapbook-nav a */
+.scrapbook-theme .filter-btn,
+.scrapbook-theme .status-btn {
+  background: #2a2625;
+  color: #d48a8a;
+  border: 2px solid #3a3533;
+  border-radius: 12px;
+  padding: 8px 18px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 #111;
+  transition: background 0.2s ease, color 0.2s ease,
+              transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.scrapbook-theme .filter-btn:hover,
+.scrapbook-theme .status-btn:hover {
+  background: #2a2625;
+  color: #e0d8d0;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #111;
+}
+
+.scrapbook-theme .filter-btn.active,
+.scrapbook-theme .status-btn.active {
+  background: #8b2a2a;
+  color: #fff;
+  border-color: #8b2a2a;
+  box-shadow: 3px 3px 0 #111;
+  transform: none;
+}
+
+/* Override the darker status-group container to match */
+.scrapbook-theme .status-group {
+  background: #1a1817;
+  border: 2px solid #3a3533;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+
+/* Mobile: stack the two groups, keep buttons centered */
+@media (max-width: 800px) {
+  .scrapbook-theme .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+    gap: 12px;
+  }
+  .scrapbook-theme .filter-group {
+    justify-content: center;
+  }
+  .scrapbook-theme .status-group {
+    justify-content: center;
+    display: flex;
+  }
+}
+
+/* ---------- 4-up grid for Manhua & Light Novel ---------- */
+/* These wrappers sit inside .grid9 but break out to full width.
+   On laptop they show 4 per row; on mobile they fall back to 3. */
+
+#reading-grid .grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  width: 100%;
+  justify-items: center;
+}
+
+/* Tile sizing inside .grid4 — match the base .grid9 .tile look */
+#reading-grid .grid4 .tile {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 220px;
+  aspect-ratio: 2 / 3;
+  position: relative;
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1a1128;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  transition: transform .3s var(--ease),
+              box-shadow .3s var(--ease),
+              border-color .2s;
+}
+
+#reading-grid .grid4 .tile:hover {
+  transform: translateY(-8px) scale(1.05);
+  z-index: 10;
+  border-color: rgba(196, 161, 255, 0.8);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6),
+              0 0 25px rgba(155, 93, 255, 0.4);
+}
+
+#reading-grid .grid4 .tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s var(--ease-smooth);
+  opacity: 0.9;
+}
+
+#reading-grid .grid4 .tile:hover img {
+  transform: scale(1.1);
+  opacity: 1;
+  filter: brightness(1.1);
+}
+
+#reading-grid .grid4 .tile .title-tip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 10px 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(to top, #0f0a1c 10%,
+              rgba(15, 10, 28, 0.9) 60%, transparent 100%);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#reading-grid .grid4 .tile:hover .title-tip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive: 3-up on tablet + mobile (matches .grid9) */
+@media (max-width: 900px) {
+  #reading-grid .grid4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  #reading-grid .grid4 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  /* Hide hover tooltip on mobile — toast handles it */
+  #reading-grid .grid4 .tile .title-tip {
+    display: none !important;
+  }
+}
+
+/* ---------- Section divider rows inside the grid ---------- */
+#reading-grid .media-divider {
+  grid-column: 1 / -1;
+  width: 100%;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e0d8d0;
+  padding: 18px 4px 6px;
+  border-top: 2px dashed #3a3533;
+  margin-top: 8px;
+  text-align: left;
+}
+
+#reading-grid .media-divider:first-child {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+body.blueprint-theme #reading-grid .media-divider {
+  color: #e8e4f0;
+  border-top-color: #3a3550;
+}
+
+/* ═══════════════════════════════════════════
+   16. SMALLER TILES FOR MANGA PAGE GRID
+   ═══════════════════════════════════════════ */
+
+/* 6 across on wide screens (was 5) — shorter overall page */
+#reading-grid .tile {
+  width: calc(16.666% - 14px) !important;
+  min-width: 130px !important;
+  /* max-width: 180px !important;   ← delete this line */
+}
+
+/* Manhua / Novel 4-up: slightly smaller too */
+#reading-grid .grid4 .tile {
+  max-width: 190px !important;
+}
+
+/* Tablet: 4 across */
+@media (max-width: 1100px) {
+  #reading-grid .tile {
+    width: calc(25% - 12px) !important;
+  }
+}
+
+/* Below 900: 3 across (matches .grid9 mobile behavior) */
+@media (max-width: 900px) {
+  #reading-grid .tile {
+    width: calc(33.333% - 10px) !important;
+    min-width: 0 !important;
+  }
+}
+
+/* Mobile: keep 3 across */
+@media (max-width: 700px) {
+  #reading-grid .tile {
+    width: calc(33.333% - 8px) !important;
+    min-width: 0 !important;
+  }
+  #reading-grid .grid4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   17. FLOATING HOVER LABEL (Manga page)
+   Shows the full title without clipping when
+   a tile is hovered on desktop.
+   ═══════════════════════════════════════════ */
+
+.hover-label {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  max-width: min(90vw, 520px);
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: rgba(25, 16, 45, 0.96);
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  text-align: center;
+  border: 2px solid #8b2a2a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6),
+              0 0 20px rgba(139, 42, 42, 0.45);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.hover-label.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Hide on small screens — mobile uses the tap toast */
+@media (max-width: 700px) {
+  .hover-label { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════
+   18. DARK TECHNICAL SCHEMATIC THEME (Manga)
+   ═══════════════════════════════════════════ */
+
+body.blueprint-theme {
+  background-color: #0d0e12;
+  /* Adds a subtle grid background like the reference image */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: #e8e4f0;
+  font-family: 'Inter', monospace;
+}
+
+/* --- Technical Header --- */
+.bp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px;
+  border: 2px solid #3a3550;
+  background: #121318;
+  box-shadow: 6px 6px 0px #000;
+  margin-bottom: 30px;
+}
+.bp-header-left { display: flex; flex-direction: column; gap: 16px; }
+.bp-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.bp-subtitle {
+  font-family: monospace;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: #8c88a8;
+  text-transform: uppercase;
+}
+.bp-links { display: flex; gap: 12px; }
+.bp-btn {
+  padding: 10px 20px;
+  border: 2px solid #4b4570;
+  background: transparent;
+  color: #e8e4f0;
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.bp-btn:hover { background: #4b4570; color: #fff; }
+
+.bp-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+.bp-barcode {
+  width: 180px;
+  height: 40px;
+  background: repeating-linear-gradient(
+    to right,
+    #e8e4f0, #e8e4f0 2px,
+    transparent 2px, transparent 4px,
+    #e8e4f0 4px, #e8e4f0 6px,
+    transparent 6px, transparent 8px
+  );
+  opacity: 0.8;
+}
+.bp-install-box {
+  border: 2px solid #4b4570;
+  background: #121318;
+  padding: 10px 16px;
+  text-align: right;
+  box-shadow: 3px 3px 0px #000;
+}
+.bp-install-top {
+  font-family: monospace;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: #8c88a8;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.bp-install-code {
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #c4b8ff;
+}
+
+/* --- Filter Bar Overrides --- */
+body.blueprint-theme .filter-bar {
+  background: #121318;
+  border: 2px solid #3a3550;
+  box-shadow: 4px 4px 0px #000;
+}
+body.blueprint-theme .filter-btn,
+body.blueprint-theme .status-btn {
+  font-family: monospace;
+  border-radius: 0;
+  border: 1px solid transparent;
+}
+body.blueprint-theme .filter-btn.active,
+body.blueprint-theme .status-btn.active {
+  background: #4b4570;
+  color: #fff;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* --- Section Dividers --- */
+body.blueprint-theme #reading-grid .media-divider {
+  color: #c4b8ff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  border-top: 2px dashed #4b4570;
+  border-bottom: 2px dashed #4b4570;
+  padding: 12px 0;
+  margin-top: 30px;
+  letter-spacing: 3px;
+}
+
+/* --- Tile Styling (Schematic Look) --- */
+body.blueprint-theme .tile {
+  border-radius: 0;
+  border: 2px solid #3a3550;
+  box-shadow: 4px 4px 0px #000;
+  background: #121318;
+  position: relative; /* Needed for the status indicator */
+}
+
+/* The Active / True Status Indicator */
+body.blueprint-theme .filter-item:not(.dimmed)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #c4b8ff;
+  z-index: 10;
+  opacity: 0; 
+  transition: opacity 0.3s;
+}
+/* Show the indicator only when a specific status filter is active */
+body.blueprint-theme .status-group .status-btn:not(:first-child).active ~ * .filter-item:not(.dimmed)::before {
+  opacity: 1;
+  box-shadow: 0 0 10px #c4b8ff;
+}
+
+body.blueprint-theme .tile:hover {
+  border-color: #c4b8ff;
+  box-shadow: 4px 4px 0px #c4b8ff;
+  transform: translateY(-4px) scale(1.02);
+  z-index: 20;
+}
+
+/* --- The "False" Status (Dimmed) --- */
+/* Made much darker, blurrier, and desaturated so it fades away */
+body.blueprint-theme .filter-item.dimmed {
+  opacity: 0.15;
+  filter: grayscale(100%) blur(3px) brightness(0.4);
+  transform: scale(0.95);
+  pointer-events: none;
+  box-shadow: none;
+  border-color: #1a1a24;
+}
+
+/* --- Tile Label (Short name visible on hover) --- */
+.bp-tile-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 30px 8px 8px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  /* Removed the harsh border-top and softened the gradient */
+  background: linear-gradient(to top, #000 0%, rgba(0,0,0,0.85) 60%, transparent 100%);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .2s ease, transform .2s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body.blueprint-theme .tile:hover .bp-tile-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Floating Hover Popup (Full name at bottom of screen) --- */
+body.blueprint-theme .hover-label {
+  background: #121318;
+  color: #fff;
+  font-family: monospace;
+  border: 2px solid #c4b8ff;
+  border-radius: 0;
+  box-shadow: 6px 6px 0px #000;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* --- Custom Nav Buttons --- */
+body.blueprint-theme .topnav {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  margin: 0 auto 24px auto; /* Centers the whole container */
+  width: max-content; /* Shrinks to fit the buttons exactly */
+  border: 2px solid #3a3550;
+  background: #121318;
+  box-shadow: 4px 4px 0px #000;
+}
+
+body.blueprint-theme .topnav a {
+  padding: 10px 24px;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  border-right: 2px solid #3a3550;
+  color: #8c88a8;
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+body.blueprint-theme .topnav a:last-child {
+  border-right: none;
+}
+
+body.blueprint-theme .topnav a:hover {
+  background: #1c1838;
+  color: #c4b8ff;
+  transform: none;
+  box-shadow: inset 0 0 10px rgba(196, 184, 255, 0.1);
+}
+
+body.blueprint-theme .topnav a.active {
+  background: #c4b8ff;
+  color: #0d0e12;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Mobile adjustments */
+@media (max-width: 700px) {
+  body.blueprint-theme .topnav {
+    flex-wrap: wrap;
+    width: 100%; /* On mobile, it goes back to full width */
+  }
+  body.blueprint-theme .topnav a {
+    flex: 1;
+    text-align: center;
+    border-bottom: 2px solid #3a3550;
+    padding: 12px 10px;
+  }
+  body.blueprint-theme .topnav a:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+/* --- Mobile Adjustments --- */
+@media (max-width: 700px) {
+  .bp-header { flex-direction: column; gap: 20px; }
+  .bp-header-right { align-items: flex-start; width: 100%; }
+  .bp-barcode { display: none; }
+  .bp-logo { font-size: 1.8rem; }
+  body.blueprint-theme .tile:hover { transform: none; } /* Remove hover bounce on mobile */
+  .bp-tile-label { display: none; } /* Hide the short label on mobile */
+}
+
+/* ═══════════════════════════════════════════
+   GAMES THEME HEADER & NAV FIXES
+   ═══════════════════════════════════════════ */
+body.cozy-theme {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cozy-nav {
+  justify-content: center; /* Centers the nav links */
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 20px 10px;
+}
+
+.cozy-links {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cozy-note {
+  text-align: center;
+  font-size: 1rem;
+  color: #a39b94;
+  font-weight: 600;
+  margin: 0 auto 40px;
+  max-width: 600px;
+  line-height: 1.6;
+  background: #242120;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 2px solid #3a3533;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Ensure the game covers fit the new polaroid-like layout */
+.cozy-cover {
+  flex: 0 0 150px; /* Slightly smaller to fit more text */
 }
