@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music — ghostedyourinterest</title>
+<meta name="description" content="My top albums, current Spotify rotation, and playlist roulette.">
+<link rel="icon" href="img/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/stylus.css">
+</head>
+<body class="vinyl-theme">
+<div class="wrap">
+
+  <!-- Nav -->
+  <nav class="topnav music-nav">
+    <a href="index.html">home</a>
+    <a href="anime.html">anime</a>
+    <a href="manga.html">manga</a>
+    <a href="games.html">games</a>
+    <a href="music.html" class="active">music</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- NOW PLAYING (RETRO PIXEL) -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="card pixel-np-card">
+    <div class="pixel-np-header">
+      <div class="pixel-np-title">
+        <span class="pixel-icon">▶</span> NOW PLAYING 
+      </div>
+      <div class="pixel-np-battery">
+        <div class="battery-fill"></div>
+        <div class="battery-tip"></div>
+      </div>
+    </div>
+
+    <div class="pixel-np-content">
+      <!-- Using cover1 as a fallback if Last.fm fails -->
+      <img id="np-image" class="pixel-np-cover" src="img/music/cover1.jpg" alt="Album Art">
+      <h2 id="np-title" class="pixel-np-song">Not playing anything right now</h2>
+      <p id="np-artist" class="pixel-np-artist">Connect to Last.fm to see live updates.</p>
+    </div>
+
+    <div class="pixel-np-footer">
+      <div class="pixel-progress-container">
+        <div class="pixel-progress-bar" id="np-bar"></div>
+      </div>
+      <div class="pixel-times">
+        <span id="np-time-current">0:00</span>
+        <!-- Play button is a dynamic link -->
+        <a href="#" id="np-link" class="pixel-play-btn" target="_blank" rel="noopener">▶</a>
+        <span id="np-time-total">0:00</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- DASHBOARD LAYOUT -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="music-dashboard">
+    
+    <!-- LEFT SIDE: Top 25 Scrapbook -->
+    <section class="scrapbook-section">
+      <div class="scrapbook-title-wrap">
+        <h1 class="scrapbook-title">Top 25 Albums</h1>
+        <div class="stars">★ ★ ★ ★ ★</div>
+      </div>
+
+      <div class="scrapbook-grid">
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Lorien Testard - Clair Obscur: Expedition 33')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Lorien Testard - Clair Obscur: Expedition 33')"><img src="img/music/cover1.jpg" alt="Clair Obscur"><span class="title-tip">Clair Obscur</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Jon Bellion - The Human Condition')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Jon Bellion - The Human Condition')"><img src="img/music/cover2.jpg" alt="The Human Condition"><span class="title-tip">The Human Condition</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Twenty One Pilots - Blurryface')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Twenty One Pilots - Blurryface')"><img src="img/music/cover3.jpg" alt="Blurryface"><span class="title-tip">Blurryface</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('AJR - The Click')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('AJR - The Click')"><img src="img/music/cover4.jpg" alt="The Click"><span class="title-tip">The Click</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Of Monsters and Men - My Head Is an Animal')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Of Monsters and Men - My Head Is an Animal')"><img src="img/music/cover5.jpg" alt="My Head Is an Animal"><span class="title-tip">My Head Is an Animal</span></a>
+        
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Logic - Under Pressure (Deluxe)')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Logic - Under Pressure (Deluxe)')"><img src="img/music/cover6.jpg" alt="Under Pressure"><span class="title-tip">Under Pressure</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('half alive - Now, Not Yet')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('half alive - Now, Not Yet')"><img src="img/music/cover7.jpg" alt="Now, Not Yet"><span class="title-tip">Now, Not Yet</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('5 Seconds of Summer - CALM')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('5 Seconds of Summer - CALM')"><img src="img/music/cover8.jpg" alt="CALM"><span class="title-tip">CALM</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Andy Mineo - Uncomfortable')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Andy Mineo - Uncomfortable')"><img src="img/music/cover9.jpg" alt="Uncomfortable"><span class="title-tip">Uncomfortable</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Alec Benjamin - (Un) Commentary')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Alec Benjamin - (Un) Commentary')"><img src="img/music/cover10.jpg" alt="(Un) Commentary"><span class="title-tip">(Un) Commentary</span></a>
+        
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Panic! at the Disco - Death of a Bachelor')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Panic! at the Disco - Death of a Bachelor')"><img src="img/music/cover11.jpg" alt="Death of a Bachelor"><span class="title-tip">Death of a Bachelor</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('NAMEDARUMAAZ - GODBREATH BUDDHACESS (THE RE-UP EDITION)')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('NAMEDARUMAAZ - GODBREATH BUDDHACESS (THE RE-UP EDITION)')"><img src="img/music/cover12.jpg" alt="Godbreath"><span class="title-tip">GODBREATH BUDDHACESS</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Mac Miller - Faces')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Mac Miller - Faces')"><img src="img/music/cover13.jpg" alt="Faces"><span class="title-tip">Faces</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('LSD - Labrinth, Sia & Diplo Present... LSD')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('LSD - Labrinth, Sia & Diplo Present... LSD')"><img src="img/music/cover14.jpg" alt="LSD"><span class="title-tip">LSD</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Stromae - Racine carrée')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Stromae - Racine carrée')"><img src="img/music/cover15.jpg" alt="Racine carrée"><span class="title-tip">Racine carrée</span></a>
+        
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Kevin Penkin - Made in Abyss')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Kevin Penkin - Made in Abyss')"><img src="img/music/cover16.jpg" alt="Made in Abyss"><span class="title-tip">Made in Abyss</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('The Lumineers - Cleopatra (Deluxe)')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('The Lumineers - Cleopatra (Deluxe)')"><img src="img/music/cover17.jpg" alt="Cleopatra"><span class="title-tip">Cleopatra</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Little Simz - GREY Area')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Little Simz - GREY Area')"><img src="img/music/cover18.jpg" alt="GREY Area"><span class="title-tip">GREY Area</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Panchiko - D>E>A>T>H>M>E>T>A>L')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Panchiko - D>E>A>T>H>M>E>T>A>L')"><img src="img/music/cover19.jpg" alt="Deathmetal"><span class="title-tip">D>E>A>T>H...</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Fat Jon and Nujabes - Samurai Champloo Music Record: Departure')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Fat Jon and Nujabes - Samurai Champloo Music Record: Departure')"><img src="img/music/cover20.jpg" alt="Samurai Champloo Departure"><span class="title-tip">Samurai Champloo</span></a>
+        
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Sam Tompkins - hi, my name is insecure.')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Sam Tompkins - hi, my name is insecure.')"><img src="img/music/cover21.jpg" alt="hi, my name is insecure."><span class="title-tip">hi, my name is...</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Post Malone - Hollywood’s Bleeding')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Post Malone - Hollywood’s Bleeding')"><img src="img/music/cover22.jpg" alt="Hollywood's Bleeding"><span class="title-tip">Hollywood's Bleeding</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Joey Valence & Brae - HYPERYOUTH')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Joey Valence & Brae - HYPERYOUTH')"><img src="img/music/cover23.jpg" alt="HYPERYOUTH"><span class="title-tip">HYPERYOUTH</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('girl in red - if i could make it go quiet')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('girl in red - if i could make it go quiet')"><img src="img/music/cover24.jpg" alt="if i could make it go quiet"><span class="title-tip">if i could make it...</span></a>
+        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Amy Winehouse - Back to Black')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Amy Winehouse - Back to Black')"><img src="img/music/cover25.jpg" alt="Back to Black"><span class="title-tip">Back to Black</span></a>
+      </div>
+    </section>
+
+    <!-- RIGHT SIDE: Playlists & Roulette -->
+    <div class="music-sidebar">
+      <section class="card">
+        <div class="section-head">
+          <div class="section-icon" style="background: #1DB954;">🎧</div>
+          <div>
+            <div class="section-title">Spotify Playlist</div>
+            <div class="section-sub">My current rotation</div>
+          </div>
+        </div>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4ytbhfww8bi3u2iWjbX8kn?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </section>
+
+      <!-- Retro Roulette -->
+      <section class="card scrapbook-roulette">
+        <div class="section-head">
+          <div class="section-icon" style="background: #8b2a2a; color: #fdfbf7;">🎲</div>
+          <div>
+            <div class="section-title">Playlist Roulette</div>
+            <div class="section-sub">Let fate decide your next listen</div>
+          </div>
+        </div>
+        
+        <div class="roulette-box">
+          <p class="roulette-text">Don't know what to listen to? Spin the wheel.</p>
+          <button class="retro-spin-btn" onclick="spinRoulette()">SPIN</button>
+          <div class="roulette-ticket" id="roulette-result">
+            <span class="ticket-text">Waiting for a spin...</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <footer>© Rorri · ghostedyourinterest.gamer.gd · made with 💜</footer>
+</div>
+
+<div id="mobile-toast"></div>
+<!-- Floating hover popup for the full title -->
+<div id="hover-label" class="hover-label"></div>
+
+<script>
+  /* ── Floating hover label (desktop) ──────────── */
+  function showHoverLabel(titleText) {
+    if (window.innerWidth > 700) {
+      const label = document.getElementById('hover-label');
+      label.innerText = titleText;
+      label.classList.add('show');
+    }
+  }
+  function hideHoverLabel() {
+    const label = document.getElementById('hover-label');
+    if (label) label.classList.remove('show');
+  }
+  function showMobileTitle(titleText) {
+    if (window.innerWidth <= 700) {
+      const toast = document.getElementById('mobile-toast');
+      toast.innerText = titleText;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 2000);
+    }
+  }
+
+  const playlistPicks = [
+    { name: "Lo-Fi Beats", link: "https://open.spotify.com/playlist/37i9dQZF1DWWQRwui0ExPn" },
+    { name: "J-Pop Hits", link: "https://open.spotify.com/playlist/37i9dQZF1DX2Dz1qC1m2W7" },
+    { name: "Synthwave / Retro", link: "https://open.spotify.com/playlist/37i9dQZF1DXdLtD0qjht4x" },
+    { name: "My Personal Mix", link: "https://open.spotify.com/user/glw5r0ag9dda6zq3u8nk9m27c" }
+  ];
+
+  function spinRoulette() {
+    const resultDiv = document.getElementById('roulette-result');
+    const btn = document.querySelector('.retro-spin-btn');
+    
+    btn.innerText = "...";
+    btn.style.transform = "scale(0.95)";
+    resultDiv.innerHTML = `<span class="ticket-text" style="opacity:0.5;">Shuffling...</span>`;
+    
+    setTimeout(() => {
+      const pick = playlistPicks[Math.floor(Math.random() * playlistPicks.length)];
+      resultDiv.innerHTML = `<span class="ticket-text">Listen to:</span><br><a href="${pick.link}" target="_blank">${pick.name}</a>`;
+      btn.innerText = "SPIN";
+      btn.style.transform = "scale(1)";
+    }, 800);
+  }
+
+  const lastFmUsername = "soulidaisy"; 
+  const lastFmApiKey = "b4169a9c563ea07576b7e4c3bd3774e3"; 
+  let lastPlayedTrack = "";
+
+  async function fetchNowPlaying() {
+    try {
+      const response = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${lastFmUsername}&api_key=${lastFmApiKey}&format=json&limit=1`);
+      const data = await response.json();
+      const track = data.recenttracks.track[0];
+      
+      // 1. Fallback default image (your local cover)
+      let imgUrl = "img/music/cover1.jpg"; 
+
+      // 2. Check for a valid Last.fm image URL
+      if (track.image) {
+        for (let i = track.image.length - 1; i >= 0; i--) {
+          const imgText = track.image[i]['#text'];
+          // Make sure it's not empty, and not one of Last.fm's default 2a96cbd8b46e4421... placeholder IDs
+          if (imgText && imgText.trim() !== "" && !imgText.includes("2a96cbd8b46e4421")) {
+            imgUrl = imgText;
+            break;
+          }
+        }
+      }
+      
+      // 3. Apply the image
+      const imgElement = document.getElementById('np-image');
+      imgElement.src = imgUrl;
+      
+      // If the image fails to load from the URL, swap to the local fallback immediately
+      imgElement.onerror = function() {
+        this.onerror = null; // prevent infinite loops
+        this.src = "img/music/cover1.jpg";
+      };
+
+      // --- Rest of the time/title logic remains the same ---
+      let totalTimeStr = "3:45";
+      let totalSecs = 225;
+      if (track.duration && track.duration !== "0") {
+        totalSecs = parseInt(track.duration);
+        const mins = Math.floor(totalSecs / 60);
+        const secs = totalSecs % 60;
+        totalTimeStr = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      }
+      document.getElementById('np-time-total').innerText = totalTimeStr;
+
+      const playBtn = document.getElementById('np-link');
+
+      if (track['@attr'] && track['@attr'].nowplaying === "true") {
+        document.getElementById('np-title').innerText = track.name;
+        document.getElementById('np-artist').innerText = track.artist['#text'];
+        
+        const query = encodeURIComponent(`${track.name} ${track.artist['#text']}`);
+        playBtn.href = `https://open.spotify.com/search/${query}`;
+        playBtn.style.opacity = "1"; 
+        
+        if (lastPlayedTrack !== track.name) { 
+            randomizeTime(totalSecs); 
+            lastPlayedTrack = track.name; 
+        }
+      } else {
+        document.getElementById('np-title').innerText = "Not playing anything right now";
+        document.getElementById('np-artist').innerText = "Last played: " + track.name;
+        document.getElementById('np-bar').style.width = "0%";
+        document.getElementById('np-time-current').innerText = "0:00";
+        
+        playBtn.href = "https://open.spotify.com/user/glw5r0ag9dda6zq3u8nk9m27c";
+        playBtn.style.opacity = "0.3";
+      }
+    } catch (error) { 
+      console.log("Last.fm error:", error); 
+      // If the entire fetch fails (e.g., offline), show the fallback
+      document.getElementById('np-image').src = "img/music/cover1.jpg";
+    }
+  }
+
+  function randomizeTime(maxSecs) {
+    const barEl = document.getElementById('np-bar');
+    const timeCurrent = document.getElementById('np-time-current');
+    const maxRandom = maxSecs > 0 ? Math.floor(maxSecs / 2) : 90; 
+    const randomSecs = Math.floor(Math.random() * (maxRandom - 15 + 1)) + 15;
+    const mins = Math.floor(randomSecs / 60);
+    const secs = randomSecs % 60;
+    timeCurrent.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    const percent = maxSecs > 0 ? (randomSecs / maxSecs) * 100 : 35;
+    barEl.style.width = "0%"; 
+    setTimeout(() => { barEl.style.width = `${percent}%`; }, 100);
+  }
+
+  fetchNowPlaying();
+  setInterval(fetchNowPlaying, 15000);
+</script>
+
+</body>
+</html>
