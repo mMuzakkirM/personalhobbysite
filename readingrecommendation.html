@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Recommendations — ghostedyourinterest</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Caveat:wght@700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/stylus.css">
+<style>
+  /* Base Layout */
+  .wrap { position: relative; overflow-x: hidden; }
+  .masonry-board { display: flex; gap: 40px; max-width: 1200px; margin: 0 auto; padding: 20px 0; align-items: flex-start; position: relative; z-index: 1; }
+  .masonry-col { flex: 1; display: flex; flex-direction: column; gap: 40px; width: 50%; }
+  
+  /* Compact Top Area */
+  .top-area { padding-top: 10px; padding-bottom: 20px; text-align: center; }
+  .top-area h1 { margin-bottom: 5px; }
+  .top-area p { margin-bottom: 15px; }
+
+  /* Sticky Nav */
+  .reading-nav { position: sticky; top: 20px; z-index: 100; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; background: rgba(26, 24, 23, 0.95); backdrop-filter: blur(10px); padding: 12px; border-radius: 12px; border: 2px solid #3a3533; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 20px; }
+  .reading-nav a { font-family: 'Quicksand', sans-serif; font-size: 0.8rem; font-weight: 700; color: #a39b94; text-decoration: none; padding: 6px 14px; border-radius: 99px; background: #2a2625; border: 1px solid #3a3533; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+  .reading-nav a:hover { background: #8b2a2a; color: #fff; border-color: #8b2a2a; }
+
+  /* Notes & Decor */
+  .review-note { background: #2a2625; padding: 35px; border-radius: 4px; box-shadow: 3px 5px 15px rgba(0,0,0,0.4); transform: rotate(-1deg); border: 1px solid #3a3533; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+  .review-note::before { content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(2deg); width: 100px; height: 25px; background: rgba(139, 42, 42, 0.6); backdrop-filter: blur(1px); }
+  .review-note p { font-family: 'Caveat', cursive; font-size: 2rem; color: #a39b94; line-height: 1.4; text-align: center; }
+  .review-note strong { color: #d48a8a; }
+  .deco-note { background: #2a2625; padding: 20px; border: 1px dashed #4a3f3a; color: #a39b94; font-family: 'Caveat', cursive; font-size: 1.4rem; text-align: center; transform: rotate(1.5deg); box-shadow: 2px 4px 10px rgba(0,0,0,0.3); border-radius: 2px; margin: 10px 0; position: relative; z-index: 2; }
+  .deco-note.left { transform: rotate(-2deg); background: #252220; }
+  .deco-note.right { transform: rotate(1deg); background: #2a2525; }
+
+  /* Scrapbook Tilts & Pins */
+  .board-card, .sticky-note { transition: transform 0.3s ease; position: relative; }
+  .masonry-col:nth-child(1) .board-card { transform: rotate(-0.5deg); }
+  .masonry-col:nth-child(1) .sticky-note { transform: rotate(1deg); }
+  .masonry-col:nth-child(2) .board-card { transform: rotate(0.5deg); }
+  .masonry-col:nth-child(2) .sticky-note { transform: rotate(-1deg); }
+  .board-card:hover, .sticky-note:hover { transform: rotate(0deg) scale(1.01); z-index: 10; }
+  .board-card::after { content: ''; position: absolute; top: 10px; right: 20px; width: 14px; height: 14px; background: radial-gradient(circle at 30% 30%, #ff9999, #8b2a2a); border-radius: 50%; box-shadow: 2px 4px 5px rgba(0,0,0,0.5), inset -2px -2px 4px rgba(0,0,0,0.3); z-index: 5; }
+  .masonry-col:nth-child(2) .board-card::after { right: auto; left: 20px; background: radial-gradient(circle at 30% 30%, #a9c7ff, #2a528b); }
+
+  /* Flip Book */
+  .flip-toggle-wrap { display: flex; justify-content: center; margin-bottom: 15px; position: relative; z-index: 10; }
+  .flip-btn { background: #8b2a2a; color: #fdfbf7; border: 2px solid #5a1a1a; padding: 12px 30px; border-radius: 99px; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(139, 42, 42, 0.3); transition: all 0.2s ease; }
+  .flip-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(139, 42, 42, 0.5); }
+  .book-container { perspective: 2500px; width: 100%; }
+  .book { position: relative; width: 100%; transition: transform 1s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+  .book.is-flipped { transform: rotateY(180deg); }
+  .book-page { width: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .page-front { position: relative; z-index: 2; transform: rotateY(0deg); }
+  .page-back { position: absolute; top: 0; left: 0; transform: rotateY(180deg); z-index: 1; }
+  .book.is-flipped .page-front { z-index: 1; }
+  .book.is-flipped .page-back { z-index: 2; }
+
+  /* Discord Embed Logs */
+  .log-list { display: flex; flex-direction: column; gap: 24px; max-width: 800px; margin: 0 auto; padding: 0 20px; }
+  .embed-card { position: relative; background: #2a2625; border-radius: 8px; border: 1px solid #3a3533; display: flex; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s ease; cursor: pointer; }
+  .embed-card:hover { transform: translateY(-2px); border-color: #d48a8a; }
+  .embed-stripe { width: 6px; flex-shrink: 0; }
+  .embed-content { padding: 20px; flex: 1; }
+  .embed-title { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 800; color: #e0d8d0; margin-bottom: 2px; }
+  .embed-jp-title { font-size: 0.85rem; color: #a39b94; margin-bottom: 12px; }
+  .embed-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 16px; font-size: 0.85rem; color: #a39b94; }
+  .embed-meta-grid strong { color: #e0d8d0; }
+  .embed-genres { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .embed-genres span { font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; background: #1a1817; color: #d48a8a; border: 1px solid #3a3533; }
+  .embed-body { display: flex; gap: 20px; align-items: flex-start; }
+  .embed-img { flex: 0 0 120px; }
+  .embed-img img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 6px; border: 1px solid #3a3533; }
+  .embed-desc p { font-size: 0.9rem; line-height: 1.6; color: #a39b94; margin-bottom: 10px; }
+  .embed-desc p:last-child { margin-bottom: 0; }
+  .embed-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .log-post-id { font-family: monospace; font-size: 0.8rem; font-weight: 700; color: #a39b94; background: #1a1817; padding: 3px 8px; border-radius: 4px; border: 1px solid #3a3533; }
+
+  @media (max-width: 900px) {
+    .masonry-board { flex-direction: column; }
+    .masonry-col { width: 100%; }
+    .board-card, .sticky-note { transform: none !important; }
+  }
+  @media (max-width: 600px) {
+    .embed-body { flex-direction: column; align-items: center; text-align: center; }
+    .embed-img { flex: none; width: 140px; margin-bottom: 10px; }
+    .embed-meta-grid { grid-template-columns: 1fr; text-align: center; }
+    .embed-genres { justify-content: center; }
+  }
+</style>
+</head>
+<body class="scrapbook-theme">
+<div class="wrap">
+
+  <!-- Background Decorations -->
+  <div class="hero-banner-wrap">
+    <div class="pennant"></div><div class="pennant"></div><div class="pennant"></div><div class="pennant"></div><div class="pennant"></div>
+    <div class="pennant"></div><div class="pennant"></div><div class="pennant"></div><div class="pennant"></div><div class="pennant"></div>
+    <div class="background-decor" style="top: 15%; left: 5%;">✧</div>
+    <div class="background-decor" style="top: 25%; right: 8%; font-size: 3rem;">✦</div>
+    <div class="background-decor" style="top: 50%; left: 2%; animation-delay: 2s;">✧</div>
+    <div class="background-decor" style="top: 75%; right: 4%; font-size: 2.5rem; animation-delay: 0.5s;">✦</div>
+    <div class="background-decor" style="bottom: 10%; left: 8%; animation-delay: 1.5s;">✧</div>
+  </div>
+
+  <nav class="topnav scrapbook-nav" style="position: relative; z-index: 10;">
+    <a href="index.html">home</a><a href="anime.html">anime</a><a href="manga.html">manga</a><a href="games.html">games</a><a href="music.html">music</a>
+  </nav>
+
+  <!-- Compact Top Section -->
+  <div class="top-area">
+    <!-- Toggle Button -->
+    <div class="flip-toggle-wrap">
+      <button id="flip-btn" class="flip-btn" onclick="toggleBook()">
+        <span id="flip-btn-text">Flip to Latest Recs ↻</span>
+      </button>
+    </div>
+
+    <!-- Quick Nav (Only visible on front page) -->
+    <nav class="reading-nav front-only" style="position: sticky; z-index: 100;">
+      <a href="#slice">Slice of Life</a><a href="#romance">Romance</a><a href="#action">Action</a><a href="#fantasy">Fantasy</a><a href="#dark">Dark & Suspense</a><a href="#funny">Funny</a><a href="#coming-of-age">Coming of Age</a><a href="#sadness">Sadness</a>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- BOOK CONTAINER -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="book-container">
+    <div class="book" id="book">
+      
+      <!-- PAGE 1: THE MASTER LIST -->
+      <div class="book-page page-front">
+        
+        <section class="moodboard-hero" style="padding-top: 0; position: relative; z-index: 1;">
+          <div class="hero-text-wrap">
+            <h1 class="hero-script">recs</h1>
+            <h2 class="hero-script-sub">to read</h2>
+            <div class="review-note">
+              <p>a personal curation of stories I genuinely reach out to people to recommend. some you might know, some you wont but theyre all new experiences worth diving into I hope.</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="masonry-board">
+          <!-- LEFT COLUMN -->
+          <div class="masonry-col">
+            <!-- 1. SLICE OF LIFE -->
+            <div class="board-card" id="slice">
+              <div class="board-header"><h3 class="board-title">HEARTWARMING & SLICE OF LIFE</h3><span class="washi-tape"></span></div>
+              <div class="board-grid-4">
+                <div class="mini-card" onclick="copyToClipboard('Sleepy Princess in the Demon Castle')" onmouseenter="showHoverLabel('Sleepy Princess in the Demon Castle')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read1.jpg" alt="Sleepy Princess"><h4>Sleepy Princess in the Demon Castle</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('A Story of Seven Lives')" onmouseenter="showHoverLabel('A Story of Seven Lives')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read2.jpg" alt="A Story of Seven Lives"><h4>A Story of Seven Lives</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('My Kitty and Old Dog')" onmouseenter="showHoverLabel('My Kitty and Old Dog')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read3.jpg" alt="My Kitty and Old Dog"><h4>My Kitty and Old Dog</h4>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. ROMANCE -->
+            <div class="sticky-note left-sticky" id="romance">
+              <h3 class="note-title">ROMANCE ♡</h3>
+              <div class="board-grid-4">
+                <div class="mini-card" onclick="copyToClipboard('Fly Me to the Moon')" onmouseenter="showHoverLabel('Fly Me to the Moon')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read4.jpg" alt="Fly Me to the Moon"><h4>Fly Me to the Moon</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('A Home Far Away')" onmouseenter="showHoverLabel('A Home Far Away')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read5.jpg" alt="A Home Far Away"><h4>A Home Far Away</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('The Summer You Were There')" onmouseenter="showHoverLabel('The Summer You Were There')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read6.jpg" alt="The Summer You Were There"><h4>The Summer You Were There</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Witch of Mine')" onmouseenter="showHoverLabel('Witch of Mine')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read7.jpg" alt="Witch of Mine"><h4>Witch of Mine</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Positively Yours')" onmouseenter="showHoverLabel('Positively Yours')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read8.jpg" alt="Positively Yours"><h4>Positively Yours</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Men\'s Wear Store and Her Royal Highness')" onmouseenter="showHoverLabel('Men\'s Wear Store and Her Royal Highness')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhua-stamp">Manhua</div><img src="img/reading/read9.jpg" alt="Men's Wear Store"><h4>Men's Wear Store and "Her Royal Highness"</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="deco-note left">✧ These stories will make you feel things ✧</div>
+
+            <!-- 3. ACTION PACKED -->
+            <div class="board-card" id="action">
+              <div class="board-header"><h3 class="board-title">ACTION PACKED</h3><span class="washi-tape dark-tape"></span></div>
+              <div class="board-grid-4">
+                <div class="mini-card" onclick="copyToClipboard('Make the Exorcist Fall in Love')" onmouseenter="showHoverLabel('Make the Exorcist Fall in Love')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read10.jpg" alt="Make the Exorcist"><h4>Make the Exorcist Fall in Love</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('The Fable')" onmouseenter="showHoverLabel('The Fable')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read11.jpg" alt="The Fable"><h4>The Fable</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Undead Unluck')" onmouseenter="showHoverLabel('Undead Unluck')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read12.png" alt="Undead Unluck"><h4>Undead Unluck</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Medaka Box')" onmouseenter="showHoverLabel('Medaka Box')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read13.jpg" alt="Medaka Box"><h4>Medaka Box</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('A Man\'s Man')" onmouseenter="showHoverLabel('A Man\'s Man')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read14.jpg" alt="A Man's Man"><h4>A Man's Man</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('ShaMONEYism')" onmouseenter="showHoverLabel('ShaMONEYism')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read15.jpg" alt="ShaMONEYism"><h4>ShaMONEYism</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Unholy Blood')" onmouseenter="showHoverLabel('Unholy Blood')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read16.jpg" alt="Unholy Blood"><h4>Unholy Blood</h4>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. DARK & SUSPENSE -->
+            <div class="sticky-note left-sticky" id="dark">
+              <h3 class="note-title">DARK & SUSPENSE</h3>
+              <div class="board-grid-4">
+                <div class="mini-card" onclick="copyToClipboard('Enigmatica')" onmouseenter="showHoverLabel('Enigmatica')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read24.jpg" alt="Enigmatica"><h4>Enigmatica</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Shadows House')" onmouseenter="showHoverLabel('Shadows House')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read25.png" alt="Shadows House"><h4>Shadows House</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('The Climber')" onmouseenter="showHoverLabel('The Climber')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read26.jpg" alt="The Climber"><h4>The Climber</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Bibliomania')" onmouseenter="showHoverLabel('Bibliomania')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read27.jpg" alt="Bibliomania"><h4>Bibliomania</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Surviving Romance')" onmouseenter="showHoverLabel('Surviving Romance')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read28.jpg" alt="Surviving Romance"><h4>Surviving Romance</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN -->
+          <div class="masonry-col">
+            <!-- 5. FANTASY & ADVENTURE -->
+            <div class="board-card" id="fantasy">
+              <div class="board-header"><h3 class="board-title">FANTASY & ADVENTURE</h3><span class="washi-tape pink-tape"></span></div>
+              <div class="board-grid-4">
+                <div class="mini-card" onclick="copyToClipboard('Gon')" onmouseenter="showHoverLabel('Gon')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read17.png" alt="Gon"><h4>Gon</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('It\'s My Life')" onmouseenter="showHoverLabel('It\'s My Life')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read18.jpg" alt="It's My Life"><h4>It's My Life</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Albus Changes the World')" onmouseenter="showHoverLabel('Albus Changes the World')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read19.jpg" alt="Albus Changes the World"><h4>Albus Changes the World</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Days Off in the Dragon\'s Stomach')" onmouseenter="showHoverLabel('Days Off in the Dragon\'s Stomach')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read20.jpg" alt="Days Off in the Dragon's Stomach"><h4>Days Off in the Dragon's Stomach</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('ELDEN RING: The Road to the Erdtree')" onmouseenter="showHoverLabel('ELDEN RING: The Road to the Erdtree')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read21.jpg" alt="ELDEN RING"><h4>ELDEN RING: The Road to the Erdtree</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Delicious in Dungeon')" onmouseenter="showHoverLabel('Delicious in Dungeon')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read22.jpg" alt="Delicious in Dungeon"><h4>Delicious in Dungeon</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('A Compendium of Ghosts')" onmouseenter="showHoverLabel('A Compendium of Ghosts')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read23.jpeg" alt="A Compendium of Ghosts"><h4>A Compendium of Ghosts</h4>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. COMING OF AGE -->
+            <div class="board-card" id="coming-of-age">
+              <div class="board-header"><h3 class="board-title">COMING OF AGE</h3><span class="washi-tape blue-tape"></span></div>
+              <div class="board-grid-4">
+                <div class="mini-card" onclick="copyToClipboard('Blank Canvas: My So-Called Artist\'s Journey')" onmouseenter="showHoverLabel('Blank Canvas: My So-Called Artist\'s Journey')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read32.jpg" alt="Blank Canvas"><h4>Blank Canvas: My So-Called Artist's Journey</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Hatori and Furuta\'s Extraordinarily Ordinary Life')" onmouseenter="showHoverLabel('Hatori and Furuta\'s Extraordinarily Ordinary Life')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read34.jpg" alt="Hatori and Furuta"><h4>Hatori and Furuta's Extraordinarily Ordinary Life</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Spirit Circle')" onmouseenter="showHoverLabel('Spirit Circle')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read35.jpg" alt="Spirit Circle"><h4>Spirit Circle</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('The Legend of the Strongest, Kurosawa!')" onmouseenter="showHoverLabel('The Legend of the Strongest, Kurosawa!')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read36.jpg" alt="Kurosawa"><h4>The Legend of the Strongest, Kurosawa!</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Yomawari Sensei')" onmouseenter="showHoverLabel('Yomawari Sensei')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read37.jpg" alt="Yomawari Sensei"><h4>Yomawari Sensei</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Taste of Illness')" onmouseenter="showHoverLabel('Taste of Illness')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read38.jpg" alt="Taste of Illness"><h4>Taste of Illness</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Spirit Fingers')" onmouseenter="showHoverLabel('Spirit Fingers')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read39.jpg" alt="Spirit Fingers"><h4>Spirit Fingers</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Westwood Vibrato')" onmouseenter="showHoverLabel('Westwood Vibrato')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read33.jpg" alt="Westwood Vibrato"><h4>Westwood Vibrato</h4>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. FUNNY -->
+            <div class="sticky-note right-sticky" id="funny">
+              <h3 class="note-title">FUNNY</h3>
+              <div class="board-grid-4">
+                <div class="mini-card" onclick="copyToClipboard('The Ostrich Beastman\'s Wild and Unrivaled Rampage: I Became the Leader of the Stupidly Cute Strongest Race')" onmouseenter="showHoverLabel('The Ostrich Beastman\'s Wild and Unrivaled Rampage: I Became the Leader of the Stupidly Cute Strongest Race')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read29.jpg" alt="Ostrich Beastman"><h4>The Ostrich Beastman's Wild and Unrivaled Rampage</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('A Man Who Defies the World of BL')" onmouseenter="showHoverLabel('A Man Who Defies the World of BL')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read30.jpg" alt="A Man Who Defies the World of BL"><h4>A Man Who Defies the World of BL</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Student Council Staff Members')" onmouseenter="showHoverLabel('Student Council Staff Members')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read31.jpg" alt="Student Council Staff Members"><h4>Seitokai Yakuindomo</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="deco-note right">✧ let me know what you think ✧</div>
+
+            <!-- 8. SADNESS -->
+            <div class="board-card" id="sadness">
+              <div class="board-header"><h3 class="board-title">SADNESS</h3><span class="washi-tape dark-tape"></span></div>
+              <div class="board-grid-4">
+                <div class="mini-card" onclick="copyToClipboard('My Girl')" onmouseenter="showHoverLabel('My Girl')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read40.jpg" alt="My Girl"><h4>My Girl</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('False Child')" onmouseenter="showHoverLabel('False Child')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read41.jpg" alt="False Child"><h4>False Child</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Whale Star: The Gyeongseong Mermaid')" onmouseenter="showHoverLabel('Whale Star: The Gyeongseong Mermaid')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read42.jpg" alt="Whale Star"><h4>Whale Star: The Gyeongseong Mermaid</h4>
+                </div>
+                <div class="mini-card" onclick="copyToClipboard('Your Letter')" onmouseenter="showHoverLabel('Your Letter')" onmouseleave="hideHoverLabel()">
+                  <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read43.jpg" alt="Your Letter"><h4>Your Letter</h4>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: THE LOG (Discord Style) -->
+      <div class="book-page page-back">
+        
+        <section class="moodboard-hero" style="padding-top: 0;">
+          <div class="hero-text-wrap">
+            <h1 class="hero-script" id="log-month-title">November</h1>
+            <h2 class="hero-script-sub">recs</h2>
+            <p class="hero-desc"><i>I'll randomly add some new recommendations for yall</i></p>
+          </div>
+        </section>
+
+        <!-- DYNAMIC TOP 5 PICKS -->
+        <div style="margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; padding: 0 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #3a3533; padding-bottom: 10px; margin-bottom: 20px;">
+            <h2 style="font-family: 'Caveat', cursive; font-size: 2rem; color: #d48a8a;">✨ This Month's Top Picks</h2>
+            <span class="washi-tape dark-tape" style="position: relative; top: 0; left: 0; display: inline-block;"></span>
+          </div>
+          <!-- This container gets populated by JS -->
+          <div class="scrapbook-grid-5" id="top-picks-container"></div>
+        </div>
+
+        <!-- LOG LIST WITH SORT BUTTON -->
+        <div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 12px;">
+            <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; color: #e0d8d0;">Latest Recs</h2>
+            <button class="sort-btn" id="sort-btn" onclick="toggleSort()" style="background: #2a2625; border: 1px solid #4a3f3a; color: #e0d8d0; padding: 8px 16px; border-radius: 8px; font-family: inherit; font-weight: 700; font-size: 0.85rem; cursor: pointer;">Sort: Newest Post ⬇</button>
+          </div>
+          
+          <!-- Note: The default HTML order is 001 to 005, but the JS will auto-sort to 005 to 001 on load -->
+          <div class="log-list" id="log-container">
+            
+            <!-- EMBED 1 (#001) -->
+            <div class="embed-card" data-post="1" onclick="copyToClipboard('Snow White with the Red Hair')">
+              <div class="embed-stripe" style="background: #d48a8a;"></div>
+              <div class="embed-content">
+                <div class="embed-top-row">
+                  <h2 class="embed-title">Snow White with the Red Hair</h2>
+                  <span class="log-post-id">#001</span>
+                </div>
+                <div class="embed-jp-title">赤髪の白雪姫 (Akagami no Shirayuki-hime)</div>
+                
+                <div class="embed-meta-grid">
+                  <div><strong>Year:</strong> 2006</div>
+                  <div><strong>Media:</strong> Manga</div>
+                  <div><strong>Status:</strong> Ongoing</div>
+                  <div><strong>Story/Art:</strong> Sorata Akizuki</div>
+                </div>
+                <div class="embed-genres">
+                  <span>Romance</span><span>Slice of Life</span><span>Fantasy</span><span>Drama</span>
+                </div>
+                <div class="embed-body">
+                  <div class="embed-img"><img src="img/reading/rec1.jpg" alt="Snow White"></div>
+                  <div class="embed-desc">
+                    <p>Shirayuki's apple-red hair is famous, but not for reasons she'd like. The vain Prince Raji of Tanbarun wants her as his concubine, so she does the only logical thing which was cutting off her hair and bolts into the night.</p>
+                    <p>Lost in the woods of the neighboring kingdom, she meets an injured boy named Zen and his two companions. After she heals his wounds, he returns the favor by helping her hide. This refreshing fantasy follows an optimistic heroine and a mysterious prince as they discover that sometimes the best escape route leads straight to a new beginning.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EMBED 2 (#002) -->
+            <div class="embed-card" data-post="2" onclick="copyToClipboard('Baby Road Trippers')">
+              <div class="embed-stripe" style="background: #3a3533;"></div>
+              <div class="embed-content">
+                <div class="embed-top-row">
+                  <h2 class="embed-title">Baby Road Trippers</h2>
+                  <span class="log-post-id">#002</span>
+                </div>
+                <div class="embed-jp-title">ベイビー車中ハッカーズ (Baby Shachuhackers)</div>
+                
+                <div class="embed-meta-grid">
+                  <div><strong>Year:</strong> 2024</div>
+                  <div><strong>Media:</strong> Manga</div>
+                  <div><strong>Status:</strong> Ongoing</div>
+                  <div><strong>Story/Art:</strong> Tabireko</div>
+                </div>
+                <div class="embed-genres">
+                  <span>Slice of Life</span><span>Comedy</span>
+                </div>
+                <div class="embed-body">
+                  <div class="embed-img"><img src="img/reading/rec2.jpg" alt="Baby Car Campers"></div>
+                  <div class="embed-desc">
+                    <p>A young girl finds school suffocating and seeks freedom by sleeping in her car parked in her own backyard since she lacks a license.</p>
+                    <p>Dreaming of driving wherever she pleases, her routine shifts when she befriends a bright classmate who can drive and opens new paths for both of them to escape together.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EMBED 3 (#003) -->
+            <div class="embed-card" data-post="3" onclick="copyToClipboard('Dig It')">
+              <div class="embed-stripe" style="background: #d48a8a;"></div>
+              <div class="embed-content">
+                <div class="embed-top-row">
+                  <h2 class="embed-title">Dig It</h2>
+                  <span class="log-post-id">#003</span>
+                </div>
+                <div class="embed-jp-title">ディグイット (Dig It)</div>
+                
+                <div class="embed-meta-grid">
+                  <div><strong>Year:</strong> 2025</div>
+                  <div><strong>Media:</strong> Manga</div>
+                  <div><strong>Status:</strong> Ongoing</div>
+                  <div><strong>Story/Art:</strong> Yoshidamaru</div>
+                </div>
+                <div class="embed-genres">
+                  <span>Sports</span><span>Drama</span>
+                </div>
+                <div class="embed-body">
+                  <div class="embed-img"><img src="img/reading/rec3.jpg" alt="Dig It"></div>
+                  <div class="embed-desc">
+                    <p>As the son of a legendary volleyball ace, the boy shoulders expectations as his middle school team’s attacker but doubts his role.</p>
+                    <p>When his father chooses to mentor a gifted teammate instead, he endured forging his own path, challenging both his rival and his father by redefining what it means to be an ace.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EMBED 4 (#004) -->
+            <div class="embed-card" data-post="4" onclick="copyToClipboard('The Summit of the Gods')">
+              <div class="embed-stripe" style="background: #3a3533;"></div>
+              <div class="embed-content">
+                <div class="embed-top-row">
+                  <h2 class="embed-title">The Summit of the Gods</h2>
+                  <span class="log-post-id">#004</span>
+                </div>
+                <div class="embed-jp-title">神々の山嶺 (Kamigami no Itadaki)</div>
+                
+                <div class="embed-meta-grid">
+                  <div><strong>Year:</strong> 2000</div>
+                  <div><strong>Media:</strong> Manga</div>
+                  <div><strong>Status:</strong> Completed</div>
+                  <div><strong>Story/Art:</strong> Baku Yumemakura, Jiro Taniguchi</div>
+                </div>
+                <div class="embed-genres">
+                  <span>Drama</span><span>Adventure</span><span>Psychological</span><span>Mystery</span>
+                </div>
+                <div class="embed-body">
+                  <div class="embed-img"><img src="img/reading/rec4.jpg" alt="Summit of the Gods"></div>
+                  <div class="embed-desc">
+                    <p>In 1993 a photo journalist discovers a camera possibly linked to George Mallory’s vanished 1924 Everest expedition.</p>
+                    <p>Chasing the truth behind mountaineering’s greatest mystery, he follows the trail of a reclusive climber, uncovering a haunting tale of obsession, ambition and humanity’s relentless pull toward the summit.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EMBED 5 (#005) -->
+            <div class="embed-card" data-post="5" onclick="copyToClipboard('The Creepy and Freaky')">
+              <div class="embed-stripe" style="background: #d48a8a;"></div>
+              <div class="embed-content">
+                <div class="embed-top-row">
+                  <h2 class="embed-title">The Creepy and Freaky</h2>
+                  <span class="log-post-id">#005</span>
+                </div>
+                <div class="embed-jp-title">こわいやさん (Kowaiyasan)</div>
+                
+                <div class="embed-meta-grid">
+                  <div><strong>Year:</strong> 2025</div>
+                  <div><strong>Media:</strong> Manga</div>
+                  <div><strong>Status:</strong> Completed</div>
+                  <div><strong>Story/Art:</strong> Kamentotsu</div>
+                </div>
+                <div class="embed-genres">
+                  <span>Horror</span><span>Supernatural</span><span>Mystery</span>
+                </div>
+                <div class="embed-body">
+                  <div class="embed-img"><img src="img/reading/rec5.jpg" alt="Creepy and Freaky"></div>
+                  <div class="embed-desc">
+                    <p>Enter a weird store where fear is sold like trinkets. Browse at will and linger among chilling tales that prey on your imagination.</p>
+                    <p>Each story is a curated terror of a slow burning dread as if whispers are inviting you to lose yourself in lingering horror and stay longer.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>© Rorri · ghostedyourinterest.gamer.gd · made with 💜</footer>
+</div>
+
+<!-- Floating hover popup -->
+<div id="hover-label" class="hover-label"></div>
+<div id="mobile-toast"></div>
+
+<script>
+  /* --- Hover & Mobile Toast Logic --- */
+  function showHoverLabel(titleText) {
+    if (window.innerWidth > 700) {
+      const label = document.getElementById('hover-label');
+      label.innerText = titleText;
+      label.classList.add('show');
+    }
+  }
+  function hideHoverLabel() {
+    const label = document.getElementById('hover-label');
+    if (label) label.classList.remove('show');
+  }
+  
+  /* --- Copy to Clipboard Logic --- */
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      // Reuse the mobile-toast element for visual feedback on all devices
+      const toast = document.getElementById('mobile-toast');
+      toast.innerText = `Copied: ${text}`;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  }
+
+  /* --- Book Flip Logic --- */
+  let isFlipped = false;
+  function toggleBook() {
+    const book = document.getElementById('book');
+    const btnText = document.getElementById('flip-btn-text');
+    const nav = document.querySelector('.reading-nav');
+    
+    isFlipped = !isFlipped;
+    
+    if (isFlipped) {
+      book.classList.add('is-flipped');
+      btnText.innerText = "Flip to Reading List ↺";
+      nav.style.display = 'none'; // Hide sticky nav on back page
+    } else {
+      book.classList.remove('is-flipped');
+      btnText.innerText = "Flip to Latest Recs ↻";
+      nav.style.display = 'flex';
+    }
+  }
+
+  /* --- Auto Month Title --- */
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  document.getElementById('log-month-title').innerText = monthNames[new Date().getMonth()];
+
+  /* --- Sort Logic (Now starts with 005 at the top) --- */
+  let isNewestFirst = true;
+  function toggleSort() {
+    const container = document.getElementById('log-container');
+    const items = Array.from(container.getElementsByClassName('embed-card'));
+    const btn = document.getElementById('sort-btn');
+
+    items.sort((a, b) => {
+      const postA = parseInt(a.getAttribute('data-post'));
+      const postB = parseInt(b.getAttribute('data-post'));
+      // If isNewestFirst is true, we want 005 (B) before 001 (A) -> B - A
+      return isNewestFirst ? postB - postA : postA - postB;
+    });
+
+    isNewestFirst = !isNewestFirst;
+    btn.innerText = isNewestFirst ? "Sort: Newest Post ⬇" : "Sort: Oldest Post ⬆";
+
+    container.innerHTML = '';
+    items.forEach(item => container.appendChild(item));
+  }
+
+  /* --- Dynamic Top Picks Logic --- */
+  // Change these numbers to feature different posts in the top 5!
+  const featuredPicks = [5, 4, 3, 2, 1];
+
+  function buildTopPicks() {
+    const container = document.getElementById('top-picks-container');
+    const allEmbeds = document.querySelectorAll('#log-container .embed-card');
+    
+    featuredPicks.forEach(id => {
+      const targetCard = Array.from(allEmbeds).find(card => parseInt(card.getAttribute('data-post')) === id);
+      
+      if (targetCard) {
+        const title = targetCard.querySelector('.embed-title').innerText;
+        const imgSrc = targetCard.querySelector('.embed-img img').src;
+        const genre = targetCard.querySelector('.embed-genres span').innerText;
+        
+        // Create the polaroid card
+        const pickDiv = document.createElement('div');
+        pickDiv.className = 'polaroid-card';
+        
+        // Add hover, click, and copy functionality
+        pickDiv.setAttribute('onmouseenter', `showHoverLabel('${title.replace(/'/g, "\\'")}')`);
+        pickDiv.setAttribute('onmouseleave', `hideHoverLabel()`);
+        pickDiv.setAttribute('onclick', `copyToClipboard('${title.replace(/'/g, "\\'")}')`);
+        
+        pickDiv.innerHTML = `
+          <img src="${imgSrc}" alt="${title}">
+          <div class="p-info">
+            <h4>${title}</h4>
+            <p>${genre}</p>
+          </div>
+        `;
+        container.appendChild(pickDiv);
+      }
+    });
+  }
+
+  // Initialize on load
+  buildTopPicks();
+  
+  // Force initial sort (Newest First) so 005 is at the top on page load
+  // We temporarily set isNewestFirst to false so the first click of toggleSort() sorts it Newest First.
+  // But we want it visually sorted Newest First immediately, so we run the sort logic manually here:
+  const initialSort = () => {
+      const container = document.getElementById('log-container');
+      const items = Array.from(container.getElementsByClassName('embed-card'));
+      items.sort((a, b) => parseInt(b.getAttribute('data-post')) - parseInt(a.getAttribute('data-post')));
+      container.innerHTML = '';
+      items.forEach(item => container.appendChild(item));
+      // Now flip the toggle state so the next click sorts it Oldest First
+      isNewestFirst = false;
+      document.getElementById('sort-btn').innerText = "Sort: Oldest Post ⬆";
+  };
+  initialSort();
+
+</script>
+
+</body>
+</html>
