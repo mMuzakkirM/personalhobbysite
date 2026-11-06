@@ -18,13 +18,12 @@
     min-height: 100vh;
   }
 
-  /* Wrapper is forced to block/centered */
   body.cozy-theme .wrap {
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
     align-items: center !important;
-    max-width: 1000px !important; /* Slightly wider container */
+    max-width: 1000px !important;
     margin: 0 auto !important;
     gap: 0 !important;
   }
@@ -67,7 +66,6 @@
     box-shadow: 0 4px 15px rgba(180, 83, 9, 0.4) !important;
   }
 
-  /* Content column */
   body.cozy-theme .game-content {
     width: 100% !important;
     max-width: 1000px !important;
@@ -149,7 +147,6 @@
     transform: translateY(-2px) !important;
   }
 
-  /* Strict thumbnail - SCALED UP */
   body.cozy-theme .game-thumb {
     flex: 0 0 130px !important;
     width: 130px !important;
@@ -157,6 +154,7 @@
     border-radius: 8px !important;
     overflow: hidden !important;
     border: 1px solid #2e2e2e !important;
+    background: #2a2a2a;
   }
   body.cozy-theme .game-thumb img {
     width: 100% !important;
@@ -165,7 +163,6 @@
     display: block !important;
   }
 
-  /* Info column */
   body.cozy-theme .game-info {
     flex: 1 !important;
     min-width: 0 !important;
@@ -273,6 +270,7 @@
     body.cozy-theme .game-link { align-self: center !important; }
     body.cozy-theme .game-title { font-size: 1.2rem !important; text-align: center !important; }
   }
+  
   /* FIX: Force filter visibility */
   body.cozy-theme .game-card.filter-item {
     display: none !important;
@@ -280,7 +278,8 @@
   body.cozy-theme .game-card.filter-item.show {
     display: flex !important;
   }
-  /* ─── CUSTOM HOVER LABEL FOR GAMES PAGE ─── */
+  
+  /* ─── CUSTOM HOVER LABEL ─── */
   #hover-label.game-hover-label {
     position: fixed !important;
     bottom: -100px !important;
@@ -309,6 +308,14 @@
     bottom: 30px !important;
     opacity: 1 !important;
   }
+
+* {
+  cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, auto !important;
+}
+a, button, .game-card, .cozy-filter-btn {
+  cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, pointer !important;
+}
+
 </style>
 </head>
 <body class="cozy-theme">
@@ -323,6 +330,8 @@
     <a href="music.html">music</a>
   </nav>
 
+<p class="page-quote">PC gamers unite woooo!</p>
+
   <div class="game-content">
 
     <header class="page-header">
@@ -330,234 +339,256 @@
       <p>Hey! I usually play games on PC so these are the only ones I recommend for that platform. Hope you find something you like here!</p>
     </header>
 
-    <div class="cozy-filter-bar">
-      <button class="cozy-filter-btn active" onclick="filterGames('all', this)">All Games</button>
-      <button class="cozy-filter-btn" onclick="filterGames('action', this)">Action</button>
-      <button class="cozy-filter-btn" onclick="filterGames('cozy', this)">Cozy</button>
-      <button class="cozy-filter-btn" onclick="filterGames('vn', this)">Visual Novel</button>
-      <button class="cozy-filter-btn" onclick="filterGames('adventure', this)">Adventure</button>
-      <button class="cozy-filter-btn" onclick="filterGames('strategy', this)">Strategy</button>
-      <button class="cozy-filter-btn" onclick="filterGames('horror', this)">Horror</button>
+    <div class="cozy-filter-bar" id="filter-bar">
+      <!-- Injected via JS -->
     </div>
 
     <section class="cozy-game-list" id="game-list">
-      
-      <article class="game-card filter-item vn show" data-post="1" onmouseenter="showHoverLabel('The House in Fata Morgana')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('The House in Fata Morgana')">
-        <div class="game-thumb"><img src="img/games/game1.jpg" alt="The House in Fata Morgana"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">The House in Fata Morgana</h2><div class="game-genre">Visual Novel</div></div>
-          <div class="game-tags"><span>Gothic</span><span>Tragedy</span><span>Masterpiece</span></div>
-          <p class="game-desc">A legendary gothic suspense visual novel spanning a millennium. Widely regarded by the VN community as one of the best stories ever written, dealing heavily in tragedy, human nature and insanity. It's an unforgettable, gut wrenching experience.</p>
-          <a href="https://store.steampowered.com/app/303310/The_House_in_Fata_Morgana/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item adventure show" data-post="2" onmouseenter="showHoverLabel('The Stanley Parable: Ultra Deluxe')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('The Stanley Parable: Ultra Deluxe')">
-        <div class="game-thumb"><img src="img/games/game2.jpg" alt="The Stanley Parable"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">The Stanley Parable: Ultra Deluxe</h2><div class="game-genre">Adventure</div></div>
-          <div class="game-tags"><span>Meta</span><span>Comedy</span><span>Mind-Bending</span></div>
-          <p class="game-desc">An expanded re-imagining of the 2013 classic where you play as Stanley, and you will not play as Stanley. The community adores it for its hilarious yet strangely trippy commentary on choice and free will. It's a game that plays <b>you</b>.</p>
-          <a href="https://store.steampowered.com/app/1703340/The_Stanley_Parable_Ultra_Deluxe/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item action show" data-post="3" onmouseenter="showHoverLabel('Clair Obscur: Expedition 33')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Clair Obscur: Expedition 33')">
-        <div class="game-thumb"><img src="img/games/game3.jpg" alt="Clair Obscur"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Clair Obscur: Expedition 33</h2><div class="game-genre">Action RPG</div></div>
-          <div class="game-tags"><span>Turn-Based</span><span>Story Rich</span><span>Post-apocalyptic</span></div>
-          <p class="game-desc">Lead Expedition 33 to destroy the Paintress so she can never paint death again. Players are going crazy over its gorgeous Belle Epoque France inspiration and its unique blend of turn-based combat with real time mechanics.</p>
-          <a href="https://store.steampowered.com/app/1903340/Clair_Obscur_Expedition_33/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item action show" data-post="4" onmouseenter="showHoverLabel('A Song of Sunlight')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('A Song of Sunlight')">
-        <div class="game-thumb"><img src="img/games/game4.jpg" alt="A Song of Sunlight"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">A Song of Sunlight</h2><div class="game-genre">Action RPG</div></div>
-          <div class="game-tags"><span>Exploration</span><span>Atmospheric</span><span>Desolate</span></div>
-          <p class="game-desc">An RPG set in a distant, lonely future. Follow Arem as he explores a desolate megastructure called "The Well." It's praised for its incredibly oppressive yet beautiful atmosphere and a story that burdens you more than youd expect.</p>
-          <a href="https://store.steampowered.com/app/2263250/A_Song_Of_Sunlight/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item vn show" data-post="5" onmouseenter="showHoverLabel('Clannad')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Clannad')">
-        <div class="game-thumb"><img src="img/games/game5.jpg" alt="Clannad"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Clannad</h2><div class="game-genre">Visual Novel</div></div>
-          <div class="game-tags"><span>Romance</span><span>Drama</span><span>Slice of Life</span></div>
-          <p class="game-desc">Follow Tomoya, a high school delinquent as he meets five girls and helps resolve their individual problems. It's a legendary tearjerker known by the community as one of the most emotionally devastating visual novels of all time.</p>
-          <a href="https://store.steampowered.com/app/324160/CLANNAD/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item vn show" data-post="6" onmouseenter="showHoverLabel('Steins;Gate')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Steins;Gate')">
-        <div class="game-thumb"><img src="img/games/game6.jpg" alt="Steins;Gate"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Steins;Gate</h2><div class="game-genre">Visual Novel</div></div>
-          <div class="game-tags"><span>Sci-Fi</span><span>Time Travel</span><span>Psychological</span></div>
-          <p class="game-desc">A rag-tag band of tech-savvy students discovers how to change the past via mail using a modified microwave. Universally praised as a top-tier thriller, the community loves how it meticulously spirals from a fun experiment into a conspiracy surrounding SERN.</p>
-          <a href="https://store.steampowered.com/app/412830/STEINSGATE/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item vn show" data-post="7" onmouseenter="showHoverLabel('Slay the Princess: The Pristine Cut')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Slay the Princess: The Pristine Cut')">
-        <div class="game-thumb"><img src="img/games/game7.jpg" alt="Slay the Princess"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Slay the Princess: The Pristine Cut</h2><div class="game-genre">Visual Novel</div></div>
-          <div class="game-tags"><span>Psychological</span><span>Branching</span><span>Hand-drawn</span></div>
-          <p class="game-desc">A choice-driven psychological horror visual novel with dramatic branching and hand-drawn art. The community loves how the narrative builds a mirror from your choices. What you say and believe determines who you are. Don't try to romance her, it won't end well.</p>
-          <a href="https://store.steampowered.com/app/1989270/Slay_the_Princess_The_Pristine_Cut/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item action show" data-post="8" onmouseenter="showHoverLabel('Lies of P')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Lies of P')">
-        <div class="game-thumb"><img src="img/games/game8.jpg" alt="Lies of P"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Lies of P</h2><div class="game-genre">Action</div></div>
-          <div class="game-tags"><span>Soulslike</span><span>Steampunk</span><span>Pinocchio</span></div>
-          <p class="game-desc">A thrilling soulslike that takes the story of Pinocchio and turns it on its head against the darkly elegant backdrop of the Belle Epoque era. Often cited by fans as one of the best non-FromSoftware soulslikes.</p>
-          <a href="https://store.steampowered.com/app/1627720/Lies_of_P/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item horror show" data-post="9" onmouseenter="showHoverLabel('Signalis')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Signalis')">
-        <div class="game-thumb"><img src="img/games/game9.jpg" alt="Signalis"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Signalis</h2><div class="game-genre">Horror</div></div>
-          <div class="game-tags"><span>Survival Horror</span><span>Retro Anime</span><span>Cosmic Mystery</span></div>
-          <p class="game-desc">A classic survival horror experience where you unravel a cosmic mystery in a dystopian future. Fans praise it for perfectly capturing the PS1-era aesthetic while weaving a terrifying, deeply psychological story about a Replika searching for her lost dreams.</p>
-          <a href="https://store.steampowered.com/app/1262350/SIGNALIS/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item strategy show" data-post="10" onmouseenter="showHoverLabel('Lorelei and the Laser Eyes')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Lorelei and the Laser Eyes')">
-        <div class="game-thumb"><img src="img/games/game10.jpg" alt="Lorelei"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Lorelei and the Laser Eyes</h2><div class="game-genre">Strategy</div></div>
-          <div class="game-tags"><span>Mystery</span><span>Puzzles</span><span>Stylish</span></div>
-          <p class="game-desc">A woman wanders into an old baroque manor in search of answers. The community is obsessed with this one's incredibly stylish, black-and-white aesthetic and the sheer complexity of its interconnected puzzles.</p>
-          <a href="https://store.steampowered.com/app/2008920/Lorelei_and_the_Laser_Eyes/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item vn show" data-post="11" onmouseenter="showHoverLabel('Z.A.T.O.: I Love the World and Everything In It')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Z.A.T.O.: I Love the World and Everything In It')">
-        <div class="game-thumb"><img src="img/games/game11.jpg" alt="Z.A.T.O."></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Z.A.T.O.: I Love the World and Everything In It</h2><div class="game-genre">Visual Novel</div></div>
-          <div class="game-tags"><span>Retro</span><span>Surreal</span><span>Mystery</span></div>
-          <p class="game-desc">USSR, 1986. A girl goes missing in the closed city of Vorkuta-5, yet not a soul seems concerned. Known for its haunting, retro atmosphere, the community loves how it uses its unique setting to uncover a signal transmitted to the universe.</p>
-          <a href="https://store.steampowered.com/app/4122860/ZATO_I_Love_the_World_and_Everything_In_It/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item action show" data-post="12" onmouseenter="showHoverLabel('Cinderia')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Cinderia')">
-        <div class="game-thumb"><img src="img/games/game12.jpg" alt="Cinderia"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Cinderia</h2><div class="game-genre">Action</div></div>
-          <div class="game-tags"><span>Roguelite</span><span>Insane Builds</span><span>Fast</span></div>
-          <p class="game-desc">A fast, brutal action roguelite with razor-sharp controls. Fans of the genre love the insane build freedom, allowing you to fuse embers and magic cards to create wildly overpowered combat styles in a world consumed by the Ash Witch.</p>
-          <a href="https://store.steampowered.com/app/3214610/Cinderia/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item strategy show" data-post="13" onmouseenter="showHoverLabel('Balatro')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Balatro')">
-        <div class="game-thumb"><img src="img/games/game13.jpg" alt="Balatro"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Balatro</h2><div class="game-genre">Strategy</div></div>
-          <div class="game-tags"><span>Poker</span><span>Deckbuilder</span><span>Addicting</span></div>
-          <p class="game-desc">A hypnotically satisfying deckbuilder where you play illegal poker hands and discover game-changing jokers. The community universally agrees this is digital crack—it's incredibly easy to lose hundreds of hours triggering outrageous combos.</p>
-          <a href="https://store.steampowered.com/app/2379780/Balatro/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item action show" data-post="14" onmouseenter="showHoverLabel('Sleeping Dogs: Definitive Edition')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Sleeping Dogs: Definitive Edition')">
-        <div class="game-thumb"><img src="img/games/game14.jpg" alt="Sleeping Dogs"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Sleeping Dogs: Definitive Edition</h2><div class="game-genre">Action</div></div>
-          <div class="game-tags"><span>Open World</span><span>Martial Arts</span><span>Triads</span></div>
-          <p class="game-desc">Play as Wei Shen, an undercover cop trying to take down the Triads from the inside out in a vibrant, neon-lit Hong Kong. An incredibly underrated open-world gem with fans particularly praising its brutal hand-to-hand martial arts combat.</p>
-          <a href="https://store.steampowered.com/app/307690/Sleeping_Dogs_Definitive_Edition/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item cozy show" data-post="15" onmouseenter="showHoverLabel('Stardew Valley')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Stardew Valley')">
-        <div class="game-thumb"><img src="img/games/game15.jpg" alt="Stardew Valley"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Stardew Valley</h2><div class="game-genre">Cozy</div></div>
-          <div class="game-tags"><span>Farming Sim</span><span>Pixel Art</span><span>Relaxing</span></div>
-          <p class="game-desc">You've inherited your grandfather's old farm plot. Armed with hand-me-down tools, you set out to begin your new life. The community considers it the gold standard of cozy games with endless content to help you turn overgrown fields into a thriving home.</p>
-          <a href="https://store.steampowered.com/app/413150/Stardew_Valley/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item strategy show" data-post="16" onmouseenter="showHoverLabel('PokéRogue')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('PokéRogue')">
-        <div class="game-thumb"><img src="img/games/game16.jpg" alt="PokéRogue"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">PokéRogue</h2><div class="game-genre">Roguelike</div></div>
-          <div class="game-tags"><span>Pokemon</span><span>Browser</span><span>Addicting</span></div>
-          <p class="game-desc">A browser-based Pokémon roguelike where you build a team and stack items to see how far you can get. It has completely taken over the Pokémon community due to how dangerously addictive and polished it is for a free fan project.</p>
-          <a href="https://pokerogue.net/" target="_blank" class="game-link">Play Free →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item action show" data-post="17" onmouseenter="showHoverLabel('HoloCure: Save the Fans!')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('HoloCure: Save the Fans!')">
-        <div class="game-thumb"><img src="img/games/game17.jpg" alt="HoloCure"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">HoloCure: Save the Fans!</h2><div class="game-genre">Bullet Heaven</div></div>
-          <div class="game-tags"><span>VTubers</span><span>Bullet Heaven</span><span>Free Fan-Game</span></div>
-          <p class="game-desc">Play as your favorite Vtubers from Hololive, fight armies of fans, and save them from mind-control. The community loves it because it's an unofficial free fan-game that somehow matches or exceeds the quality and content of the games it's inspired by.</p>
-          <a href="https://store.steampowered.com/app/2420510/HoloCure_Save_the_Fans/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item cozy show" data-post="18" onmouseenter="showHoverLabel('Mistpaw Ravine')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Mistpaw Ravine')">
-        <div class="game-thumb"><img src="img/games/game18.jpg" alt="Mistpaw Ravine"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Mistpaw Ravine</h2><div class="game-genre">Cozy</div></div>
-          <div class="game-tags"><span>City-Builder</span><span>Cats</span><span>Cozy</span></div>
-          <p class="game-desc">The witches are gone, and only their cats remain. Make a new home for them in this feline city-builder. Cat lovers in the community are obsessed with keeping their cats fed, happy and giving them a cozy life in a world ravaged by magic.</p>
-          <a href="https://store.steampowered.com/app/3735490/Mistpaw_Ravine/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item strategy show" data-post="19" onmouseenter="showHoverLabel('Library of Ruina')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Library of Ruina')">
-        <div class="game-thumb"><img src="img/games/game19.jpg" alt="Library of Ruina"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Library of Ruina</h2><div class="game-genre">Strategy</div></div>
-          <div class="game-tags"><span>Deckbuilder</span><span>Dark Fantasy</span><span>Stage Combat</span></div>
-          <p class="game-desc">"May you find your book in this place." Combat between guests and librarians breaks out like it's on a stage and defeated guests turn into books. Fans praise its incredibly complex deckbuilding mechanics and its deeply dark and mysterious world.</p>
-          <a href="https://store.steampowered.com/app/1256670/Library_Of_Ruina/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
-      <article class="game-card filter-item action show" data-post="20" onmouseenter="showHoverLabel('Octopath Traveler')" onmouseleave="hideHoverLabel()" onclick="copyToClipboard('Octopath Traveler')">
-        <div class="game-thumb"><img src="img/games/game20.jpg" alt="Octopath Traveler"></div>
-        <div class="game-info">
-          <div class="game-header-row"><h2 class="game-title">Octopath Traveler</h2><div class="game-genre">RPG</div></div>
-          <div class="game-tags"><span>HD-2D</span><span>Turn-Based</span><span>Eight Stories</span></div>
-          <p class="game-desc">Eight travelers, eight adventures, and eight roles to play across the wondrous world of Orsterra. Players often debate the pacing of the stories but the community universally agrees that the HD-2D visual style and the beautiful soundtrack are absolute masterpieces.</p>
-          <a href="https://store.steampowered.com/app/921570/OCTOPATH_TRAVELER/" target="_blank" class="game-link">View on Steam →</a>
-        </div>
-      </article>
-
+      <div class="loading-text">Fetching recommendations...</div>
     </section>
 
   </div>
+
+<div class="chapter-footer">
+  <svg class="chapter-wave" viewBox="0 0 500 24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,12 Q62.5,0 125,12 T250,12 T375,12 T500,12" fill="none" stroke="#b45309" stroke-width="2"/>
+    <path d="M0,18 Q62.5,6 125,18 T250,18 T375,18 T500,18" fill="none" stroke="#3a3533" stroke-width="1"/>
+  </svg>
+  
+  <div class="chapter-links">
+    <a href="index.html">Home</a>
+    <a href="anime.html">Anime</a>
+    <a href="manga.html">Manga</a>
+    <a href="games.html">Games</a>
+    <a href="music.html">Music</a>
+    
+    <!-- Secret Unlocks -->
+    <a href="anirecommendation.html" class="secret" data-unlock-from="anime">More Anime →</a>
+    <a href="readingrecommendation.html" class="secret" data-unlock-from="manga">More Reading →</a>
+    <a href="guessanimusic.html" class="secret" data-unlock-from="music">Music Game →</a>
+    <a href="cardgame.html" class="secret" data-unlock-from="games">Card Game →</a>
+    <a href="blackjack.html" class="secret" data-unlock-from="games">Blackjack →</a>
+    <a href="zerozero48.html" class="secret" data-unlock-from="games">2048 Game →</a>
+    
+    <!-- Sanctum (Hidden until visited) -->
+    <a href="sanctum.html" class="secret" data-unlock-from="sanctum">Sanctum</a>
+  </div>
+  <p class="chapter-note">— lock in and come back when you're ready —</p>
 </div>
 
-<div id="hover-label" class="hover-label"></div>
+  <footer>© Rorri · ghostedyourinterest.gamer.gd · made with 💜</footer>
+</div>
+
+<div id="hover-label" class="game-hover-label"></div>
 <div id="mobile-toast"></div>
 
 <script>
+  // ─────────────────────────────────────────────────────────
+  // 🛠️ YOUR CUSTOM RECOMMENDATION LIST
+  // ─────────────────────────────────────────────────────────
+  // For Steam games, use: "steamId": 123456
+  // For Browser games, use: "browserUrl": "https://..."
+  // ─────────────────────────────────────────────────────────
+  const gameRecommendations = [
+    {
+      steamId: 303310,
+      title: "The House in Fata Morgana",
+      category: "vn",
+      genreLabel: "Visual Novel",
+      image: "img/games/game1.jpg",
+      tags: ["Gothic", "Tragedy", "Masterpiece"],
+      desc: "A legendary gothic suspense visual novel spanning a millennium. Widely regarded by the VN community as one of the best stories ever written, dealing heavily in tragedy, human nature and insanity. It's an unforgettable, gut wrenching experience."
+    },
+    {
+      steamId: 1703340,
+      title: "The Stanley Parable: Ultra Deluxe",
+      category: "adventure",
+      genreLabel: "Adventure",
+      image: "img/games/game2.jpg",
+      tags: ["Meta", "Comedy", "Mind-Bending"],
+      desc: "An expanded re-imagining of the 2013 classic where you play as Stanley, and you will not play as Stanley. The community adores it for its hilarious yet strangely trippy commentary on choice and free will. It's a game that plays <b>you</b>."
+    },
+    {
+      steamId: 1903340,
+      title: "Clair Obscur: Expedition 33",
+      category: "action",
+      genreLabel: "Action RPG",
+      image: "img/games/game3.jpg",
+      tags: ["Turn-Based", "Story Rich", "Post-apocalyptic"],
+      desc: "Lead Expedition 33 to destroy the Paintress so she can never paint death again. Players are going crazy over its gorgeous Belle Epoque France inspiration and its unique blend of turn-based combat with real time mechanics."
+    },
+    {
+      steamId: 2263250,
+      title: "A Song of Sunlight",
+      category: "action",
+      genreLabel: "Action RPG",
+      image: "img/games/game4.jpg",
+      tags: ["Exploration", "Atmospheric", "Desolate"],
+      desc: "An RPG set in a distant, lonely future. Follow Arem as he explores a desolate megastructure called 'The Well.' It's praised for its incredibly oppressive yet beautiful atmosphere and a story that burdens you more than youd expect."
+    },
+    {
+      steamId: 324160,
+      title: "Clannad",
+      category: "vn",
+      genreLabel: "Visual Novel",
+      image: "img/games/game5.jpg",
+      tags: ["Romance", "Drama", "Slice of Life"],
+      desc: "Follow Tomoya, a high school delinquent as he meets five girls and helps resolve their individual problems. It's a legendary tearjerker known by the community as one of the most emotionally devastating visual novels of all time."
+    },
+    {
+      steamId: 412830,
+      title: "Steins;Gate",
+      category: "vn",
+      genreLabel: "Visual Novel",
+      image: "img/games/game6.jpg",
+      tags: ["Sci-Fi", "Time Travel", "Psychological"],
+      desc: "A rag-tag band of tech-savvy students discovers how to change the past via mail using a modified microwave. Universally praised as a top-tier thriller, the community loves how it meticulously spirals from a fun experiment into a conspiracy surrounding SERN."
+    },
+    {
+      steamId: 1989270,
+      title: "Slay the Princess: The Pristine Cut",
+      category: "vn",
+      genreLabel: "Visual Novel",
+      image: "img/games/game7.jpg",
+      tags: ["Psychological", "Branching", "Hand-drawn"],
+      desc: "A choice-driven psychological horror visual novel with dramatic branching and hand-drawn art. The community loves how the narrative builds a mirror from your choices. What you say and believe determines who you are. Don't try to romance her, it won't end well."
+    },
+    {
+      steamId: 1627720,
+      title: "Lies of P",
+      category: "action",
+      genreLabel: "Action",
+      image: "img/games/game8.jpg",
+      tags: ["Soulslike", "Steampunk", "Pinocchio"],
+      desc: "A thrilling soulslike that takes the story of Pinocchio and turns it on its head against the darkly elegant backdrop of the Belle Epoque era. Often cited by fans as one of the best non-FromSoftware soulslikes."
+    },
+    {
+      steamId: 1262350,
+      title: "Signalis",
+      category: "horror",
+      genreLabel: "Horror",
+      image: "img/games/game9.jpg",
+      tags: ["Survival Horror", "Retro Anime", "Cosmic Mystery"],
+      desc: "A classic survival horror experience where you unravel a cosmic mystery in a dystopian future. Fans praise it for perfectly capturing the PS1-era aesthetic while weaving a terrifying, deeply psychological story about a Replika searching for her lost dreams."
+    },
+    {
+      steamId: 2008920,
+      title: "Lorelei and the Laser Eyes",
+      category: "strategy",
+      genreLabel: "Strategy",
+      image: "img/games/game10.jpg",
+      tags: ["Mystery", "Puzzles", "Stylish"],
+      desc: "A woman wanders into an old baroque manor in search of answers. The community is obsessed with this one's incredibly stylish, black-and-white aesthetic and the sheer complexity of its interconnected puzzles."
+    },
+    {
+      steamId: 4122860,
+      title: "Z.A.T.O.: I Love the World and Everything In It",
+      category: "vn",
+      genreLabel: "Visual Novel",
+      image: "img/games/game11.jpg",
+      tags: ["Retro", "Surreal", "Mystery"],
+      desc: "USSR, 1986. A girl goes missing in the closed city of Vorkuta-5, yet not a soul seems concerned. Known for its haunting, retro atmosphere, the community loves how it uses its unique setting to uncover a signal transmitted to the universe."
+    },
+    {
+      steamId: 3214610,
+      title: "Cinderia",
+      category: "action",
+      genreLabel: "Action",
+      image: "img/games/game12.jpg",
+      tags: ["Roguelite", "Insane Builds", "Fast"],
+      desc: "A fast, brutal action roguelite with razor-sharp controls. Fans of the genre love the insane build freedom, allowing you to fuse embers and magic cards to create wildly overpowered combat styles in a world consumed by the Ash Witch."
+    },
+    {
+      steamId: 2379780,
+      title: "Balatro",
+      category: "strategy",
+      genreLabel: "Strategy",
+      image: "img/games/game13.jpg",
+      tags: ["Poker", "Deckbuilder", "Addicting"],
+      desc: "A hypnotically satisfying deckbuilder where you play illegal poker hands and discover game-changing jokers. The community universally agrees this is digital crack—it's incredibly easy to lose hundreds of hours triggering outrageous combos."
+    },
+    {
+      steamId: 307690,
+      title: "Sleeping Dogs: Definitive Edition",
+      category: "action",
+      genreLabel: "Action",
+      image: "img/games/game14.jpg",
+      tags: ["Open World", "Martial Arts", "Triads"],
+      desc: "Play as Wei Shen, an undercover cop trying to take down the Triads from the inside out in a vibrant, neon-lit Hong Kong. An incredibly underrated open-world gem with fans particularly praising its brutal hand-to-hand martial arts combat."
+    },
+    {
+      steamId: 413150,
+      title: "Stardew Valley",
+      category: "cozy",
+      genreLabel: "Cozy",
+      image: "img/games/game15.jpg",
+      tags: ["Farming Sim", "Pixel Art", "Relaxing"],
+      desc: "You've inherited your grandfather's old farm plot. Armed with hand-me-down tools, you set out to begin your new life. The community considers it the gold standard of cozy games with endless content to help you turn overgrown fields into a thriving home."
+    },
+    // ─── BROWSER GAME EXAMPLE ───
+    {
+      browserUrl: "https://pokerogue.net/",
+      title: "PokéRogue",
+      category: "browser",
+      genreLabel: "Roguelike",
+      image: "img/games/game16.jpg",
+      tags: ["Pokemon", "Browser", "Addicting"],
+      desc: "A browser-based Pokémon roguelike where you build a team and stack items to see how far you can get. It has completely taken over the Pokémon community due to how dangerously addictive and polished it is for a free fan project."
+    },
+    // ─── BACK TO STEAM GAMES ───
+    {
+      steamId: 2420510,
+      title: "HoloCure: Save the Fans!",
+      category: "action",
+      genreLabel: "Bullet Heaven",
+      image: "img/games/game17.jpg",
+      tags: ["VTubers", "Bullet Heaven", "Free Fan-Game"],
+      desc: "Play as your favorite Vtubers from Hololive, fight armies of fans, and save them from mind-control. The community loves it because it's an unofficial free fan-game that somehow matches or exceeds the quality and content of the games it's inspired by."
+    },
+    {
+      steamId: 3735490,
+      title: "Mistpaw Ravine",
+      category: "cozy",
+      genreLabel: "Cozy",
+      image: "img/games/game18.jpg",
+      tags: ["City-Builder", "Cats", "Cozy"],
+      desc: "The witches are gone, and only their cats remain. Make a new home for them in this feline city-builder. Cat lovers in the community are obsessed with keeping their cats fed, happy and giving them a cozy life in a world ravaged by magic."
+    },
+    {
+      steamId: 1256670,
+      title: "Library of Ruina",
+      category: "strategy",
+      genreLabel: "Strategy",
+      image: "img/games/game19.jpg",
+      tags: ["Deckbuilder", "Dark Fantasy", "Stage Combat"],
+      desc: '"May you find your book in this place." Combat between guests and librarians breaks out like it\'s on a stage and defeated guests turn into books. Fans praise its incredibly complex deckbuilding mechanics and its deeply dark and mysterious world.'
+    },
+    {
+      steamId: 921570,
+      title: "Octopath Traveler",
+      category: "action",
+      genreLabel: "RPG",
+      image: "img/games/game20.jpg",
+      tags: ["HD-2D", "Turn-Based", "Eight Stories"],
+      desc: "Eight travelers, eight adventures, and eight roles to play across the wondrous world of Orsterra. Players often debate the pacing of the stories but the community universally agrees that the HD-2D visual style and the beautiful soundtrack are absolute masterpieces."
+    }
+  ];
+
+  // Your Cloudflare Worker URL
+  const WORKER_URL = 'https://steam-proxy.elielatg.workers.dev/';
+
+  // ─────────────────────────────────────────────────────────
+  // ⚙️ SYSTEM LOGIC (You probably don't need to edit below this)
+  // ─────────────────────────────────────────────────────────
+
   function showHoverLabel(titleText) {
     if (window.innerWidth > 700) {
       const label = document.getElementById('hover-label');
-      label.className = 'game-hover-label show'; /* Adds the new class */
+      label.className = 'game-hover-label show';
       label.innerText = titleText;
     }
   }
+
   function hideHoverLabel() {
     const label = document.getElementById('hover-label');
     if (label) label.classList.remove('show');
@@ -566,9 +597,11 @@
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
       const toast = document.getElementById('mobile-toast');
-      toast.innerText = `Copied: ${text}`;
-      toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); }, 2000);
+      if(toast) {
+        toast.innerText = `Copied: ${text}`;
+        toast.classList.add('show');
+        setTimeout(() => { toast.classList.remove('show'); }, 2000);
+      }
     }).catch(err => {
       console.error('Failed to copy: ', err);
     });
@@ -585,7 +618,103 @@
       }
     });
   }
-</script>
 
+  // Fetch data and build the page
+  async function initGames() {
+    const listContainer = document.getElementById('game-list');
+    const filterBar = document.getElementById('filter-bar');
+    
+    // Extract unique categories to build filter buttons dynamically
+    const categories = new Set(['all']);
+    gameRecommendations.forEach(g => categories.add(g.category));
+
+    // Generate Filter Buttons
+    Array.from(categories).forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = `cozy-filter-btn ${cat === 'all' ? 'active' : ''}`;
+      // Format the button text (e.g., "Browser" or "Visual Novel")
+      btn.innerText = cat === 'all' ? 'All Games' : cat.charAt(0).toUpperCase() + cat.slice(1);
+      btn.onclick = function() { filterGames(cat, this); };
+      filterBar.appendChild(btn);
+    });
+
+    listContainer.innerHTML = ''; // Clear loading text
+
+    // Fetch just the title from Steam for the games that have a steamId
+    const fetchPromises = gameRecommendations.map(async (game) => {
+      if (!game.steamId) return game; // Skip fetch if it's a browser game
+
+      try {
+        const res = await fetch(`${WORKER_URL}?appid=${game.steamId}`);
+        const json = await res.json();
+        
+        if (json[game.steamId] && json[game.steamId].success) {
+          // Overwrite the hardcoded title with the exact Steam title
+          return { ...game, title: json[game.steamId].data.name };
+        }
+      } catch (err) {
+        console.error(`Failed to load Steam ID ${game.steamId}`, err);
+      }
+      return game; // Return original data if fetch fails
+    });
+
+    const results = await Promise.all(fetchPromises);
+
+    // Render cards
+    results.forEach(game => {
+      const { steamId, browserUrl, title, category, genreLabel, image, tags, desc } = game;
+      
+      // Determine the link and button text based on game type
+      const isBrowser = !!browserUrl;
+      const gameLink = isBrowser ? browserUrl : `https://store.steampowered.com/app/${steamId}/`;
+      const linkText = isBrowser ? 'Play Free →' : 'View on Steam →';
+
+      // Build tags HTML
+      const tagsHtml = tags.map(t => `<span>${t}</span>`).join('');
+
+      const card = document.createElement('article');
+      // Note: We add the category class dynamically
+      card.className = `game-card filter-item ${category} show`;
+      card.onmouseenter = () => showHoverLabel(title);
+      card.onmouseleave = hideHoverLabel;
+      card.onclick = () => copyToClipboard(title);
+
+      card.innerHTML = `
+        <div class="game-thumb">
+          <img src="${image}" alt="${title}" loading="lazy">
+        </div>
+        <div class="game-info">
+          <div class="game-header-row">
+            <h2 class="game-title">${title}</h2>
+            <div class="game-genre">${genreLabel}</div>
+          </div>
+          <div class="game-tags">${tagsHtml}</div>
+          <p class="game-desc">${desc}</p>
+          <a href="${gameLink}" target="_blank" class="game-link">${linkText}</a>
+        </div>
+      `;
+
+      listContainer.appendChild(card);
+    });
+  }
+
+  // Start the process when the page loads
+  document.addEventListener('DOMContentLoaded', initGames);
+
+  // ─── UNIVERSAL CHAPTER UNLOCK LOGIC ───
+  document.querySelectorAll('.chapter-links a.secret').forEach(link => {
+    const parent = link.dataset.unlockFrom;
+    if (localStorage.getItem('visited_' + parent)) {
+      link.classList.add('unlocked');
+      link.style.display = 'inline-block'; // Force it to show
+    }
+  });
+
+  // Mark THIS page as visited (Auto-detects the filename)
+  const thisPage = location.pathname.split('/').pop().replace('.html','') || 'index';
+  localStorage.setItem('visited_' + thisPage, 'true');
+
+</script>
+<script src="js/easter-eggs.js"></script>
 </body>
 </html>
