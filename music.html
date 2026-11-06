@@ -8,6 +8,14 @@
 <link rel="icon" href="img/favicon.ico">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/stylus.css">
+	<style>
+* {
+  cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, auto !important;
+}
+a, button, .polaroid, .retro-spin-btn {
+  cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, pointer !important;
+}
+    </style>
 </head>
 <body class="vinyl-theme">
 <div class="wrap">
@@ -20,6 +28,8 @@
     <a href="games.html">games</a>
     <a href="music.html" class="active">music</a>
   </nav>
+
+<p class="page-quote">my taste is a mess, but it's my mess</p>
 
   <!-- ═══════════════════════════════════════ -->
   <!-- NOW PLAYING (RETRO PIXEL) -->
@@ -68,35 +78,55 @@
       </div>
 
       <div class="scrapbook-grid">
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Lorien Testard - Clair Obscur: Expedition 33')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Lorien Testard - Clair Obscur: Expedition 33')"><img src="img/music/cover1.jpg" alt="Clair Obscur"><span class="title-tip">Clair Obscur</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Jon Bellion - The Human Condition')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Jon Bellion - The Human Condition')"><img src="img/music/cover2.jpg" alt="The Human Condition"><span class="title-tip">The Human Condition</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Twenty One Pilots - Blurryface')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Twenty One Pilots - Blurryface')"><img src="img/music/cover3.jpg" alt="Blurryface"><span class="title-tip">Blurryface</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('AJR - The Click')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('AJR - The Click')"><img src="img/music/cover4.jpg" alt="The Click"><span class="title-tip">The Click</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Of Monsters and Men - My Head Is an Animal')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Of Monsters and Men - My Head Is an Animal')"><img src="img/music/cover5.jpg" alt="My Head Is an Animal"><span class="title-tip">My Head Is an Animal</span></a>
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Lorien Testard - Clair Obscur: Expedition 33')"><img src="img/music/cover1.jpg" alt="Clair Obscur"><span class="title-tip">Clair Obscur</span></a>
         
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Logic - Under Pressure (Deluxe)')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Logic - Under Pressure (Deluxe)')"><img src="img/music/cover6.jpg" alt="Under Pressure"><span class="title-tip">Under Pressure</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('half alive - Now, Not Yet')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('half alive - Now, Not Yet')"><img src="img/music/cover7.jpg" alt="Now, Not Yet"><span class="title-tip">Now, Not Yet</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('5 Seconds of Summer - CALM')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('5 Seconds of Summer - CALM')"><img src="img/music/cover8.jpg" alt="CALM"><span class="title-tip">CALM</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Andy Mineo - Uncomfortable')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Andy Mineo - Uncomfortable')"><img src="img/music/cover9.jpg" alt="Uncomfortable"><span class="title-tip">Uncomfortable</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Alec Benjamin - (Un) Commentary')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Alec Benjamin - (Un) Commentary')"><img src="img/music/cover10.jpg" alt="(Un) Commentary"><span class="title-tip">(Un) Commentary</span></a>
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Jon Bellion - The Human Condition')"><img src="img/music/cover2.jpg" alt="The Human Condition"><span class="title-tip">The Human Condition</span></a>
         
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Panic! at the Disco - Death of a Bachelor')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Panic! at the Disco - Death of a Bachelor')"><img src="img/music/cover11.jpg" alt="Death of a Bachelor"><span class="title-tip">Death of a Bachelor</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('NAMEDARUMAAZ - GODBREATH BUDDHACESS (THE RE-UP EDITION)')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('NAMEDARUMAAZ - GODBREATH BUDDHACESS (THE RE-UP EDITION)')"><img src="img/music/cover12.jpg" alt="Godbreath"><span class="title-tip">GODBREATH BUDDHACESS</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Mac Miller - Faces')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Mac Miller - Faces')"><img src="img/music/cover13.jpg" alt="Faces"><span class="title-tip">Faces</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('LSD - Labrinth, Sia & Diplo Present... LSD')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('LSD - Labrinth, Sia & Diplo Present... LSD')"><img src="img/music/cover14.jpg" alt="LSD"><span class="title-tip">LSD</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Stromae - Racine carrée')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Stromae - Racine carrée')"><img src="img/music/cover15.jpg" alt="Racine carrée"><span class="title-tip">Racine carrée</span></a>
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Twenty One Pilots - Blurryface')"><img src="img/music/cover3.jpg" alt="Blurryface"><span class="title-tip">Blurryface</span></a>
         
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Kevin Penkin - Made in Abyss')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Kevin Penkin - Made in Abyss')"><img src="img/music/cover16.jpg" alt="Made in Abyss"><span class="title-tip">Made in Abyss</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('The Lumineers - Cleopatra (Deluxe)')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('The Lumineers - Cleopatra (Deluxe)')"><img src="img/music/cover17.jpg" alt="Cleopatra"><span class="title-tip">Cleopatra</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Little Simz - GREY Area')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Little Simz - GREY Area')"><img src="img/music/cover18.jpg" alt="GREY Area"><span class="title-tip">GREY Area</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Panchiko - D>E>A>T>H>M>E>T>A>L')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Panchiko - D>E>A>T>H>M>E>T>A>L')"><img src="img/music/cover19.jpg" alt="Deathmetal"><span class="title-tip">D>E>A>T>H...</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Fat Jon and Nujabes - Samurai Champloo Music Record: Departure')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Fat Jon and Nujabes - Samurai Champloo Music Record: Departure')"><img src="img/music/cover20.jpg" alt="Samurai Champloo Departure"><span class="title-tip">Samurai Champloo</span></a>
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('AJR - The Click')"><img src="img/music/cover4.jpg" alt="The Click"><span class="title-tip">The Click</span></a>
         
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Sam Tompkins - hi, my name is insecure.')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Sam Tompkins - hi, my name is insecure.')"><img src="img/music/cover21.jpg" alt="hi, my name is insecure."><span class="title-tip">hi, my name is...</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Post Malone - Hollywood’s Bleeding')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Post Malone - Hollywood’s Bleeding')"><img src="img/music/cover22.jpg" alt="Hollywood's Bleeding"><span class="title-tip">Hollywood's Bleeding</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Joey Valence & Brae - HYPERYOUTH')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Joey Valence & Brae - HYPERYOUTH')"><img src="img/music/cover23.jpg" alt="HYPERYOUTH"><span class="title-tip">HYPERYOUTH</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('girl in red - if i could make it go quiet')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('girl in red - if i could make it go quiet')"><img src="img/music/cover24.jpg" alt="if i could make it go quiet"><span class="title-tip">if i could make it...</span></a>
-        <a class="polaroid" href="#" onmouseenter="showHoverLabel('Amy Winehouse - Back to Black')" onmouseleave="hideHoverLabel()" onclick="showMobileTitle('Amy Winehouse - Back to Black')"><img src="img/music/cover25.jpg" alt="Back to Black"><span class="title-tip">Back to Black</span></a>
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Of Monsters and Men - My Head Is an Animal')"><img src="img/music/cover5.jpg" alt="My Head Is an Animal"><span class="title-tip">My Head Is an Animal</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Logic - Under Pressure (Deluxe)')"><img src="img/music/cover6.jpg" alt="Under Pressure"><span class="title-tip">Under Pressure</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('half alive - Now, Not Yet')"><img src="img/music/cover7.jpg" alt="Now, Not Yet"><span class="title-tip">Now, Not Yet</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('5 Seconds of Summer - CALM')"><img src="img/music/cover8.jpg" alt="CALM"><span class="title-tip">CALM</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Andy Mineo - Uncomfortable')"><img src="img/music/cover9.jpg" alt="Uncomfortable"><span class="title-tip">Uncomfortable</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Alec Benjamin - (Un) Commentary')"><img src="img/music/cover10.jpg" alt="(Un) Commentary"><span class="title-tip">(Un) Commentary</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Panic! at the Disco - Death of a Bachelor')"><img src="img/music/cover11.jpg" alt="Death of a Bachelor"><span class="title-tip">Death of a Bachelor</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('NAMEDARUMAAZ - GODBREATH BUDDHACESS (THE RE-UP EDITION)')"><img src="img/music/cover12.jpg" alt="Godbreath"><span class="title-tip">GODBREATH BUDDHACESS</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Mac Miller - Faces')"><img src="img/music/cover13.jpg" alt="Faces"><span class="title-tip">Faces</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('LSD - Labrinth, Sia & Diplo Present... LSD')"><img src="img/music/cover14.jpg" alt="LSD"><span class="title-tip">LSD</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Stromae - Racine carrée')"><img src="img/music/cover15.jpg" alt="Racine carrée"><span class="title-tip">Racine carrée</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Kevin Penkin - Made in Abyss')"><img src="img/music/cover16.jpg" alt="Made in Abyss"><span class="title-tip">Made in Abyss</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('The Lumineers - Cleopatra (Deluxe)')"><img src="img/music/cover17.jpg" alt="Cleopatra"><span class="title-tip">Cleopatra</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Little Simz - GREY Area')"><img src="img/music/cover18.jpg" alt="GREY Area"><span class="title-tip">GREY Area</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Panchiko - D>E>A>T>H>M>E>T>A>L')"><img src="img/music/cover19.jpg" alt="Deathmetal"><span class="title-tip">D>E>A>T>H...</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Fat Jon and Nujabes - Samurai Champloo Music Record: Departure')"><img src="img/music/cover20.jpg" alt="Samurai Champloo Departure"><span class="title-tip">Music Record: Departure</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Sam Tompkins - hi, my name is insecure.')"><img src="img/music/cover21.jpg" alt="hi, my name is insecure."><span class="title-tip">hi, my name is...</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Post Malone - Hollywood’s Bleeding')"><img src="img/music/cover22.jpg" alt="Hollywood's Bleeding"><span class="title-tip">Hollywood's Bleeding</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Joey Valence & Brae - HYPERYOUTH')"><img src="img/music/cover23.jpg" alt="HYPERYOUTH"><span class="title-tip">HYPERYOUTH</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('girl in red - if i could make it go quiet')"><img src="img/music/cover24.jpg" alt="if i could make it go quiet"><span class="title-tip">if i could make it...</span></a>
+        
+        <a class="polaroid" href="#" onclick="event.preventDefault(); showMobileTitle('Amy Winehouse - Back to Black')"><img src="img/music/cover25.jpg" alt="Back to Black"><span class="title-tip">Back to Black</span></a>
       </div>
     </section>
 
@@ -134,6 +164,33 @@
     </div>
 
   </div>
+
+<div class="chapter-footer">
+  <svg class="chapter-wave" viewBox="0 0 500 24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,12 Q62.5,0 125,12 T250,12 T375,12 T500,12" fill="none" stroke="#b45309" stroke-width="2"/>
+    <path d="M0,18 Q62.5,6 125,18 T250,18 T375,18 T500,18" fill="none" stroke="#3a3533" stroke-width="1"/>
+  </svg>
+  
+  <div class="chapter-links">
+    <a href="index.html">Home</a>
+    <a href="anime.html">Anime</a>
+    <a href="manga.html">Manga</a>
+    <a href="games.html">Games</a>
+    <a href="music.html">Music</a>
+    
+    <!-- Secret Unlocks -->
+    <a href="anirecommendation.html" class="secret" data-unlock-from="anime">More Anime →</a>
+    <a href="readingrecommendation.html" class="secret" data-unlock-from="manga">More Reading →</a>
+    <a href="guessanimusic.html" class="secret" data-unlock-from="music">Music Game →</a>
+    <a href="cardgame.html" class="secret" data-unlock-from="games">Card Game →</a>
+    <a href="blackjack.html" class="secret" data-unlock-from="games">Blackjack →</a>
+    <a href="zerozero48.html" class="secret" data-unlock-from="games">2048 Game →</a>
+    
+    <!-- Sanctum (Hidden until visited) -->
+    <a href="sanctum.html" class="secret" data-unlock-from="sanctum">Sanctum</a>
+  </div>
+  <p class="chapter-note">— when side A ends, flip the record —</p>
+</div>
 
   <footer>© Rorri · ghostedyourinterest.gamer.gd · made with 💜</footer>
 </div>
@@ -278,7 +335,21 @@
 
   fetchNowPlaying();
   setInterval(fetchNowPlaying, 15000);
-</script>
 
+  // ─── UNIVERSAL CHAPTER UNLOCK LOGIC ───
+  document.querySelectorAll('.chapter-links a.secret').forEach(link => {
+    const parent = link.dataset.unlockFrom;
+    if (localStorage.getItem('visited_' + parent)) {
+      link.classList.add('unlocked');
+      link.style.display = 'inline-block'; // Force it to show
+    }
+  });
+
+  // Mark THIS page as visited (Auto-detects the filename)
+  const thisPage = location.pathname.split('/').pop().replace('.html','') || 'index';
+  localStorage.setItem('visited_' + thisPage, 'true');
+
+</script>
+<script src="js/easter-eggs.js"></script>
 </body>
 </html>
