@@ -4,25 +4,163 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>home — ghostedyourinterest</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Caveat:wght@700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/stylus.css">
+<style>
+  * {
+    cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, auto !important;
+  }
+  a, button, summary, .minigame-note, .ps-link, .discord-btn, .press-card {
+    cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, pointer !important;
+  }
+
+  /* ─── VN Modal Styles ─── */
+  .vn-modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); z-index: 99999; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); }
+  .vn-modal.show { display: flex; }
+  .vn-box { background: #000; border: 4px solid #fff; border-radius: 4px; padding: 24px; max-width: 600px; width: 100%; display: flex; gap: 24px; position: relative; box-shadow: 0 0 0 4px #000, 0 0 30px rgba(255, 255, 255, 0.2); font-family: 'Outfit', sans-serif; }
+  .vn-face { flex: 0 0 80px; height: 80px; background: #111; border: 2px solid #fff; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 800; color: #b45309; text-shadow: 0 0 10px rgba(180, 83, 9, 0.5); user-select: none; }
+  .vn-content { flex: 1; display: flex; flex-direction: column; }
+  .vn-speaker { font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; color: #b45309; margin-bottom: 12px; text-transform: uppercase; }
+  .vn-text { font-size: 1.2rem; line-height: 1.5; color: #fff; min-height: 90px; margin-bottom: 16px; cursor: pointer; }
+  .vn-next { align-self: flex-end; font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; background: transparent; border: none; color: #b45309; cursor: pointer; padding: 6px 0; transition: all 0.2s; animation: blink 1.2s infinite; }
+  .vn-next:hover { color: #fff; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @media (max-width: 600px) { .vn-box { flex-direction: column; align-items: center; text-align: center; } .vn-face { display: none; } .vn-next { align-self: center; } }
+
+  /* ─── PRESS CARD (Refined) ─── */
+  .press-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0f0d0b;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" /><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/></filter><rect width="100" height="100" filter="url(%23n)"/></svg>');
+    border: 1px solid #b45309;
+    border-radius: 4px; /* More square, like a paper clipping */
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #f4ecd8;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.5);
+  }
+  .press-card:hover {
+    border-color: #fbbf24;
+    background: #1a1817;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 6px 15px rgba(180, 83, 9, 0.2);
+  }
+  .press-card-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .press-card-icon {
+    font-size: 1.5rem;
+    filter: grayscale(1) sepia(1) hue-rotate(350deg) saturate(2);
+  }
+  .press-card h3 {
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    font-size: 1.2rem;
+    color: #f4ecd8;
+  }
+  .press-card p {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.75rem;
+    color: #a39b94;
+    margin: 4px 0 0 0;
+    font-style: italic;
+  }
+  .press-card-arrow {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    color: #b45309;
+    font-size: 1rem;
+    transition: transform 0.2s;
+  }
+  .press-card:hover .press-card-arrow { transform: translateX(4px); }
+
+  /* ─── MINIGAMES 2x2 GRID (Fixed Sizing) ─── */
+  .minigame-notes-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .minigame-note {
+    position: relative;
+    padding: 20px;
+    text-align: left;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes stamp to bottom if text is short */
+    min-height: 150px;
+    height: 100%;
+  }
+  
+  .mn-header { 
+    font-size: 0.65rem; 
+    margin-bottom: 8px; 
+    font-weight: 800;
+    letter-spacing: 1px;
+    opacity: 0.9;
+  }
+  
+  .mn-content {
+    flex-grow: 1;
+    padding-right: 40px; /* Creates a safe zone for the stamp */
+  }
+  
+  .mn-title { 
+    font-size: 1.15rem; 
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  
+  .mn-desc { 
+    font-size: 0.8rem; 
+    line-height: 1.4;
+    margin-bottom: 0;
+    opacity: 0.75;
+  }
+  
+  /* The Stamp */
+  .mn-stamp {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid currentColor;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    transform: rotate(-4deg);
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 600px) {
+    .press-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .press-card-arrow { display: none; }
+    .minigame-notes-container { grid-template-columns: 1fr; }
+    .minigame-note { min-height: auto; }
+  }
+</style>
 </head>
 <body class="xiu-theme">
 
-<!-- Background Image & Overlay -->
 <div class="xiu-bg" style="background-image: linear-gradient(rgba(20, 30, 24, 0.9), rgba(20, 30, 24, 0.95)), url('img/20230911_093722.jpg');"></div>
 
 <div class="xiu-wrapper">
-
-  <!-- Main Card Container -->
   <div class="profile-card">
-    
-    <!-- Top Banner -->
+
     <div class="profile-banner">
       <img src="img/HDlThPxbUAAIfeC.jpg" alt="Banner">
     </div>
 
-    <!-- Navigation Bar -->
     <nav class="profile-nav">
       <a href="index.html" class="active">home</a>
       <a href="anime.html">anime</a>
@@ -31,12 +169,15 @@
       <a href="music.html">music</a>
     </nav>
 
-    <!-- Profile Header (Avatar + Info) -->
+    <div class="xiu-status-bar">
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">Currently idling...</span>
+    </div>
+
     <div class="profile-header">
       <div class="ph-avatar-wrap">
         <img src="img/avatar.jpg" alt="Rorri" class="ph-avatar">
       </div>
-      
       <div class="ph-info">
         <div class="ph-top-row">
           <div class="ph-name-block">
@@ -44,92 +185,310 @@
             <p>19 • infp-t • sagittarius</p>
           </div>
           <div class="ph-links-block">
-            <p>reality?<br>
-Therapy has not been effective, in fact,
-I have gotten worse</p>
+            <p>reality?<br>Therapy has not been effective, in fact, I have gotten worse</p>
           </div>
         </div>
-        
         <div class="ph-bio">
-          <p>hi .. im Rorri. i do in fact have hobbies like a normal teenager, currently a student who loves to procrastinate. 
-		  <br>feel free to dm me, <i>more active on discord than the rest</i> </p>
+          <p>Hi .. i'm Rorri. i do in fact have hobbies like a normal teenager, currently a student with too much time indulging in it alone.
+          <br>feel free to dm me, <i>more active on discord than the rest</i></p>
+        </div>
+        <a href="music.html" class="mini-np" id="mini-now-playing" style="display:none;">
+          <div class="mini-np-vinyl"></div>
+          <div class="mini-np-info">
+            <div class="mini-np-song" id="mini-np-song">Loading...</div>
+            <div class="mini-np-artist" id="mini-np-artist">...</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <p class="page-quote">good job finding me through discord, probably, I hope that's the case, if not <i>:sweats:</i></p>
+
+    <div class="profile-socials">
+      <a href="https://x.com/soulidaisy" target="_blank" class="ps-link"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"/></svg><span>twitter</span></a>
+      <a href="https://myanimelist.net/profile/eliel_source" target="_blank" class="ps-link"><span class="ico">📺</span><span>MAL</span></a>
+      <a href="https://anilist.co/user/elielSource/" target="_blank" class="ps-link"><span class="ico">🎴</span><span>AniList</span></a>
+      <a href="https://www.instagram.com/soulidaisy/" target="_blank" class="ps-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg><span>insta</span></a>
+      <a href="https://open.spotify.com/user/glw5r0ag9dda6zq3u8nk9m27c" target="_blank" class="ps-link"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg><span>spotify</span></a>
+      <a href="https://www.pinterest.com/soulidaisy/" target="_blank" class="ps-link"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.17 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg><span>pinterest</span></a>
+      <a href="https://backloggd.com/u/eliel_source/" target="_blank" class="ps-link"><span class="ico">🎮</span><span>backloggd</span></a>
+      <button class="ps-link discord-btn" onclick="document.getElementById('discord-popup').style.display='flex'"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z"/></svg><span>discord</span></button>
+    </div>
+
+    <div class="profile-text-block">
+      <div class="pt-header"><span>before you follow</span></div>
+      <div class="pt-body" style="padding-top: 0;">
+        <p style="font-family:'Quicksand',sans-serif; font-size: 0.9rem; color: #a39b94; margin: 0 0 16px;">tap the box below. it's not that deep, i promise.</p>
+        <details class="faq-drop">
+          <summary>click to expand — what you should actually know</summary>
+          <div class="faq-inner">
+            <details class="faq-item"><summary>what should I actually know before DMing you?</summary><p>I'm more active on discord than any other app but still pretty much active anywhere else reposting, liking or watching stuff. if I read something and dont reply within a day, I'm prolly touching grass, so <i>no</i> I'm not ignoring you, I'm just not looking atm.</p></details>
+            <details class="faq-item"><summary>what do you actually spend your time on?</summary><p>Watching anime, reading manga/manhwa/manhua/light novels, listening to music or playing singleplayer games. Occasionally I watch streamers, mostly vtubers or playing gacha. I do in fact touch grass, contrary to what my stats suggest.</p></details>
+            <details class="faq-item"><summary>can I recommend something to you?</summary><p>Yes, please. I'll judge it silently but I'll also genuinely try it if its not already on my blacklist. My personal lists are open invitations, not closed doors.</p></details>
+            <details class="faq-item"><summary>what won't you engage with?</summary><p>Arguments about which anime is "objectively" best. Genuinely I say this "everyone has their own taste" or like any recs that start with "if you don't like X you have no taste." urm no girl <i>swipes left</i></p></details>
+            <details class="faq-item"><summary>something feels off about the site — can I report it?</summary><p>Yes, please! DM me. Broken images, weird mobile layout, a rec that doesn't load — I'd rather fix it than let it rot cause this is kinda like a training for experience type of situation im experimenting on rn.</p></details>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- PRESS REDIRECT (More subtle, newspaper style) -->
+    <a href="press/midnight-press.html" class="press-card">
+      <div class="press-card-left">
+        <div class="press-card-icon">📰</div>
+        <div>
+          <h3>The Midnight Press</h3>
+          <p>QuebecATG's newsletter.</p>
         </div>
       </div>
+      <div class="press-card-arrow">Read →</div>
+    </a>
+
+    <!-- MINIGAMES (2x2 Grid) -->
+    <div class="minigame-notes-container">
+      <a href="guessanimusic.html" class="minigame-note">
+        <div class="mn-content">
+          <div class="mn-header">🎵 MINIGAME 01</div>
+          <div class="mn-title">Guess the Anime Music!</div>
+          <div class="mn-desc">Test your ears. Hover to listen.</div>
+        </div>
+        <div class="mn-stamp">PLAY</div>
+      </a>
+      
+      <a href="cardgame.html" class="minigame-note card-note">
+        <div class="mn-content">
+          <div class="mn-header">🃏 MINIGAME 02</div>
+          <div class="mn-title">Higher or Lower</div>
+          <div class="mn-desc">A simple card game. Keep your streak going!</div>
+        </div>
+        <div class="mn-stamp">PLAY</div>
+      </a>
+      
+      <a href="blackjack.html" class="minigame-note threes-note">
+        <div class="mn-content">
+          <div class="mn-header">🎰 MINIGAME 03</div>
+          <div class="mn-title">Midnight Casino</div>
+          <div class="mn-desc">Standard blackjack against the bots.</div>
+        </div>
+        <div class="mn-stamp">NEW</div>
+      </a>
+      
+      <a href="zerozero48.html" class="minigame-note threes-note">
+        <div class="mn-content">
+          <div class="mn-header">🧩 MINIGAME 04</div>
+          <div class="mn-title">ZeroZero48</div>
+          <div class="mn-desc">Slide, merge and pick perks.</div>
+        </div>
+        <div class="mn-stamp">PLAY</div>
+      </a>
     </div>
 
-    <!-- Social Links (8 Icons) -->
-    <div class="profile-socials">
-      <a href="https://x.com/soulidaisy" target="_blank" class="ps-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"/></svg>
-        <span>twitter</span>
-      </a>
-      <a href="https://myanimelist.net/profile/eliel_source" target="_blank" class="ps-link">
-        <span class="ico">📺</span>
-        <span>MAL</span>
-      </a>
-      <a href="https://anilist.co/user/elielSource/" target="_blank" class="ps-link">
-        <span class="ico">🎴</span>
-        <span>AniList</span>
-      </a>
-      <a href="https://www.instagram.com/soulidaisy/" target="_blank" class="ps-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-        <span>insta</span>
-      </a>
-      <a href="https://open.spotify.com/user/glw5r0ag9dda6zq3u8nk9m27c" target="_blank" class="ps-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-        <span>spotify</span>
-      </a>
-      <a href="https://www.pinterest.com/soulidaisy/" target="_blank" class="ps-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.951-7.252 4.17 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
-        <span>pinterest</span>
-      </a>
-      <a href="https://backloggd.com/u/eliel_source/" target="_blank" class="ps-link">
-        <span class="ico">🎮</span>
-        <span>backloggd</span>
-      </a>
-      <button class="ps-link discord-btn" onclick="document.getElementById('discord-popup').style.display='flex'">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12z"/></svg>
-        <span>discord</span>
-      </button>
-    </div>
-
-    <!-- Before You Follow Section (Updated Text) -->
-    <div class="profile-text-block">
-      <div class="pt-header">
-        <span>before you follow</span>
-      </div>
-      <div class="pt-body">
-        <p> i like, stuff like watching anime, reading manga/manhwa/manhua/light novels, listening to music, playing games etc normal stuff as a teen i guess. i watch a lot of vtubers in my downtime while getting a bit into gacha games too, mostly play singleplayer games. well you can check my list of stuff ive done on my other profiles give a follow if ya like, maybe i gonna experiment what types of things i can do on a website heheh.</p>
-      </div>
-<!-- Minigames Note -->
-<div class="minigame-note-wrap">
-  <a href="guessanimusic.html" class="minigame-note">
-    <div class="mn-header">🎮 MINIGAMES</div>
-    <div class="mn-title">Guess the Anime Music!</div>
-    <div class="mn-desc">Test your ears. Hover to listen, click to reveal.</div>
-    <div class="mn-stamp">NEW</div>
-  </a>
-</div>
+ <!-- CHAPTER FOOTER -->
+<div class="chapter-footer">
+  <svg class="chapter-wave" viewBox="0 0 500 24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,12 Q62.5,0 125,12 T250,12 T375,12 T500,12" fill="none" stroke="#b45309" stroke-width="2"/>
+    <path d="M0,18 Q62.5,6 125,18 T250,18 T375,18 T500,18" fill="none" stroke="#3a3533" stroke-width="1"/>
+  </svg>
+  
+  <div class="chapter-links">
+    <a href="index.html">Home</a>
+    <a href="anime.html">Anime</a>
+    <a href="manga.html">Manga</a>
+    <a href="games.html">Games</a>
+    <a href="music.html">Music</a>
+    
+    <!-- Secret Unlocks -->
+    <a href="anirecommendation.html" class="secret" data-unlock-from="anime">More Anime →</a>
+    <a href="readingrecommendation.html" class="secret" data-unlock-from="manga">More Reading →</a>
+    <a href="guessanimusic.html" class="secret" data-unlock-from="music">Music Game →</a>
+    <a href="cardgame.html" class="secret" data-unlock-from="games">Card Game →</a>
+    <a href="blackjack.html" class="secret" data-unlock-from="games">Blackjack →</a>
+    <a href="zerozero48.html" class="secret" data-unlock-from="games">2048 Game →</a>
+      <a href="press/index.html" class="secret unlocked">The Press</a> <!-- Always visible -->
+    <!-- Sanctum (Hidden until visited) -->
+    <a href="sanctum.html" class="secret" data-unlock-from="sanctum">Sanctum</a>
+  </div>
+      <p class="chapter-note">— go through the whole thing backwards, I don't mind —</p>
     </div>
 
   </div>
-
-  <footer class="xiu-footer">
-    © Rorri · ghostedyourinterest.gamer.gd · made with 💜
-  </footer>
 </div>
 
-<!-- Customized Discord Modal -->
+<footer class="xiu-footer">
+  © Rorri · ghostedyourinterest.gamer.gd · made with 💜
+</footer>
+
+<!-- Discord Modal & VN Modal -->
 <div id="discord-popup" class="modal-overlay" onclick="if(event.target === this) this.style.display='none'">
   <div class="modal-content">
     <h3 class="modal-title">Discord Server In Progress! 🚧</h3>
     <p class="modal-text">The server is still being built, but you can add me directly:</p>
     <div class="modal-id">rorri_1565</div>
-    
     <button class="modal-copy-btn" onclick="navigator.clipboard.writeText('rorri_1565'); this.innerText='Copied!'; setTimeout(() => this.innerText='Copy ID', 2000);">Copy ID</button>
     <button class="modal-close" onclick="document.getElementById('discord-popup').style.display='none'">Close</button>
   </div>
 </div>
 
+<div class="vn-modal" id="vn-modal">
+  <div class="vn-box">
+    <div class="vn-face">R</div>
+    <div class="vn-content">
+      <div class="vn-speaker" id="vn-speaker">RORRI</div>
+      <div class="vn-text" id="vn-text"></div>
+      <button class="vn-next" id="vn-next">next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const myStatus = { type: "idle", text: "Currently idling... hmu on discord!" };
+  const statusEl = document.getElementById('status-text');
+  const dotEl = document.getElementById('status-dot');
+  if (statusEl && dotEl) { statusEl.innerText = myStatus.text; dotEl.className = 'status-dot ' + myStatus.type; }
+
+  const lastFmUsername = "soulidaisy";
+  const lastFmApiKey = "b4169a9c563ea07576b7e4c3bd3774e3";
+  async function fetchMiniNowPlaying() {
+    try {
+      const res = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${lastFmUsername}&api_key=${lastFmApiKey}&format=json&limit=1`);
+      const data = await res.json();
+      const track = data.recenttracks.track[0];
+      const npWidget = document.getElementById('mini-now-playing');
+      if (track['@attr'] && track['@attr'].nowplaying === "true") {
+        document.getElementById('mini-np-song').innerText = track.name;
+        document.getElementById('mini-np-artist').innerText = track.artist['#text'];
+        npWidget.style.display = 'flex';
+      } else { npWidget.style.display = 'none'; }
+    } catch (err) { console.log("Last.fm error", err); }
+  }
+  fetchMiniNowPlaying(); setInterval(fetchMiniNowPlaying, 30000);
+
+  // ─── UNIVERSAL CHAPTER UNLOCK LOGIC ───
+  document.querySelectorAll('.chapter-links a.secret').forEach(link => {
+    const parent = link.dataset.unlockFrom;
+    if (localStorage.getItem('visited_' + parent)) {
+      link.classList.add('unlocked');
+      link.style.display = 'inline-block'; // Force it to show
+    }
+  });
+
+  // Mark THIS page as visited (Auto-detects the filename)
+  const thisPage = location.pathname.split('/').pop().replace('.html','') || 'index';
+  localStorage.setItem('visited_' + thisPage, 'true');
+
+  /* Konami Code VN Script */
+  const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let konamiIdx = 0;
+  let vnIdx = 0;
+  let isTyping = false;
+  let typeTimeout = null;
+
+  const vnScript = [
+    { speaker: 'RORRI', text: "Oh. You actually know the Konami code." },
+    { speaker: 'RORRI', text: "I respect the curiosity. Most people just scroll and leave." },
+    { speaker: 'RORRI', text: "Since you're clearly the kind of person who presses random buttons in a specific order on a stranger's website...| I guess you deserve a secret." },
+    { speaker: 'RORRI', text: "First things first. You need to watch *Ping Pong the Animation*.| It looks weird. The art style is intentionally ugly. Get over it. It's a masterpiece." },
+    { speaker: 'RORRI', text: "Next...| you have to watch the Monogatari series. But you can't just watch it however you want." },
+    { speaker: 'RORRI', text: "If you watch it in release order and get confused, that's on you. I warned you.| Here is the chronological watch order. Take notes." },
+    { speaker: 'RORRI', text: "Start with Bakemonogatari. Then the Kizumonogatari films. Then Nisemonogatari. Then Nekomonogatari Kuro.| Got it? Good." },
+    { speaker: 'RORRI', text: "Next is Monogatari 2nd Season. But ONLY until episode 11. Then you pause and watch Hanamonogatari.| Then you can finish the rest of the season." },
+    { speaker: 'RORRI', text: "Then comes Koyomi History. Tsukimonogatari. Owarimonogatari. Koyomimonogatari.| And Owarimonogatari 2nd Season." },
+    { speaker: 'RORRI', text: "Finally: Zoku Owarimonogatari. Then Monogatari Series: Off Season until episode 8.| Then Monster Season, and end with the Zankoku Douwa." },
+    { speaker: 'RORRI', text: "If you watch it in the wrong order, the anime police will break down your door.| The watch order is a rite of passage. Do not mess it up." },
+    { speaker: 'RORRI', text: "And finally...| you need to watch Hololive. Specifically Gigi Murin." },
+    { speaker: 'RORRI', text: "I am not taking questions on this. She is a chaotic gremlin and she is perfect. Just go watch her streams.| It's part of the required curriculum now." },
+    { speaker: 'RORRI', text: "Actually, you know what? Just watch all of it.| You clearly have time. You're literally doing cheat codes on a personal blog." },
+    { speaker: 'RORRI', text: "Go outside after this, though. I'm serious. Touch grass. Look at a tree.| The internet will still be here when you get back." },
+    { speaker: 'RORRI', text: "Okay. That's all. Tell no one. ✦" }
+  ];
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (key === konamiCode[konamiIdx]) {
+      konamiIdx++;
+      if (konamiIdx === konamiCode.length) { konamiIdx = 0; openVN(); }
+    } else { konamiIdx = 0; }
+  });
+
+  let audioCtx;
+  function playBlip() {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+      osc.type = 'square'; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.03, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+      osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+    } catch(e) {}
+  }
+
+  function openVN() { vnIdx = 0; document.getElementById('vn-modal').classList.add('show'); renderVN(); }
+
+  function renderVN() {
+    const line = vnScript[vnIdx];
+    const textEl = document.getElementById('vn-text');
+    const nextBtn = document.getElementById('vn-next');
+    document.getElementById('vn-speaker').textContent = line.speaker;
+    nextBtn.classList.remove('ready'); nextBtn.textContent = "next →"; nextBtn.style.opacity = "0";
+    textEl.textContent = ""; isTyping = true; clearTimeout(typeTimeout);
+    const parts = line.text.split('|'); let currentPart = 0; let currentIndex = 0; let fullText = "";
+
+    function typeCharacter() {
+      if (currentPart >= parts.length) { finishTyping(nextBtn); return; }
+      const textToType = parts[currentPart];
+      if (currentIndex < textToType.length) {
+        fullText += textToType[currentIndex]; textEl.textContent = fullText;
+        if (textToType[currentIndex] !== ' ') playBlip();
+        currentIndex++; typeTimeout = setTimeout(typeCharacter, 30);
+      } else {
+        currentPart++; currentIndex = 0;
+        if (currentPart < parts.length) { typeTimeout = setTimeout(typeCharacter, 600); }
+        else { finishTyping(nextBtn); }
+      }
+    }
+    typeCharacter();
+  }
+
+  function finishTyping(nextBtn) {
+    clearTimeout(typeTimeout); isTyping = false;
+    nextBtn.style.opacity = "1"; nextBtn.classList.add('ready');
+    nextBtn.textContent = vnIdx === vnScript.length - 1 ? 'close ✕' : 'next →';
+  }
+
+  function vnAdvance() {
+    if (isTyping) {
+      clearTimeout(typeTimeout);
+      const line = vnScript[vnIdx];
+      const textEl = document.getElementById('vn-text');
+      textEl.textContent = line.text.replace(/\|/g, ''); 
+      finishTyping(document.getElementById('vn-next'));
+      return; 
+    }
+    vnIdx++;
+    if (vnIdx >= vnScript.length) { closeVN(); return; }
+    renderVN();
+  }
+
+  function closeVN() {
+    document.getElementById('vn-modal').classList.remove('show');
+    clearTimeout(typeTimeout);
+    vnIdx = 0;
+  }
+
+  document.getElementById('vn-next').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (vnIdx === vnScript.length - 1 && !isTyping) { closeVN(); } else { vnAdvance(); }
+  });
+
+  document.getElementById('vn-text').addEventListener('click', (e) => {
+    e.stopPropagation();
+    vnAdvance();
+  });
+
+  document.getElementById('vn-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'vn-modal') { closeVN(); }
+  });
+</script>
+<script src="js/easter-eggs.js"></script>
 </body>
 </html>
