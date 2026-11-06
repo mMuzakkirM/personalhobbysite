@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anime Recommendations — ghostedyourinterest</title>
+<meta name="description" content="Curated anime recommendations by Rorri.">
+<link rel="icon" href="img/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/stylus.css">
+<script src="js/watched.js"></script>
+<style>
+  /* Force body and wrap to block layout */
+  body.editorial-theme {
+    display: block !important;
+    padding: 40px 20px 80px !important;
+    background-color: #0f0f11 !important;
+  }
+
+  body.editorial-theme .wrap {
+    display: block !important;
+    max-width: 1000px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+  /* Nav and header centered */
+  body.editorial-theme .topnav.editorial-nav {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    margin-bottom: 30px !important;
+  }
+
+  body.editorial-theme .page-header { 
+    text-align: center; 
+    padding: 20px 20px 40px; 
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  body.editorial-theme .page-header h1 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: clamp(1.8rem, 7vw, 3rem);
+    color: #fff; 
+    text-transform: uppercase; 
+    letter-spacing: -1px; 
+    margin: 0 0 20px 0;
+    word-wrap: break-word;
+    line-height: 1.1;
+  }
+
+  /* ─── JIKAN SEARCH BAR ─── */
+  .jikan-search-wrap {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 0 auto 10px;
+    max-width: 500px;
+  }
+  .jikan-search-wrap input {
+    flex: 1;
+    padding: 12px 16px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .jikan-search-wrap input:focus { border-color: #fff; }
+  
+  .jikan-search-wrap button {
+    padding: 12px 24px;
+    background: #fff;
+    color: #111;
+    border: none;
+    border-radius: 4px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+  }
+  .jikan-search-wrap button:hover { background: #e0e0e0; }
+
+  #search-results {
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: left;
+  }
+  .search-result-card {
+    display: flex;
+    gap: 15px;
+    background: #18181b;
+    border: 1px solid #27272a;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+  .search-result-card img {
+    width: 60px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  .search-result-info h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    margin: 0 0 5px 0;
+    color: #fff;
+  }
+  .search-result-info p {
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    margin: 0;
+  }
+  .watched-badge {
+    display: inline-block;
+    background: #22c55e;
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 5px;
+    text-transform: uppercase;
+  }
+  /* Update input/button states */
+  .jikan-search-wrap input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .jikan-search-wrap button:disabled {
+    background: #555;
+    color: #888;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .search-loading {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  /* Article container */
+  body.editorial-theme .anirec-wrap {
+    display: block !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+  body.editorial-theme .magazine-article {
+    display: block !important;
+    width: 100% !important;
+    max-width: 900px !important;
+    margin: 0 auto 60px !important;
+    background: #18181b !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    border: 1px solid #27272a !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+  }
+
+  /* HERO */
+  body.editorial-theme .mag-hero {
+    display: block !important;
+    width: 100% !important;
+    height: 320px !important;
+    background-size: cover !important;
+    background-position: center 30% !important;
+    background-repeat: no-repeat !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%) !important;
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%) !important;
+  }
+
+  /* Content */
+  body.editorial-theme .mag-content {
+    display: block !important;
+    padding: 0 40px 50px !important;
+    margin-top: -60px !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  body.editorial-theme .mag-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 3.5rem !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    line-height: 1 !important;
+    margin: 0 0 20px 0 !important;
+    text-transform: uppercase !important;
+    word-wrap: break-word !important;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.8) !important;
+  }
+
+  body.editorial-theme .mag-divider {
+    display: flex !important;
+    justify-content: flex-end !important;
+    border-top: 2px solid #555 !important;
+    margin-bottom: 40px !important;
+    position: relative !important;
+  }
+
+  body.editorial-theme .mag-brand {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.8rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    color: #a0a0a0 !important;
+    background: #18181b !important;
+    padding: 0 10px !important;
+    margin-top: -10px !important;
+  }
+
+  body.editorial-theme .mag-synopsis-row {
+    display: flex !important;
+    gap: 40px !important;
+    align-items: flex-start !important;
+  }
+
+  body.editorial-theme .mag-cover {
+    flex: 0 0 200px !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6) !important;
+    border: 1px solid #333 !important;
+  }
+  body.editorial-theme .mag-cover img {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  body.editorial-theme .mag-synopsis-text { flex: 1 !important; }
+
+  body.editorial-theme .mag-heading {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    margin-bottom: 16px !important;
+  }
+
+  body.editorial-theme .mag-desc {
+    font-family: 'Quicksand', sans-serif !important;
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+    color: #b0b0b0 !important;
+    margin-bottom: 16px !important;
+  }
+
+  body.editorial-theme .mag-tags {
+    display: flex !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+  body.editorial-theme .mag-tags span {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    padding: 8px 24px !important;
+    border-radius: 999px !important;
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+    background: transparent !important;
+  }
+
+  body.editorial-theme .mag-gallery {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px !important;
+  }
+  body.editorial-theme .mag-gallery img {
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    border: 1px solid #333 !important;
+    background: #1a1a1a !important;
+    display: block !important;
+  }
+
+  @media (max-width: 768px) {
+    body.editorial-theme .mag-hero { height: 180px !important; }
+    body.editorial-theme .mag-content { padding: 0 20px 30px !important; margin-top: -40px !important; }
+    body.editorial-theme .mag-title { font-size: 2.4rem !important; }
+    body.editorial-theme .mag-synopsis-row { flex-direction: column !important; gap: 16px !important; }
+    body.editorial-theme .mag-cover { flex: none !important; width: 140px !important; margin: 0 auto !important; }
+    body.editorial-theme .mag-gallery { grid-template-columns: repeat(2, 1fr) !important; }
+    .jikan-search-wrap { flex-direction: column; }
+  }
+
+* {
+  cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, auto !important;
+}
+a, button, input {
+  cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, pointer !important;
+}
+
+</style>
+</head>
+<body class="editorial-theme">
+<div class="wrap">
+
+  <nav class="topnav editorial-nav">
+    <a href="index.html">home</a>
+    <a href="anime.html">anime</a>
+    <a href="manga.html">manga</a>
+    <a href="games.html">games</a>
+    <a href="music.html">music</a>
+  </nav>
+
+  <header class="page-header">
+    <h1>Anime Recommendations</h1>
+    
+    <!-- Jikan Search Bar -->
+    <p style="color: #a0a0a0; font-size: 0.9rem; margin-bottom: 15px; font-family: 'Quicksand', sans-serif;">
+      Search to check if I've watched the anime or not yet. I'm too lazy to keep my profiles 100% synced and you're too lazy to look at my other anime profiles.
+    </p>
+    <div class="jikan-search-wrap">
+	<input type="text" id="anime-search" placeholder="Search any anime..." autocomplete="off" onkeydown="if(event.key==='Enter') searchAnime()">
+      <button id="search-btn" onclick="searchAnime()">Search</button>
+    </div>
+    <div id="search-results"></div>
+  </header>
+
+<p class="page-quote">if you came here from my top 30, congratulations, you have taste</p>
+
+  <div class="anirec-wrap">
+
+    <!-- RECOMMENDATION 1 -->
+    <article class="magazine-article" data-year="2026">
+      <div class="mag-hero" style="background-image: url('img/anirec/aniback1.jpg');"></div>
+      <div class="mag-content">
+        <h2 class="mag-title">Sentenced<br>to Be a Hero</h2>
+        <div class="mag-divider"><span class="mag-brand">RORRI RECS</span></div>
+        <div class="mag-synopsis-row">
+          <div class="mag-cover">
+            <img src="img/anirec/anirec1.jpg" alt="Sentenced to Be a Hero Cover">
+          </div>
+          <div class="mag-synopsis-text">
+            <h3 class="mag-heading">Summary</h3>
+            <p class="mag-desc">
+              Heroism is literally a punishment. Convicted criminals are forced to fight on the front lines against the Demon King's army and if they die, theyre just revived to keep fighting. It sounds ridiculously bleak but the story focuses on the leftovers characters caught in this system.
+            </p>
+            <p class="mag-desc" style="margin-bottom: 24px;">
+              When their leader who was convicted for killing a goddess andends up forging a contract with another goddess as this sets off a chain of events that might actually change the world. It's brutal, fast paced and the action choreography is top tier. Watch this if you want a dark fantasy that actually delivers on its premise.
+            </p>
+            <div class="mag-tags">
+              <span>Dark Fantasy</span>
+              <span>Action</span>
+              <span>Adventure</span>
+            </div>
+          </div>
+        </div>
+        <h3 class="mag-heading" style="text-align: center; margin-top: 60px; margin-bottom: 20px; font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase;">Gallery</h3>
+        <div class="mag-gallery">
+          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHcwM3IybXFoNHhpdnR0b3dzb3BoY3YzaThtb2w4ZmcwOWdwMnFlcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/tuy10jiaK8u70UV6Cw/giphy.gif" alt="Sentenced to Be a Hero Fight">
+          <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bjRnNXhjamlyYW9yeXkxZm45dWl6ZTlsZnoybjR1ODU3a2t2M3pmbCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/0r0uisDiAFTHCIlKUc/giphy.gif" alt="Sentenced to Be a Hero Fight 2">
+          <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3eGxiem5pdmozd2p0ajJ3eWRxMHN6bHQ4eXQ2ZW1wdWprMjQ0enJscCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/GBftY49VspM3I2URAi/giphy.gif" alt="Sentenced to Be a Hero Xylo">
+        </div>
+      </div>
+    </article>
+
+    <!-- RECOMMENDATION 2 -->
+    <article class="magazine-article" data-year="2025">
+      <div class="mag-hero" style="background-image: url('img/anirec/aniback2.jpeg');"></div>
+      <div class="mag-content">
+        <h2 class="mag-title">Apocalypse<br>Hotel</h2>
+        <div class="mag-divider"><span class="mag-brand">RORRI RECS</span></div>
+        <div class="mag-synopsis-row">
+          <div class="mag-cover">
+            <img src="img/anirec/anirec2.jpg" alt="Apocalypse Hotel Cover">
+          </div>
+          <div class="mag-synopsis-text">
+            <h3 class="mag-heading">Summary</h3>
+            <p class="mag-desc">
+              This one is weird in the absolute best way possible. It’s a quiet, offbeat post-apocalyptic story that somehow feels ridiculously cozy instead of bleak. It leans hard into atmosphere, letting the silence, mundane hotel routines and tiny character moments do all the heavy lifting.
+            </p>
+            <p class="mag-desc" style="margin-bottom: 24px;">
+              There’s this constant feeling of emptiness mixed with warmth, like the world literally ended but hospitality didnt. Do <b>not</b> go in expecting crazy action or giant plot twists. Watch this if you love slow burns and anime that just trust you to sit in the mood.
+            </p>
+            <div class="mag-tags">
+              <span>Sci-Fi</span>
+              <span>Slice of Life</span>
+              <span>Cozy Apocalypse</span>
+            </div>
+          </div>
+        </div>
+        <h3 class="mag-heading" style="text-align: center; margin-top: 60px; margin-bottom: 20px; font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase;">Gallery</h3>
+        <div class="mag-gallery">
+          <img src="img/anirec/2src1.gif" alt="Apocalypse Hotel1 GIF">
+          <img src="img/anirec/2src2.gif" alt="Apocalypse Hotel2 GIF">
+          <img src="img/anirec/2src3.gif" alt="Apocalypse Hotel3 GIF">
+        </div>
+      </div>
+    </article>
+
+    <!-- RECOMMENDATION 3 -->
+    <article class="magazine-article" data-year="2025">
+      <div class="mag-hero" style="background-image: url('img/anirec/aniback3.jpg');"></div>
+      <div class="mag-content">
+        <h2 class="mag-title">Lost in<br>Starlight</h2>
+        <div class="mag-divider"><span class="mag-brand">RORRI RECS</span></div>
+        <div class="mag-synopsis-row">
+          <div class="mag-cover">
+            <img src="img/anirec/anirec3.jpg" alt="Lost in Starlight Cover">
+          </div>
+          <div class="mag-synopsis-text">
+            <h3 class="mag-heading">Summary</h3>
+            <p class="mag-desc">
+              This feels incredibly intimate and dreamy, almost like you're just drifting through someone else's memories instead of watching a straightforward plot. It’s romance mixed with soft sci-fi elements, relying entirely on its gorgeous visuals and soundtrack to sell the emotion. The pacing is gentle, almost fragile but thats exactly what gives it its charm.
+            </p>
+            <p class="mag-desc" style="margin-bottom: 24px;">
+              When you watch this, dont stress over the mechanics or explanations. Focus on the visual language and the emotional resonance. This is for the people who love quiet romance, reflective sci-fi and stories that actually leave space for you to interpret things yourself.
+            </p>
+            <div class="mag-tags">
+              <span>Romance</span>
+              <span>Sci-Fi</span>
+              <span>Introspective</span>
+            </div>
+          </div>
+        </div>
+        <h3 class="mag-heading" style="text-align: center; margin-top: 60px; margin-bottom: 20px; font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase;">Gallery</h3>
+        <div class="mag-gallery">
+          <img src="img/anirec/3src1.jpg" alt="Lost in Starlight Screenshot 1">
+          <img src="img/anirec/3src2.jpg" alt="Lost in Starlight Screenshot 2">
+          <img src="img/anirec/3src3.jpg" alt="Lost in Starlight Screenshot 3">
+        </div>
+      </div>
+    </article>
+
+    <!-- RECOMMENDATION 4 -->
+    <article class="magazine-article" data-year="2025">
+      <div class="mag-hero" style="background-image: url('img/anirec/aniback4.jpg');"></div>
+      <div class="mag-content">
+        <h2 class="mag-title">A Ninja and an<br>Assassin</h2>
+        <div class="mag-divider"><span class="mag-brand">RORRI RECS</span></div>
+        <div class="mag-synopsis-row">
+          <div class="mag-cover">
+            <img src="img/anirec/anirec4.jpg" alt="A Ninja and an Assassin Cover">
+          </div>
+          <div class="mag-synopsis-text">
+            <h3 class="mag-heading">Summary</h3>
+            <p class="mag-desc">
+              Two deadly professionals from rival factions are forced to live under the same roof. If that sounds like a setup for an action-packed bloodbath, think again.
+            </p>
+            <p class="mag-desc" style="margin-bottom: 24px;">
+              It's a fantastic action comedy that leans heavily into domestic slice of life tropes while occasionally reminding you how terrifyingly lethal these two actually are. The dynamic between them is hilarious and surprisingly wholesome.
+            </p>
+            <div class="mag-tags">
+              <span>Comedy</span>
+              <span>Action</span>
+              <span>Slice of Life</span>
+            </div>
+          </div>
+        </div>
+        <h3 class="mag-heading" style="text-align: center; margin-top: 60px; margin-bottom: 20px; font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase;">Gallery</h3>
+        <div class="mag-gallery">
+          <img src="img/anirec/4src1.jpg" alt="Ninja and Assassin Screenshot 1">
+          <img src="img/anirec/4src2.gif" alt="Ninja and Assassin Screenshot 2">
+          <img src="img/anirec/4src3.gif" alt="Ninja and Assassin Screenshot 3">
+        </div>
+      </div>
+    </article>
+
+    <!-- RECOMMENDATION 5 -->
+    <article class="magazine-article" data-year="2024">
+      <div class="mag-hero" style="background-image: url('img/anirec/aniback5.jpg');"></div>
+      <div class="mag-content">
+        <h2 class="mag-title">Yatagarasu</h2>
+        <div class="mag-divider"><span class="mag-brand">RORRI RECS</span></div>
+        <div class="mag-synopsis-row">
+          <div class="mag-cover">
+            <img src="img/anirec/anirec5.jpg" alt="Yatagarasu Cover">
+          </div>
+          <div class="mag-synopsis-text">
+            <h3 class="mag-heading">Summary</h3>
+            <p class="mag-desc">
+              A stunning fantasy series centered around a world where a young boy is chosen to impersonate the prince and gets tangled in the ruthless politics of the imperial court.
+            </p>
+            <p class="mag-desc" style="margin-bottom: 24px;">
+              The community loves this one for its incredibly rich worldbuilding, beautiful art style and deep political intrigue. If you enjoy mystery and complex plots where everyone is playing a dangerous game, this is top-tier.
+            </p>
+            <div class="mag-tags">
+              <span>Fantasy</span>
+              <span>Mystery</span>
+              <span>Political</span>
+            </div>
+          </div>
+        </div>
+        <h3 class="mag-heading" style="text-align: center; margin-top: 60px; margin-bottom: 20px; font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase;">Gallery</h3>
+        <div class="mag-gallery">
+          <img src="img/anirec/5src1.jpg" alt="Yatagarasu Screenshot 1">
+          <img src="img/anirec/5src2.jpg" alt="Yatagarasu Screenshot 2">
+          <img src="img/anirec/5src3.jpg" alt="Yatagarasu Screenshot 3">
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+<div class="chapter-footer">
+  <svg class="chapter-wave" viewBox="0 0 500 24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,12 Q62.5,0 125,12 T250,12 T375,12 T500,12" fill="none" stroke="#b45309" stroke-width="2"/>
+    <path d="M0,18 Q62.5,6 125,18 T250,18 T375,18 T500,18" fill="none" stroke="#3a3533" stroke-width="1"/>
+  </svg>
+  
+  <div class="chapter-links">
+    <a href="index.html">Home</a>
+    <a href="anime.html">Anime</a>
+    <a href="manga.html">Manga</a>
+    <a href="games.html">Games</a>
+    <a href="music.html">Music</a>
+    
+    <!-- Secret Unlocks -->
+    <a href="anirecommendation.html" class="secret" data-unlock-from="anime">More Anime →</a>
+    <a href="readingrecommendation.html" class="secret" data-unlock-from="manga">More Reading →</a>
+    <a href="guessanimusic.html" class="secret" data-unlock-from="music">Music Game →</a>
+    <a href="cardgame.html" class="secret" data-unlock-from="games">Card Game →</a>
+    <a href="blackjack.html" class="secret" data-unlock-from="games">Blackjack →</a>
+    <a href="zerozero48.html" class="secret" data-unlock-from="games">2048 Game →</a>
+    
+    <!-- Sanctum (Hidden until visited) -->
+    <a href="sanctum.html" class="secret" data-unlock-from="sanctum">Sanctum</a>
+  </div>
+  <p class="chapter-note">— you've unlocked the more anime shelf. please use it responsibly. —</p>
+</div>
+
+  <footer>© Rorri · ghostedyourinterest.gamer.gd · made with 💜</footer>
+</div>
+
+<script>
+  // ── Pull all buckets from watched.js (with graceful fallbacks) ──
+  const WATCHED  = typeof myWatchedList  !== 'undefined' && Array.isArray(myWatchedList)  ? myWatchedList  : [];
+  const WATCHING = typeof myWatchingList !== 'undefined' && Array.isArray(myWatchingList) ? myWatchingList : [];
+  const ONHOLD   = typeof myOnHoldList   !== 'undefined' && Array.isArray(myOnHoldList)   ? myOnHoldList   : [];
+  const DROPPED  = typeof myDroppedList  !== 'undefined' && Array.isArray(myDroppedList)  ? myDroppedList  : [];
+  const PLANNING = typeof myPlanningList !== 'undefined' && Array.isArray(myPlanningList) ? myPlanningList : [];
+
+  let isSearching = false;
+  let lastSearchTime = 0;
+  const COOLDOWN_MS = 1500;
+
+  function normalize(str) {
+    return (str || '')
+      .toLowerCase()
+      .replace(/[^\w\s]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  const SETS = {
+    watched:  new Set(WATCHED.map(normalize)),
+    watching: new Set(WATCHING.map(normalize)),
+    onhold:   new Set(ONHOLD.map(normalize)),
+    dropped:  new Set(DROPPED.map(normalize)),
+    planning: new Set(PLANNING.map(normalize)),
+  };
+
+  function getStatus(anime) {
+    const candidates = [anime.title, anime.title_english]
+      .filter(Boolean)
+      .map(normalize);
+    for (const [status, set] of Object.entries(SETS)) {
+      if (candidates.some(c => set.has(c))) return status;
+    }
+    return null;
+  }
+
+  const BADGES = {
+    watched:  { label: "✓ Completed",     bg: "#22c55e", color: "#000" },
+    watching: { label: "▶ Watching",      bg: "#3b82f6", color: "#fff" },
+    onhold:   { label: "⏸ On-Hold",       bg: "#eab308", color: "#000" },
+    dropped:  { label: "✕ Dropped",       bg: "#ef4444", color: "#fff" },
+    planning: { label: "☆ Plan to Watch", bg: "#a855f7", color: "#fff" },
+  };
+
+  async function searchAnime() {
+    if (isSearching) return;
+    const now = Date.now();
+    if (now - lastSearchTime < COOLDOWN_MS) return;
+
+    const query = document.getElementById('anime-search').value.trim();
+    const resultsDiv = document.getElementById('search-results');
+    const btn = document.getElementById('search-btn');
+    const input = document.getElementById('anime-search');
+
+    if (!query) {
+      resultsDiv.innerHTML = '<p style="color:#ff9999; text-align:center;">Please enter a title.</p>';
+      return;
+    }
+
+    isSearching = true;
+    lastSearchTime = now;
+    btn.disabled = true;
+    input.disabled = true;
+    btn.innerHTML = '<span class="search-loading"></span>';
+    resultsDiv.innerHTML = '<p style="color:#a0a0a0; text-align:center; padding: 20px;">Searching...</p>';
+
+    try {
+      const url = `https://api.tenrai.org/v1/anime?q=${encodeURIComponent(query)}&limit=10`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`API status ${response.status}`);
+      const data = await response.json();
+      const allResults = data.data || [];
+
+      const knownResults = allResults
+        .map(a => ({ anime: a, status: getStatus(a) }))
+        .filter(x => x.status !== null);
+
+      resultsDiv.innerHTML = '';
+
+      if (knownResults.length === 0) {
+        resultsDiv.innerHTML = `
+          <p style="color:#a0a0a0; text-align:center; padding: 20px;">
+            I haven't logged <b>"${query}"</b> on MAL yet. 😴
+          </p>`;
+        return;
+      }
+
+      knownResults.forEach(({ anime, status }) => {
+        const badge = BADGES[status];
+        const card = document.createElement('div');
+        card.className = 'search-result-card';
+        card.innerHTML = `
+          <img src="${anime.images?.jpg?.image_url || ''}" alt="${anime.title}">
+          <div class="search-result-info">
+            <h3>${anime.title}</h3>
+            <p>${anime.type || 'Unknown'} • ${anime.episodes || '?'} eps • Score: ${anime.score || 'N/A'}</p>
+            <span class="watched-badge" style="background:${badge.bg}; color:${badge.color};">${badge.label}</span>
+          </div>
+        `;
+        resultsDiv.appendChild(card);
+      });
+
+    } catch (error) {
+      console.error("API Error:", error);
+      resultsDiv.innerHTML = `<p style="color:#ff9999; text-align:center; padding: 20px;">Network error or API is down. Try again in a moment.</p>`;
+    } finally {
+      isSearching = false;
+      btn.disabled = false;
+      input.disabled = false;
+      btn.innerText = 'Search';
+    }
+  }
+
+  // ─── UNIVERSAL CHAPTER UNLOCK LOGIC ───
+  document.querySelectorAll('.chapter-links a.secret').forEach(link => {
+    const parent = link.dataset.unlockFrom;
+    if (localStorage.getItem('visited_' + parent)) {
+      link.classList.add('unlocked');
+      link.style.display = 'inline-block'; // Force it to show
+    }
+  });
+
+  // Mark THIS page as visited (Auto-detects the filename)
+  const thisPage = location.pathname.split('/').pop().replace('.html','') || 'index';
+  localStorage.setItem('visited_' + thisPage, 'true');
+
+</script>
+<script src="js/easter-eggs.js"></script>
+</body>
+</html>
