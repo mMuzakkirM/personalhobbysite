@@ -6,6 +6,15 @@
 <title>Top 30 Anime — ghostedyourinterest</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/stylus.css">
+	<style>
+/* Skyrim cursor with themed hover (uses your cursors-4u asset) */
+* {
+  cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, auto !important;
+}
+a, button, .cal-item {
+  cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, pointer !important;
+}
+    </style>
 </head>
 <body class="calendar-theme">
 <div class="wrap">
@@ -17,6 +26,8 @@
     <a href="games.html">games</a>
     <a href="music.html">music</a>
   </nav>
+
+<p class="page-quote">I've watched too much and I need someone to blame besides myself</p>
 
   <header class="calendar-header">
     <div class="cal-top-row">
@@ -271,6 +282,34 @@
     <div class="featured-sub" style="font-family: 'Inter', sans-serif; font-weight: 600;">Check out my niche recommendations if you want some deeply weird shows</div>
   </a>
 
+<!-- CHAPTER FOOTER -->
+<div class="chapter-footer">
+  <svg class="chapter-wave" viewBox="0 0 500 24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,12 Q62.5,0 125,12 T250,12 T375,12 T500,12" fill="none" stroke="#b45309" stroke-width="2"/>
+    <path d="M0,18 Q62.5,6 125,18 T250,18 T375,18 T500,18" fill="none" stroke="#3a3533" stroke-width="1"/>
+  </svg>
+  
+  <div class="chapter-links">
+    <a href="index.html">Home</a>
+    <a href="anime.html">Anime</a>
+    <a href="manga.html">Manga</a>
+    <a href="games.html">Games</a>
+    <a href="music.html">Music</a>
+    
+    <!-- Secret Unlocks -->
+    <a href="anirecommendation.html" class="secret" data-unlock-from="anime">More Anime →</a>
+    <a href="readingrecommendation.html" class="secret" data-unlock-from="manga">More Reading →</a>
+    <a href="guessanimusic.html" class="secret" data-unlock-from="music">Music Game →</a>
+    <a href="cardgame.html" class="secret" data-unlock-from="games">Card Game →</a>
+    <a href="blackjack.html" class="secret" data-unlock-from="games">Blackjack →</a>
+    <a href="zerozero48.html" class="secret" data-unlock-from="games">2048 Game →</a>
+    
+    <!-- Sanctum (Hidden until visited) -->
+    <a href="sanctum.html" class="secret" data-unlock-from="sanctum">Sanctum</a>
+  </div>
+  <p class="chapter-note">— some shows have multiple seasons, some are films. pick one. —</p>
+</div>
+
   <footer>© Rorri · ghostedyourinterest.gamer.gd · made with 💜</footer>
 </div>
 
@@ -367,7 +406,23 @@
       setTimeout(() => { toast.classList.remove('show'); }, 2000);
     }
   }
+
+  // ─── UNIVERSAL CHAPTER UNLOCK LOGIC ───
+  document.querySelectorAll('.chapter-links a.secret').forEach(link => {
+    const parent = link.dataset.unlockFrom;
+    if (localStorage.getItem('visited_' + parent)) {
+      link.classList.add('unlocked');
+      link.style.display = 'inline-block'; // Force it to show
+    }
+  });
+
+  // Mark THIS page as visited (Auto-detects the filename)
+  const thisPage = location.pathname.split('/').pop().replace('.html','') || 'index';
+  localStorage.setItem('visited_' + thisPage, 'true');
+
 </script>
+
+<script src="js/easter-eggs.js"></script>
 
 </body>
 </html>
