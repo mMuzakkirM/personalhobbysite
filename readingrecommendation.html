@@ -74,6 +74,44 @@
   .embed-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
   .log-post-id { font-family: monospace; font-size: 0.8rem; font-weight: 700; color: #a39b94; background: #1a1817; padding: 3px 8px; border-radius: 4px; border: 1px solid #3a3533; }
 
+  /* Surprise Me Button */
+  .surprise-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #2a2625;
+    border: 2px solid #3a3533;
+    color: #d48a8a;
+    padding: 8px 16px;
+    border-radius: 99px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 3px 3px 0 #111;
+    margin-bottom: 20px;
+  }
+  .surprise-btn:hover {
+    background: #8b2a2a;
+    color: #fff;
+    border-color: #8b2a2a;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 #111;
+  }
+
+  /* Card highlight animation for Surprise Me */
+  @keyframes highlightCard {
+    0% { box-shadow: 0 0 0 rgba(212, 138, 138, 0); border-color: #3a3533; }
+    50% { box-shadow: 0 0 30px rgba(212, 138, 138, 0.8); border-color: #d48a8a; }
+    100% { box-shadow: 0 0 0 rgba(212, 138, 138, 0); border-color: #3a3533; }
+  }
+  .mini-card.highlight {
+    animation: highlightCard 2s ease-in-out 3;
+    position: relative;
+    z-index: 20;
+  }
+
   @media (max-width: 900px) {
     .masonry-board { flex-direction: column; }
     .masonry-col { width: 100%; }
@@ -85,6 +123,14 @@
     .embed-meta-grid { grid-template-columns: 1fr; text-align: center; }
     .embed-genres { justify-content: center; }
   }
+
+    * {
+      cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, auto !important;
+    }
+    a, button, .mini-card, .embed-card, .flip-btn, .surprise-btn {
+      cursor: url('https://cdn.cursors-4u.net/previews/the-elders-scroll-skyrim-pointer-365249b4-32.webp') 35 35, pointer !important;
+    }
+
 </style>
 </head>
 <body class="scrapbook-theme">
@@ -105,12 +151,21 @@
     <a href="index.html">home</a><a href="anime.html">anime</a><a href="manga.html">manga</a><a href="games.html">games</a><a href="music.html">music</a>
   </nav>
 
+<p class="page-quote">17% of my personality lives on this page. read responsibly.</p>
+
   <!-- Compact Top Section -->
   <div class="top-area">
     <!-- Toggle Button -->
     <div class="flip-toggle-wrap">
       <button id="flip-btn" class="flip-btn" onclick="toggleBook()">
         <span id="flip-btn-text">Flip to Latest Recs ↻</span>
+      </button>
+    </div>
+
+    <!-- NEW: Surprise Me Button -->
+    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+      <button class="surprise-btn" onclick="surpriseMe()">
+        🎲 Surprise Me!
       </button>
     </div>
 
@@ -146,13 +201,13 @@
             <div class="board-card" id="slice">
               <div class="board-header"><h3 class="board-title">HEARTWARMING & SLICE OF LIFE</h3><span class="washi-tape"></span></div>
               <div class="board-grid-4">
-                <div class="mini-card" onclick="copyToClipboard('Sleepy Princess in the Demon Castle')" onmouseenter="showHoverLabel('Sleepy Princess in the Demon Castle')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Sleepy Princess in the Demon Castle" onclick="copyToClipboard('Sleepy Princess in the Demon Castle')" onmouseenter="showHoverLabel('Sleepy Princess in the Demon Castle')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read1.jpg" alt="Sleepy Princess"><h4>Sleepy Princess in the Demon Castle</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('A Story of Seven Lives')" onmouseenter="showHoverLabel('A Story of Seven Lives')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="A Story of Seven Lives" onclick="copyToClipboard('A Story of Seven Lives')" onmouseenter="showHoverLabel('A Story of Seven Lives')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read2.jpg" alt="A Story of Seven Lives"><h4>A Story of Seven Lives</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('My Kitty and Old Dog')" onmouseenter="showHoverLabel('My Kitty and Old Dog')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="My Kitty and Old Dog" onclick="copyToClipboard('My Kitty and Old Dog')" onmouseenter="showHoverLabel('My Kitty and Old Dog')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read3.jpg" alt="My Kitty and Old Dog"><h4>My Kitty and Old Dog</h4>
                 </div>
               </div>
@@ -162,22 +217,22 @@
             <div class="sticky-note left-sticky" id="romance">
               <h3 class="note-title">ROMANCE ♡</h3>
               <div class="board-grid-4">
-                <div class="mini-card" onclick="copyToClipboard('Fly Me to the Moon')" onmouseenter="showHoverLabel('Fly Me to the Moon')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Fly Me to the Moon" onclick="copyToClipboard('Fly Me to the Moon')" onmouseenter="showHoverLabel('Fly Me to the Moon')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read4.jpg" alt="Fly Me to the Moon"><h4>Fly Me to the Moon</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('A Home Far Away')" onmouseenter="showHoverLabel('A Home Far Away')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="A Home Far Away" onclick="copyToClipboard('A Home Far Away')" onmouseenter="showHoverLabel('A Home Far Away')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read5.jpg" alt="A Home Far Away"><h4>A Home Far Away</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('The Summer You Were There')" onmouseenter="showHoverLabel('The Summer You Were There')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="The Summer You Were There" onclick="copyToClipboard('The Summer You Were There')" onmouseenter="showHoverLabel('The Summer You Were There')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read6.jpg" alt="The Summer You Were There"><h4>The Summer You Were There</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Witch of Mine')" onmouseenter="showHoverLabel('Witch of Mine')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Witch of Mine" onclick="copyToClipboard('Witch of Mine')" onmouseenter="showHoverLabel('Witch of Mine')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read7.jpg" alt="Witch of Mine"><h4>Witch of Mine</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Positively Yours')" onmouseenter="showHoverLabel('Positively Yours')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Positively Yours" onclick="copyToClipboard('Positively Yours')" onmouseenter="showHoverLabel('Positively Yours')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read8.jpg" alt="Positively Yours"><h4>Positively Yours</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Men\'s Wear Store and Her Royal Highness')" onmouseenter="showHoverLabel('Men\'s Wear Store and Her Royal Highness')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Men's Wear Store and Her Royal Highness" onclick="copyToClipboard('Men\'s Wear Store and Her Royal Highness')" onmouseenter="showHoverLabel('Men\'s Wear Store and Her Royal Highness')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhua-stamp">Manhua</div><img src="img/reading/read9.jpg" alt="Men's Wear Store"><h4>Men's Wear Store and "Her Royal Highness"</h4>
                 </div>
               </div>
@@ -189,25 +244,25 @@
             <div class="board-card" id="action">
               <div class="board-header"><h3 class="board-title">ACTION PACKED</h3><span class="washi-tape dark-tape"></span></div>
               <div class="board-grid-4">
-                <div class="mini-card" onclick="copyToClipboard('Make the Exorcist Fall in Love')" onmouseenter="showHoverLabel('Make the Exorcist Fall in Love')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Make the Exorcist Fall in Love" onclick="copyToClipboard('Make the Exorcist Fall in Love')" onmouseenter="showHoverLabel('Make the Exorcist Fall in Love')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read10.jpg" alt="Make the Exorcist"><h4>Make the Exorcist Fall in Love</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('The Fable')" onmouseenter="showHoverLabel('The Fable')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="The Fable" onclick="copyToClipboard('The Fable')" onmouseenter="showHoverLabel('The Fable')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read11.jpg" alt="The Fable"><h4>The Fable</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Undead Unluck')" onmouseenter="showHoverLabel('Undead Unluck')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Undead Unluck" onclick="copyToClipboard('Undead Unluck')" onmouseenter="showHoverLabel('Undead Unluck')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read12.png" alt="Undead Unluck"><h4>Undead Unluck</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Medaka Box')" onmouseenter="showHoverLabel('Medaka Box')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Medaka Box" onclick="copyToClipboard('Medaka Box')" onmouseenter="showHoverLabel('Medaka Box')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read13.jpg" alt="Medaka Box"><h4>Medaka Box</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('A Man\'s Man')" onmouseenter="showHoverLabel('A Man\'s Man')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="A Man's Man" onclick="copyToClipboard('A Man\'s Man')" onmouseenter="showHoverLabel('A Man\'s Man')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read14.jpg" alt="A Man's Man"><h4>A Man's Man</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('ShaMONEYism')" onmouseenter="showHoverLabel('ShaMONEYism')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="ShaMONEYism" onclick="copyToClipboard('ShaMONEYism')" onmouseenter="showHoverLabel('ShaMONEYism')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read15.jpg" alt="ShaMONEYism"><h4>ShaMONEYism</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Unholy Blood')" onmouseenter="showHoverLabel('Unholy Blood')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Unholy Blood" onclick="copyToClipboard('Unholy Blood')" onmouseenter="showHoverLabel('Unholy Blood')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read16.jpg" alt="Unholy Blood"><h4>Unholy Blood</h4>
                 </div>
               </div>
@@ -217,19 +272,19 @@
             <div class="sticky-note left-sticky" id="dark">
               <h3 class="note-title">DARK & SUSPENSE</h3>
               <div class="board-grid-4">
-                <div class="mini-card" onclick="copyToClipboard('Enigmatica')" onmouseenter="showHoverLabel('Enigmatica')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Enigmatica" onclick="copyToClipboard('Enigmatica')" onmouseenter="showHoverLabel('Enigmatica')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read24.jpg" alt="Enigmatica"><h4>Enigmatica</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Shadows House')" onmouseenter="showHoverLabel('Shadows House')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Shadows House" onclick="copyToClipboard('Shadows House')" onmouseenter="showHoverLabel('Shadows House')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read25.png" alt="Shadows House"><h4>Shadows House</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('The Climber')" onmouseenter="showHoverLabel('The Climber')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="The Climber" onclick="copyToClipboard('The Climber')" onmouseenter="showHoverLabel('The Climber')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read26.jpg" alt="The Climber"><h4>The Climber</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Bibliomania')" onmouseenter="showHoverLabel('Bibliomania')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Bibliomania" onclick="copyToClipboard('Bibliomania')" onmouseenter="showHoverLabel('Bibliomania')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read27.jpg" alt="Bibliomania"><h4>Bibliomania</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Surviving Romance')" onmouseenter="showHoverLabel('Surviving Romance')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Surviving Romance" onclick="copyToClipboard('Surviving Romance')" onmouseenter="showHoverLabel('Surviving Romance')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read28.jpg" alt="Surviving Romance"><h4>Surviving Romance</h4>
                 </div>
               </div>
@@ -242,25 +297,25 @@
             <div class="board-card" id="fantasy">
               <div class="board-header"><h3 class="board-title">FANTASY & ADVENTURE</h3><span class="washi-tape pink-tape"></span></div>
               <div class="board-grid-4">
-                <div class="mini-card" onclick="copyToClipboard('Gon')" onmouseenter="showHoverLabel('Gon')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Gon" onclick="copyToClipboard('Gon')" onmouseenter="showHoverLabel('Gon')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read17.png" alt="Gon"><h4>Gon</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('It\'s My Life')" onmouseenter="showHoverLabel('It\'s My Life')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="It's My Life" onclick="copyToClipboard('It\'s My Life')" onmouseenter="showHoverLabel('It\'s My Life')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read18.jpg" alt="It's My Life"><h4>It's My Life</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Albus Changes the World')" onmouseenter="showHoverLabel('Albus Changes the World')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Albus Changes the World" onclick="copyToClipboard('Albus Changes the World')" onmouseenter="showHoverLabel('Albus Changes the World')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read19.jpg" alt="Albus Changes the World"><h4>Albus Changes the World</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Days Off in the Dragon\'s Stomach')" onmouseenter="showHoverLabel('Days Off in the Dragon\'s Stomach')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Days Off in the Dragon's Stomach" onclick="copyToClipboard('Days Off in the Dragon\'s Stomach')" onmouseenter="showHoverLabel('Days Off in the Dragon\'s Stomach')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read20.jpg" alt="Days Off in the Dragon's Stomach"><h4>Days Off in the Dragon's Stomach</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('ELDEN RING: The Road to the Erdtree')" onmouseenter="showHoverLabel('ELDEN RING: The Road to the Erdtree')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="ELDEN RING: The Road to the Erdtree" onclick="copyToClipboard('ELDEN RING: The Road to the Erdtree')" onmouseenter="showHoverLabel('ELDEN RING: The Road to the Erdtree')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read21.jpg" alt="ELDEN RING"><h4>ELDEN RING: The Road to the Erdtree</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Delicious in Dungeon')" onmouseenter="showHoverLabel('Delicious in Dungeon')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Delicious in Dungeon" onclick="copyToClipboard('Delicious in Dungeon')" onmouseenter="showHoverLabel('Delicious in Dungeon')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read22.jpg" alt="Delicious in Dungeon"><h4>Delicious in Dungeon</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('A Compendium of Ghosts')" onmouseenter="showHoverLabel('A Compendium of Ghosts')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="A Compendium of Ghosts" onclick="copyToClipboard('A Compendium of Ghosts')" onmouseenter="showHoverLabel('A Compendium of Ghosts')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read23.jpeg" alt="A Compendium of Ghosts"><h4>A Compendium of Ghosts</h4>
                 </div>
               </div>
@@ -270,28 +325,28 @@
             <div class="board-card" id="coming-of-age">
               <div class="board-header"><h3 class="board-title">COMING OF AGE</h3><span class="washi-tape blue-tape"></span></div>
               <div class="board-grid-4">
-                <div class="mini-card" onclick="copyToClipboard('Blank Canvas: My So-Called Artist\'s Journey')" onmouseenter="showHoverLabel('Blank Canvas: My So-Called Artist\'s Journey')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Blank Canvas: My So-Called Artist's Journey" onclick="copyToClipboard('Blank Canvas: My So-Called Artist\'s Journey')" onmouseenter="showHoverLabel('Blank Canvas: My So-Called Artist\'s Journey')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read32.jpg" alt="Blank Canvas"><h4>Blank Canvas: My So-Called Artist's Journey</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Hatori and Furuta\'s Extraordinarily Ordinary Life')" onmouseenter="showHoverLabel('Hatori and Furuta\'s Extraordinarily Ordinary Life')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Hatori and Furuta's Extraordinarily Ordinary Life" onclick="copyToClipboard('Hatori and Furuta\'s Extraordinarily Ordinary Life')" onmouseenter="showHoverLabel('Hatori and Furuta\'s Extraordinarily Ordinary Life')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read34.jpg" alt="Hatori and Furuta"><h4>Hatori and Furuta's Extraordinarily Ordinary Life</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Spirit Circle')" onmouseenter="showHoverLabel('Spirit Circle')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Spirit Circle" onclick="copyToClipboard('Spirit Circle')" onmouseenter="showHoverLabel('Spirit Circle')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read35.jpg" alt="Spirit Circle"><h4>Spirit Circle</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('The Legend of the Strongest, Kurosawa!')" onmouseenter="showHoverLabel('The Legend of the Strongest, Kurosawa!')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="The Legend of the Strongest, Kurosawa!" onclick="copyToClipboard('The Legend of the Strongest, Kurosawa!')" onmouseenter="showHoverLabel('The Legend of the Strongest, Kurosawa!')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read36.jpg" alt="Kurosawa"><h4>The Legend of the Strongest, Kurosawa!</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Yomawari Sensei')" onmouseenter="showHoverLabel('Yomawari Sensei')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Yomawari Sensei" onclick="copyToClipboard('Yomawari Sensei')" onmouseenter="showHoverLabel('Yomawari Sensei')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read37.jpg" alt="Yomawari Sensei"><h4>Yomawari Sensei</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Taste of Illness')" onmouseenter="showHoverLabel('Taste of Illness')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Taste of Illness" onclick="copyToClipboard('Taste of Illness')" onmouseenter="showHoverLabel('Taste of Illness')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read38.jpg" alt="Taste of Illness"><h4>Taste of Illness</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Spirit Fingers')" onmouseenter="showHoverLabel('Spirit Fingers')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Spirit Fingers" onclick="copyToClipboard('Spirit Fingers')" onmouseenter="showHoverLabel('Spirit Fingers')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read39.jpg" alt="Spirit Fingers"><h4>Spirit Fingers</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Westwood Vibrato')" onmouseenter="showHoverLabel('Westwood Vibrato')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Westwood Vibrato" onclick="copyToClipboard('Westwood Vibrato')" onmouseenter="showHoverLabel('Westwood Vibrato')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read33.jpg" alt="Westwood Vibrato"><h4>Westwood Vibrato</h4>
                 </div>
               </div>
@@ -301,13 +356,13 @@
             <div class="sticky-note right-sticky" id="funny">
               <h3 class="note-title">FUNNY</h3>
               <div class="board-grid-4">
-                <div class="mini-card" onclick="copyToClipboard('The Ostrich Beastman\'s Wild and Unrivaled Rampage: I Became the Leader of the Stupidly Cute Strongest Race')" onmouseenter="showHoverLabel('The Ostrich Beastman\'s Wild and Unrivaled Rampage: I Became the Leader of the Stupidly Cute Strongest Race')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="The Ostrich Beastman's Wild and Unrivaled Rampage: I Became the Leader of the Stupidly Cute Strongest Race" onclick="copyToClipboard('The Ostrich Beastman\'s Wild and Unrivaled Rampage: I Became the Leader of the Stupidly Cute Strongest Race')" onmouseenter="showHoverLabel('The Ostrich Beastman\'s Wild and Unrivaled Rampage: I Became the Leader of the Stupidly Cute Strongest Race')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read29.jpg" alt="Ostrich Beastman"><h4>The Ostrich Beastman's Wild and Unrivaled Rampage</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('A Man Who Defies the World of BL')" onmouseenter="showHoverLabel('A Man Who Defies the World of BL')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="A Man Who Defies the World of BL" onclick="copyToClipboard('A Man Who Defies the World of BL')" onmouseenter="showHoverLabel('A Man Who Defies the World of BL')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read30.jpg" alt="A Man Who Defies the World of BL"><h4>A Man Who Defies the World of BL</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Student Council Staff Members')" onmouseenter="showHoverLabel('Student Council Staff Members')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Student Council Staff Members" onclick="copyToClipboard('Student Council Staff Members')" onmouseenter="showHoverLabel('Student Council Staff Members')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read31.jpg" alt="Student Council Staff Members"><h4>Seitokai Yakuindomo</h4>
                 </div>
               </div>
@@ -319,16 +374,16 @@
             <div class="board-card" id="sadness">
               <div class="board-header"><h3 class="board-title">SADNESS</h3><span class="washi-tape dark-tape"></span></div>
               <div class="board-grid-4">
-                <div class="mini-card" onclick="copyToClipboard('My Girl')" onmouseenter="showHoverLabel('My Girl')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="My Girl" onclick="copyToClipboard('My Girl')" onmouseenter="showHoverLabel('My Girl')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read40.jpg" alt="My Girl"><h4>My Girl</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('False Child')" onmouseenter="showHoverLabel('False Child')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="False Child" onclick="copyToClipboard('False Child')" onmouseenter="showHoverLabel('False Child')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manga-stamp">Manga</div><img src="img/reading/read41.jpg" alt="False Child"><h4>False Child</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Whale Star: The Gyeongseong Mermaid')" onmouseenter="showHoverLabel('Whale Star: The Gyeongseong Mermaid')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Whale Star: The Gyeongseong Mermaid" onclick="copyToClipboard('Whale Star: The Gyeongseong Mermaid')" onmouseenter="showHoverLabel('Whale Star: The Gyeongseong Mermaid')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read42.jpg" alt="Whale Star"><h4>Whale Star: The Gyeongseong Mermaid</h4>
                 </div>
-                <div class="mini-card" onclick="copyToClipboard('Your Letter')" onmouseenter="showHoverLabel('Your Letter')" onmouseleave="hideHoverLabel()">
+                <div class="mini-card" data-title="Your Letter" onclick="copyToClipboard('Your Letter')" onmouseenter="showHoverLabel('Your Letter')" onmouseleave="hideHoverLabel()">
                   <div class="type-stamp manhwa-stamp">Manhwa</div><img src="img/reading/read43.jpg" alt="Your Letter"><h4>Your Letter</h4>
                 </div>
               </div>
@@ -366,7 +421,6 @@
             <button class="sort-btn" id="sort-btn" onclick="toggleSort()" style="background: #2a2625; border: 1px solid #4a3f3a; color: #e0d8d0; padding: 8px 16px; border-radius: 8px; font-family: inherit; font-weight: 700; font-size: 0.85rem; cursor: pointer;">Sort: Newest Post ⬇</button>
           </div>
           
-          <!-- Note: The default HTML order is 001 to 005, but the JS will auto-sort to 005 to 001 on load -->
           <div class="log-list" id="log-container">
             
             <!-- EMBED 1 (#001) -->
@@ -521,6 +575,33 @@
     </div>
   </div>
 
+<div class="chapter-footer">
+  <svg class="chapter-wave" viewBox="0 0 500 24" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,12 Q62.5,0 125,12 T250,12 T375,12 T500,12" fill="none" stroke="#b45309" stroke-width="2"/>
+    <path d="M0,18 Q62.5,6 125,18 T250,18 T375,18 T500,18" fill="none" stroke="#3a3533" stroke-width="1"/>
+  </svg>
+  
+  <div class="chapter-links">
+    <a href="index.html">Home</a>
+    <a href="anime.html">Anime</a>
+    <a href="manga.html">Manga</a>
+    <a href="games.html">Games</a>
+    <a href="music.html">Music</a>
+    
+    <!-- Secret Unlocks -->
+    <a href="anirecommendation.html" class="secret" data-unlock-from="anime">More Anime →</a>
+    <a href="readingrecommendation.html" class="secret" data-unlock-from="manga">More Reading →</a>
+    <a href="guessanimusic.html" class="secret" data-unlock-from="music">Music Game →</a>
+    <a href="cardgame.html" class="secret" data-unlock-from="games">Card Game →</a>
+    <a href="blackjack.html" class="secret" data-unlock-from="games">Blackjack →</a>
+    <a href="zerozero48.html" class="secret" data-unlock-from="games">2048 Game →</a>
+    
+    <!-- Sanctum (Hidden until visited) -->
+    <a href="sanctum.html" class="secret" data-unlock-from="sanctum">Sanctum</a>
+  </div>
+  <p class="chapter-note">— flip the book back when you're done —</p>
+</div>
+
   <footer>© Rorri · ghostedyourinterest.gamer.gd · made with 💜</footer>
 </div>
 
@@ -540,6 +621,14 @@
   function hideHoverLabel() {
     const label = document.getElementById('hover-label');
     if (label) label.classList.remove('show');
+  }
+  function showMobileTitle(titleText) {
+    if (window.innerWidth <= 700) {
+      const toast = document.getElementById('mobile-toast');
+      toast.innerText = titleText;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 2000);
+    }
   }
   
   /* --- Copy to Clipboard Logic --- */
@@ -601,7 +690,6 @@
   }
 
   /* --- Dynamic Top Picks Logic --- */
-  // Change these numbers to feature different posts in the top 5!
   const featuredPicks = [5, 4, 3, 2, 1];
 
   function buildTopPicks() {
@@ -616,11 +704,9 @@
         const imgSrc = targetCard.querySelector('.embed-img img').src;
         const genre = targetCard.querySelector('.embed-genres span').innerText;
         
-        // Create the polaroid card
         const pickDiv = document.createElement('div');
         pickDiv.className = 'polaroid-card';
         
-        // Add hover, click, and copy functionality
         pickDiv.setAttribute('onmouseenter', `showHoverLabel('${title.replace(/'/g, "\\'")}')`);
         pickDiv.setAttribute('onmouseleave', `hideHoverLabel()`);
         pickDiv.setAttribute('onclick', `copyToClipboard('${title.replace(/'/g, "\\'")}')`);
@@ -641,21 +727,62 @@
   buildTopPicks();
   
   // Force initial sort (Newest First) so 005 is at the top on page load
-  // We temporarily set isNewestFirst to false so the first click of toggleSort() sorts it Newest First.
-  // But we want it visually sorted Newest First immediately, so we run the sort logic manually here:
   const initialSort = () => {
       const container = document.getElementById('log-container');
       const items = Array.from(container.getElementsByClassName('embed-card'));
       items.sort((a, b) => parseInt(b.getAttribute('data-post')) - parseInt(a.getAttribute('data-post')));
       container.innerHTML = '';
       items.forEach(item => container.appendChild(item));
-      // Now flip the toggle state so the next click sorts it Oldest First
       isNewestFirst = false;
       document.getElementById('sort-btn').innerText = "Sort: Oldest Post ⬆";
   };
   initialSort();
 
-</script>
+  /* --- Surprise Me Logic --- */
+  function surpriseMe() {
+    // 1. Ensure we are on the front page (Reading List)
+    if (isFlipped) {
+      toggleBook();
+    }
 
+    // 2. Get all mini cards
+    const cards = document.querySelectorAll('.board-card .mini-card, .sticky-note .mini-card');
+    if (cards.length === 0) return;
+
+    // 3. Remove highlight from any previous surprise
+    cards.forEach(c => c.classList.remove('highlight'));
+
+    // 4. Pick a random card
+    const randomCard = cards[Math.floor(Math.random() * cards.length)];
+    const title = randomCard.getAttribute('data-title') || "A random book";
+    
+    // 5. Scroll to the card and highlight it
+    randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    randomCard.classList.add('highlight');
+    
+    // Show the title in the toast
+    showMobileTitle(`Surprise! Check out: ${title}`);
+    
+    // Optional: Remove highlight after animation finishes
+    setTimeout(() => {
+      randomCard.classList.remove('highlight');
+    }, 6000);
+  }
+
+  // ─── UNIVERSAL CHAPTER UNLOCK LOGIC ───
+  document.querySelectorAll('.chapter-links a.secret').forEach(link => {
+    const parent = link.dataset.unlockFrom;
+    if (localStorage.getItem('visited_' + parent)) {
+      link.classList.add('unlocked');
+      link.style.display = 'inline-block'; // Force it to show
+    }
+  });
+
+  // Mark THIS page as visited (Auto-detects the filename)
+  const thisPage = location.pathname.split('/').pop().replace('.html','') || 'index';
+  localStorage.setItem('visited_' + thisPage, 'true');
+
+</script>
+<script src="js/easter-eggs.js"></script>
 </body>
 </html>
